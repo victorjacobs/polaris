@@ -12,6 +12,7 @@ public class Triangle implements Surface {
 	private Vector3f v2;
 	private Vector3f v3;
 	private Color fillColor;
+	private float currentT;
 	
 	public Triangle(Vector3f v1, Vector3f v2, Vector3f v3, Color fillColor) {
 		this.v1 = v1;
@@ -62,6 +63,8 @@ public class Triangle implements Surface {
 		if (t < t0 || t > t1) return false;
 		if (gamma < 0 || gamma > 1) return false;
 		if (beta < 0 || beta > 1 - gamma) return false;
+		
+		this.currentT = t;
 				
 		return true;
 	}
@@ -75,6 +78,11 @@ public class Triangle implements Surface {
 	@Override
 	public Color getColor() {
 		return this.fillColor;
+	}
+
+	@Override
+	public float getCurrentT() {
+		return currentT;
 	}
 
 }

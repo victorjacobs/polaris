@@ -12,8 +12,6 @@ public class Ray {
 
 	private Vector3f direction;
 
-	// x and y have to be converted to u and v!
-	// TODO Vectors u and v dependent of camera placement, for now fix them
 	public Ray(Camera cam, float x, float y) {
 		setCamera(cam);
 		

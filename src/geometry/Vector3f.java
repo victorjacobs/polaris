@@ -101,6 +101,10 @@ public class Vector3f extends Tuple3f implements Serializable
     	return new Vector3f(x + other.x, y + other.y, z + other.z);
     }
     
+    public float dotProduct(Vector3f other) {
+    	return x * other.x + y * other.y + z * other.z;
+    }
+    
     @Override
     public boolean equals(Object o) {
     	if (this == o) return true;
