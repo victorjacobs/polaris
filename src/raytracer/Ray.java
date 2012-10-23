@@ -1,3 +1,6 @@
+package raytracer;
+import geometry.Vector3f;
+
 /**
  * Class representing a ray
  * 

@@ -1,3 +1,7 @@
+package raytracer;
+import geometry.Surface;
+import gui.CgPanel;
+
 import java.awt.Color;
 import java.util.HashSet;
 
@@ -33,8 +37,6 @@ public class RayTracer {
 					surfaceColor = surf.getColor();
 					if (surf.hit(ray, 0, Float.POSITIVE_INFINITY)) {
 						panel.drawPixel(x, y, surfaceColor.getRed() / 255, surfaceColor.getGreen() / 255, surfaceColor.getBlue() / 255);
-					} else {
-						panel.drawPixel(x, y, 0, 0, 0);
 					}
 				}
 			}

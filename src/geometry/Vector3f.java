@@ -1,3 +1,4 @@
+package geometry;
 
 import java.io.Serializable;
 
@@ -93,11 +94,28 @@ public class Vector3f extends Tuple3f implements Serializable
     }
     
     public Vector3f multiply(float mult) {
-    	return new Vector3f(mult * x, mult* y, mult * z);
+    	return new Vector3f(mult * x, mult * y, mult * z);
     }
     
     public Vector3f sum(Vector3f other) {
     	return new Vector3f(x + other.x, y + other.y, z + other.z);
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+    	if (this == o) return true;
+    	if (!(o instanceof Vector3f)) return false;
+    	
+    	Vector3f other = (Vector3f) o;
+    	
+    	if (this.x == other.x && this.y == other.y && this.z == other.z) return true;
+    	
+    	return false;
+    }
+    
+    @Override
+    public String toString() {
+    	return "(" + x + ", " + y + ", " + z + ")";
     }
     
 }

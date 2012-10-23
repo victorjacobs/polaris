@@ -1,4 +1,8 @@
+package geometry;
+
 import java.awt.Color;
+
+import raytracer.Ray;
 
 public interface Surface {
 	

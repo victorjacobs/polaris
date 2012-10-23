@@ -1,3 +1,6 @@
+package raytracer;
+import geometry.Vector3f;
+
 
 public class Camera {
 	private Vector3f gaze;
