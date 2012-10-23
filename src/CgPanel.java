@@ -37,6 +37,7 @@ public class CgPanel extends JPanel  implements ComponentListener {
     * The color channels r,g and b are supposed to be in the range [0...1]
     */ 
    public void drawPixel(int x, int y, float r, float g, float b) {
+	   //System.out.println("Drawing on ("+ x + ", " + y + ")" + " Color: (" + r + ", " + g + ", " + b + ")");
       if (x>=0 && x<getWidth() && y>=0 && y<getHeight()) {
          rgbpixels[x+getWidth()*y] = 255<<24 | (int)(255*r)<<16 | (int)(255*g)<<8 | (int)(255*b);
       }
