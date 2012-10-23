@@ -4,7 +4,7 @@ import java.io.Serializable;
 public abstract class Tuple2f implements Serializable, Cloneable
 {
     /**
-	 * 
+	 * TODO immutable
 	 */
 	private static final long serialVersionUID = -1810750322449923266L;
 

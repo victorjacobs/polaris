@@ -16,6 +16,7 @@ public class Vector3f extends Tuple3f implements Serializable
 
     public Vector3f()
     {
+    	this(0, 0, 0);
     }
 
 
@@ -62,6 +63,33 @@ public class Vector3f extends Tuple3f implements Serializable
     public Vector3f(float v[])
     {
         super(v);
+    }
+    
+    public float norm() {
+    	return (float) Math.sqrt(x * x + y * y + z * z);
+    }
+    
+    public Vector3f crossProduct(Vector3f other) {
+    	float C1 = y * other.z - z * other.y;
+    	float C2 = z * other.x - x * other.z;
+    	float C3 = x * other.y - y * other.x;
+    	return new Vector3f(C1, C2, C3);
+    }
+    
+    public Vector3f divideBy(float divider) {
+    	return new Vector3f(x / divider, y / divider, z / divider);
+    }
+    
+    public Vector3f minus(Vector3f min) {
+    	return new Vector3f(x - min.x, y - min.y, z - min.z);
+    }
+    
+    public Vector3f negate() {
+    	return (new Vector3f()).minus(this);
+    }
+    
+    public Vector3f normalize() {
+    	return this.divideBy(this.norm());
     }
     
 }

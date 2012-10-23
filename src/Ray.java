@@ -3,7 +3,6 @@
  * 
  * @author Victor
  */
-// NOTE: all vectors are in u, v, w axis
 public class Ray {
 	
 	private Vector3f origin;
@@ -32,6 +31,7 @@ public class Ray {
 		setOrigin(origin);
 		
 		// Generate direction
+		// NOTE: l, r, t, b hebben niets te maken met SCREEN!
 		float l = -RayTracer.SCREEN_X / 2;
 		float r = RayTracer.SCREEN_X / 2;
 		float t = RayTracer.SCREEN_Y / 2;
