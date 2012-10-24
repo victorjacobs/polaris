@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import raytracer.Ray;
 
-
 public class Triangle implements Surface {
 	
 	// Vertices
