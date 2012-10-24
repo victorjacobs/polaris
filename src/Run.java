@@ -50,7 +50,7 @@ public class Run {
 //		rayTracer.addSurface(sphere);
 		
 		// Load object from file
-		Model cylinder = new Model("data/teapot.obj");
+		Model cylinder = new Model("data/shuttle.obj");
 		rayTracer.addSurface(cylinder);
 		
 		rayTracer.trace();

@@ -56,50 +56,66 @@ public class Model implements Surface {
 		}
 		
 		System.out.println("File loaded");
+		System.out.println("Some stats:");
+		System.out.println(" " + points.size() + " points");
+		System.out.println(" " + triangles.size() + " triangles");
 	}
 	
 	// TODO: now we assume that all planes are triangles
 	private void parseLine(String line) {
 		String[] lineTokenized = line.split(" ");
 		
-		switch (DataTags.valueOf(lineTokenized[0].toUpperCase())) {
-		case V:
-			// Points
-			Vector3f point = new Vector3f(Float.parseFloat(lineTokenized[1]), Float.parseFloat(lineTokenized[2]), Float.parseFloat(lineTokenized[3]));
-			points.add(point);
-			break;
-			
-		case VT:
-			System.out.println("Not yet implemented");
-			break;
-			
-		case VN:
-			// Normal vector
-			Vector3f normal = new Vector3f(Float.parseFloat(lineTokenized[1]), Float.parseFloat(lineTokenized[2]), Float.parseFloat(lineTokenized[3]));
-			normalVectors.add(normal);
-			break;
-			
-		case F:
-			// Generate vertices
-			// TODO make more general?
-			// TODO als geen textuur/normaal
-			String[] indices = lineTokenized[1].split("/");
-			Vertex v1 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
-			
-			indices = lineTokenized[2].split("/");
-			Vertex v2 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
-			
-			indices = lineTokenized[3].split("/");
-			Vertex v3 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
-			
-			// Triangle
-			// TODO: color
-			Triangle triag = new Triangle(v1, v2, v3, Color.GREEN);
-			
-			triangles.add(triag);
-			
-			break;
+		try {
+			switch (DataTags.valueOf(lineTokenized[0].toUpperCase())) {
+			case V:
+				// Points
+				Vector3f point = new Vector3f(Float.parseFloat(lineTokenized[1]), Float.parseFloat(lineTokenized[2]), Float.parseFloat(lineTokenized[3]));
+				points.add(point);
+				break;
+				
+			case VT:
+				//System.out.println("Not yet implemented");
+				break;
+				
+			case VN:
+				// Normal vector
+				Vector3f normal = new Vector3f(Float.parseFloat(lineTokenized[1]), Float.parseFloat(lineTokenized[2]), Float.parseFloat(lineTokenized[3]));
+				normalVectors.add(normal);
+				break;
+				
+			case F:
+				// Generate vertices
+				// TODO make more general?
+				// TODO als geen textuur/normaal
+				String[] indices = lineTokenized[1].split("/");
+				Triangle triag;
+				
+				if (indices.length == 1) {
+					triag = new Triangle(points.get(Integer.parseInt(indices[0]) - 1), points.get(Integer.parseInt(indices[0]) - 1), points.get(Integer.parseInt(indices[0]) - 1), Color.GREEN);
+				} else {
+					Vertex v1 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
+					
+					indices = lineTokenized[2].split("/");
+					Vertex v2 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
+					
+					indices = lineTokenized[3].split("/");
+					Vertex v3 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
+					
+					// Triangle
+					// TODO: color
+					triag = new Triangle(v1, v2, v3, Color.GREEN);
+				}
+				
+				
+				triangles.add(triag);
+				
+				break;
+			}
+		} catch (Exception e) {
+			// Just ignore the message
+			//System.err.println("Unsupported message");
 		}
+		
 	}
 
 	@Override
@@ -126,5 +142,9 @@ public class Model implements Surface {
 	public float getCurrentT() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public void move(float x, float y, float z) {
+		
 	}
 }
