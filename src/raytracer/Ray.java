@@ -17,10 +17,10 @@ public class Ray {
 		
 		// Generate direction
 		// NOTE: l, r, t, b hebben niets te maken met SCREEN!
-		float l = -2;
-		float r = 2;
-		float t = 1;
-		float b = -1;
+		float l = -4;
+		float r = 4;
+		float t = 2;
+		float b = -2;
 		
 		float u = l + ((r - l) * (x + 0.5f)) / RayTracer.SCREEN_X;
 		float v = b + ((t - b) * (y + 0.5f)) / RayTracer.SCREEN_Y;

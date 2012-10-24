@@ -17,7 +17,7 @@ public class Run {
 		frame.setVisible(true);
 		
 		// TODO: why the hell moet up vector naar beneden gericht zijn?
-		Camera camera = new Camera(new Vector3f(-10, 0, 0), new Vector3f(1, 0, 0), new Vector3f(0, 0, 1), 5);
+		Camera camera = new Camera(new Vector3f(0, 0, -10), new Vector3f(0, 0, 1), new Vector3f(0, -1, 0), 5);
 		RayTracer rayTracer = new RayTracer(panel, camera);
 		
 		// Fancy driehoek, non overlapping

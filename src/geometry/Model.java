@@ -54,6 +54,8 @@ public class Model implements Surface {
 			System.err.println("Something went wrong reading out file " + fileName);
 			e.printStackTrace();
 		}
+		
+		System.out.println("File loaded");
 	}
 	
 	// TODO: now we assume that all planes are triangles
