@@ -15,6 +15,6 @@ public class PointLight {
 	}
 	
 	public Vector3f rayTo(Vector3f point) {
-		return position.minus(point);
+		return position.minus(point).normalize();
 	}
 }
