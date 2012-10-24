@@ -36,8 +36,8 @@ public class RayTracer {
 		Color surfaceColor;
 		float lowestT = Float.POSITIVE_INFINITY;
 		
-		for (int x = 1; x < panel.getHeight(); x++) {
-			for (int y = 1; y < panel.getWidth(); y++) {
+		for (int x = 1; x < panel.getWidth(); x++) {
+			for (int y = 1; y < panel.getHeight(); y++) {
 				ray = new Ray(camera, x, y);
 				
 				for (Surface surf : surfaces) {
