@@ -27,20 +27,20 @@ public class Sphere implements Surface {
 		
 		float disc = B * B - 4 * A * C;
 		
-		if (disc <= 0) return true;
+		if (disc < 0) return false;
 		
-		return false;
 		// t berekenen voor z buffering
-//		float tPlus = (ray.getDirection().negate().dotProduct(C1) + disc) / ray.getDirection().dotProduct(ray.getDirection());
-//		float tMin = (ray.getDirection().negate().dotProduct(C1) - disc) / ray.getDirection().dotProduct(ray.getDirection());
-//		
-//		float t = Math.min(tPlus, tMin);
-//		
-//		if (t < t0 || t > t1) return false;
-//		
-//		this.currentT = t;
-//		
-//		return true;
+		float tPlus = (ray.getDirection().negate().dotProduct(C1) + disc) / ray.getDirection().dotProduct(ray.getDirection());
+		float tMin = (ray.getDirection().negate().dotProduct(C1) - disc) / ray.getDirection().dotProduct(ray.getDirection());
+		
+		//float t = Math.min(tPlus, tMin);
+		float t = tPlus;
+		
+		if (t < t0 || t > t1) return false;
+		
+		this.currentT = tPlus;
+		
+		return true;
 	}
 
 	@Override
