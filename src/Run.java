@@ -1,5 +1,5 @@
-import geometry.Sphere;
 import geometry.Surface;
+import geometry.Triangle;
 import geometry.Vector3f;
 import gui.CgPanel;
 
@@ -24,13 +24,13 @@ public class Run {
 		RayTracer rayTracer = new RayTracer(panel, camera);
 		
 		// Fancy driehoek, non overlapping
-//		Surface triag1 = new Triangle(5, 0, 10, 5, -7, -3, 5, 0, 0, Color.CYAN);
-//		Surface triag2 = new Triangle(5, 0, 10, 5, 7, -3, 5, 0, 0, Color.RED);
-//		Surface triag3 = new Triangle(5, 0, 0, 5, -7, -3, 5, 7, -3, Color.BLUE);
-//		
-//		rayTracer.addSurface(triag1);
-//		rayTracer.addSurface(triag2);
-//		rayTracer.addSurface(triag3);
+		Surface triag1 = new Triangle(5, 0, 10, 5, -7, -3, 5, 0, 0, Color.CYAN);
+		Surface triag2 = new Triangle(5, 0, 10, 5, 7, -3, 5, 0, 0, Color.RED);
+		Surface triag3 = new Triangle(5, 0, 0, 5, -7, -3, 5, 7, -3, Color.BLUE);
+		
+		rayTracer.addSurface(triag1);
+		rayTracer.addSurface(triag2);
+		rayTracer.addSurface(triag3);
 		
 		// Driehoeken, overlapping
 //		Surface triag1 = new Triangle(5, 0, 10, 5, 5, 0, 5, -5, 0, Color.BLUE);
@@ -48,9 +48,9 @@ public class Run {
 //		rayTracer.addSurface(sphere2);
 		
 		// Enkele sphere
-		Surface sphere = new Sphere(new Vector3f(100, 0, 0), 20, Color.GREEN);
-		
-		rayTracer.addSurface(sphere);
+//		Surface sphere = new Sphere(new Vector3f(100, 0, 0), 20, Color.GREEN);
+//		
+//		rayTracer.addSurface(sphere);
 		
 		rayTracer.trace();
 		

@@ -15,8 +15,9 @@ import java.util.ArrayList;
  *
  */
 public class Model {
-	private ArrayList<Vector3f> vertices;
+	private ArrayList<Vector3f> points;
 	private ArrayList<Vector3f> normalVectors;
+	private ArrayList<Vertex> vertices;
 	
 	private enum DataTags {
 		V, VT, VN, F
@@ -25,9 +26,9 @@ public class Model {
 	// TODO eventueel parser uit halen en ergens anders zetten
 	public Model(String fileName) {
 		System.out.println("Loading model from file " + fileName);
-		vertices = new ArrayList<Vector3f>();
+		points = new ArrayList<Vector3f>();
 		// Add dummy on index 0 because data is 1-indexed
-		vertices.add(new Vector3f(0, 0, 0));
+		points.add(new Vector3f(0, 0, 0));
 		
 		normalVectors = new ArrayList<Vector3f>();
 		// Same as above, add dummy
@@ -63,7 +64,7 @@ public class Model {
 		switch (DataTags.valueOf(lineTokenized[0])) {
 		case V:
 			Vector3f vertex = new Vector3f(Float.parseFloat(lineTokenized[1]), Float.parseFloat(lineTokenized[2]), Float.parseFloat(lineTokenized[3]));
-			vertices.add(vertex);
+			points.add(vertex);
 			break;
 			
 		case VT:

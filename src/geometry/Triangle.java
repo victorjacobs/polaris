@@ -7,13 +7,32 @@ import raytracer.Ray;
 public class Triangle implements Surface {
 	
 	// Vertices
-	private Vector3f v1;
-	private Vector3f v2;
-	private Vector3f v3;
+	private Vertex v1;
+	private Vertex v2;
+	private Vertex v3;
 	private Color fillColor;
 	private float currentT;
 	
+	// If single triangle, not in collection
 	public Triangle(Vector3f v1, Vector3f v2, Vector3f v3, Color fillColor) {
+		// Calculate normal vector for triangle and store in vertices
+		Vector3f U = v2.minus(v1);
+		Vector3f V = v3.minus(v1);
+		
+		Vector3f N = U.crossProduct(V);
+		
+		Vertex vert1 = new Vertex(v1, N);
+		Vertex vert2 = new Vertex(v2, N);
+		Vertex vert3 = new Vertex(v3, N);
+		
+		this.v1 = vert1;
+		this.v2 = vert2;
+		this.v3 = vert3;
+		this.fillColor = fillColor;
+	}
+	
+	// Triangle made out of vertices that have normal vectors 
+	public Triangle(Vertex v1, Vertex v2, Vertex v3, Color fillColor) {
 		this.v1 = v1;
 		this.v2 = v2;
 		this.v3 = v3;
@@ -28,18 +47,18 @@ public class Triangle implements Surface {
 	@Override
 	public boolean hit(Ray ray, float t0, float t1) {
 		
-		float a = v1.x - v2.x;
-		float b = v1.y - v2.y;
-		float c = v1.z - v2.z;
-		float d = v1.x - v3.x;
-		float e = v1.y - v3.y;
-		float f = v1.z - v3.z;
+		float a = v1.getPoint().x - v2.getPoint().x;
+		float b = v1.getPoint().y - v2.getPoint().y;
+		float c = v1.getPoint().z - v2.getPoint().z;
+		float d = v1.getPoint().x - v3.getPoint().x;
+		float e = v1.getPoint().y - v3.getPoint().y;
+		float f = v1.getPoint().z - v3.getPoint().z;
 		float g = ray.getDirection().x;
 		float h = ray.getDirection().y;
 		float i = ray.getDirection().z;
-		float j = v1.x - ray.getCamera().getPosition().x;
-		float k = v1.y - ray.getCamera().getPosition().y;
-		float l = v1.z - ray.getCamera().getPosition().z;
+		float j = v1.getPoint().x - ray.getCamera().getPosition().x;
+		float k = v1.getPoint().y - ray.getCamera().getPosition().y;
+		float l = v1.getPoint().z - ray.getCamera().getPosition().z;
 		
 		// Compute M
 		float M1 = e * i - h * f;
