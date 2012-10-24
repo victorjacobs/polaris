@@ -1,9 +1,6 @@
-import geometry.Surface;
-import geometry.Triangle;
+import geometry.Model;
 import geometry.Vector3f;
 import gui.CgPanel;
-
-import java.awt.Color;
 
 import javax.swing.JFrame;
 
@@ -20,17 +17,17 @@ public class Run {
 		frame.setVisible(true);
 		
 		// TODO: why the hell moet up vector naar beneden gericht zijn?
-		Camera camera = new Camera(new Vector3f(-10, 0, 0), new Vector3f(1, 0, 0), new Vector3f(0, 0, -1), 10);
+		Camera camera = new Camera(new Vector3f(-10, 0, 0), new Vector3f(1, 0, 0), new Vector3f(0, 0, 1), 5);
 		RayTracer rayTracer = new RayTracer(panel, camera);
 		
 		// Fancy driehoek, non overlapping
-		Surface triag1 = new Triangle(5, 0, 10, 5, -7, -3, 5, 0, 0, Color.CYAN);
-		Surface triag2 = new Triangle(5, 0, 10, 5, 7, -3, 5, 0, 0, Color.RED);
-		Surface triag3 = new Triangle(5, 0, 0, 5, -7, -3, 5, 7, -3, Color.BLUE);
-		
-		rayTracer.addSurface(triag1);
-		rayTracer.addSurface(triag2);
-		rayTracer.addSurface(triag3);
+//		Surface triag1 = new Triangle(5, 0, 10, 5, -7, -3, 5, 0, 0, Color.CYAN);
+//		Surface triag2 = new Triangle(5, 0, 10, 5, 7, -3, 5, 0, 0, Color.RED);
+//		Surface triag3 = new Triangle(5, 0, 0, 5, -7, -3, 5, 7, -3, Color.BLUE);
+//		
+//		rayTracer.addSurface(triag1);
+//		rayTracer.addSurface(triag2);
+//		rayTracer.addSurface(triag3);
 		
 		// Driehoeken, overlapping
 //		Surface triag1 = new Triangle(5, 0, 10, 5, 5, 0, 5, -5, 0, Color.BLUE);
@@ -51,6 +48,10 @@ public class Run {
 //		Surface sphere = new Sphere(new Vector3f(100, 0, 0), 20, Color.GREEN);
 //		
 //		rayTracer.addSurface(sphere);
+		
+		// Load object from file
+		Model cylinder = new Model("data/teapot.obj");
+		rayTracer.addSurface(cylinder);
 		
 		rayTracer.trace();
 		

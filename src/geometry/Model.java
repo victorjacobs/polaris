@@ -1,5 +1,6 @@
 package geometry;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,16 +9,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import raytracer.Ray;
+
 /**
  * Class that represents a model made up out of a number of triangles
  * 
  * @author victor
  *
  */
-public class Model {
+public class Model implements Surface {
 	private ArrayList<Vector3f> points;
 	private ArrayList<Vector3f> normalVectors;
-	private ArrayList<Vertex> vertices;
+	private ArrayList<Triangle> triangles;
 	
 	private enum DataTags {
 		V, VT, VN, F
@@ -27,12 +30,8 @@ public class Model {
 	public Model(String fileName) {
 		System.out.println("Loading model from file " + fileName);
 		points = new ArrayList<Vector3f>();
-		// Add dummy on index 0 because data is 1-indexed
-		points.add(new Vector3f(0, 0, 0));
-		
 		normalVectors = new ArrayList<Vector3f>();
-		// Same as above, add dummy
-		normalVectors.add(new Vector3f(0, 0, 0));
+		triangles = new ArrayList<Triangle>();
 		
 		parseFile(fileName);
 	}
@@ -61,10 +60,11 @@ public class Model {
 	private void parseLine(String line) {
 		String[] lineTokenized = line.split(" ");
 		
-		switch (DataTags.valueOf(lineTokenized[0])) {
+		switch (DataTags.valueOf(lineTokenized[0].toUpperCase())) {
 		case V:
-			Vector3f vertex = new Vector3f(Float.parseFloat(lineTokenized[1]), Float.parseFloat(lineTokenized[2]), Float.parseFloat(lineTokenized[3]));
-			points.add(vertex);
+			// Points
+			Vector3f point = new Vector3f(Float.parseFloat(lineTokenized[1]), Float.parseFloat(lineTokenized[2]), Float.parseFloat(lineTokenized[3]));
+			points.add(point);
 			break;
 			
 		case VT:
@@ -72,12 +72,57 @@ public class Model {
 			break;
 			
 		case VN:
-			System.out.println("Not yet implemented");
+			// Normal vector
+			Vector3f normal = new Vector3f(Float.parseFloat(lineTokenized[1]), Float.parseFloat(lineTokenized[2]), Float.parseFloat(lineTokenized[3]));
+			normalVectors.add(normal);
 			break;
 			
 		case F:
+			// Generate vertices
+			// TODO make more general?
+			// TODO als geen textuur/normaal
+			String[] indices = lineTokenized[1].split("/");
+			Vertex v1 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
+			
+			indices = lineTokenized[2].split("/");
+			Vertex v2 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
+			
+			indices = lineTokenized[3].split("/");
+			Vertex v3 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
+			
+			// Triangle
+			// TODO: color
+			Triangle triag = new Triangle(v1, v2, v3, Color.GREEN);
+			
+			triangles.add(triag);
 			
 			break;
 		}
+	}
+
+	@Override
+	public boolean hit(Ray ray, float t0, float t1) {
+		for (Triangle triag : triangles) {
+			if (triag.hit(ray, t0, t1)) return true;
+		}
+		
+		return false;
+	}
+
+	@Override
+	public void boundingBox() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Color getColor() {
+		return Color.GREEN;
+	}
+
+	@Override
+	public float getCurrentT() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
