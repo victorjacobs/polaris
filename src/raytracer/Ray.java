@@ -17,8 +17,8 @@ public class Ray {
 		
 		// Generate direction
 		// NOTE: l, r, t, b hebben niets te maken met SCREEN!
-		float l = -4;
-		float r = 4;
+		float l = -2.6f;
+		float r = 2.6f;
 		float t = 2;
 		float b = -2;
 		

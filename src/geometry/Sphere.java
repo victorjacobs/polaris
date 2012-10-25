@@ -33,12 +33,20 @@ public class Sphere implements Surface {
 		float tPlus = (ray.getDirection().negate().dotProduct(C1) + disc) / ray.getDirection().dotProduct(ray.getDirection());
 		float tMin = (ray.getDirection().negate().dotProduct(C1) - disc) / ray.getDirection().dotProduct(ray.getDirection());
 		
+		System.out.println("tPlus: " + tPlus + " tMin: " + tMin);
+		
 		//float t = Math.min(tPlus, tMin);
-		float t = tPlus;
+		float t = Math.abs(Math.min(tPlus, tMin));
 		
 		if (t < t0 || t > t1) return null;
 		
-		return new Hit(null, null, tPlus);
+		// Calculate hit point
+		Vector3f where = ray.getCamera().getPosition().sum(ray.getDirection().multiply(t));
+		
+		// Normal vector TODO ofwel omgekeerd
+		Vector3f normal = center.minus(where);
+		
+		return new Hit(where, normal, tPlus);
 	}
 
 	@Override

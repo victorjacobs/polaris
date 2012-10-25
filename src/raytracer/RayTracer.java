@@ -37,6 +37,8 @@ public class RayTracer {
 		Hit hit;
 		float lowestT = Float.POSITIVE_INFINITY;
 		
+		long start = System.currentTimeMillis();
+		
 		for (int x = 1; x < panel.getWidth(); x++) {
 			for (int y = 1; y < panel.getHeight(); y++) {
 				ray = new Ray(camera, x, y);
@@ -68,5 +70,11 @@ public class RayTracer {
 				lowestT = Float.POSITIVE_INFINITY;
 			}
 		}
+		
+		long stop = System.currentTimeMillis();
+		
+		System.out.println("Render completed in " + Math.round((stop - start) / 1000) + "s");
 	}
+	
+	
 }

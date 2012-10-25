@@ -20,7 +20,7 @@ public class Run {
 		// TODO: why the hell moet up vector naar beneden gericht zijn?
 		Camera camera = new Camera(new Vector3f(0, 0, -10), new Vector3f(0, 0, 1), new Vector3f(0, -1, 0), 5);
 		RayTracer rayTracer = new RayTracer(panel, camera);
-		PointLight light1 = new PointLight(new Vector3f(-4, 10, -4));
+		PointLight light1 = new PointLight(new Vector3f(-4, 100, -4));
 		rayTracer.addLightSource(light1);
 		
 		// Fancy driehoek, non overlapping
@@ -41,19 +41,19 @@ public class Run {
 		
 		// Sphere, overlapping
 		// TODO als rand overlapt met andere bol
-//		Surface sphere1 = new Sphere(new Vector3f(100, 5, 0), 20, Color.GREEN);
-//		Surface sphere2 = new Sphere(new Vector3f(20, 0, 0), 10, Color.YELLOW);
+//		Surface sphere1 = new Sphere(new Vector3f(1, 5, 10), 1, Color.GREEN);
+//		Surface sphere2 = new Sphere(new Vector3f(2, 0, 100), 3, Color.YELLOW);
 //		
 //		rayTracer.addSurface(sphere1);
 //		rayTracer.addSurface(sphere2);
 		
 		// Enkele sphere
-//		Surface sphere = new Sphere(new Vector3f(100, 0, 0), 20, Color.GREEN);
+//		Surface sphere = new Sphere(new Vector3f(0, 0, 10), 1, Color.GREEN);
 //		
 //		rayTracer.addSurface(sphere);
 		
 		// Load object from file
-		Model cylinder = new Model("data/table.obj");
+		Model cylinder = new Model("data/teapot.obj");
 		rayTracer.addSurface(cylinder);
 		
 		rayTracer.trace();
