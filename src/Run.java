@@ -17,10 +17,10 @@ public class Run {
 		frame.getContentPane().add(panel);
 		frame.setVisible(true);
 		
-		// TODO: why the hell moet up vector naar beneden gericht zijn?
-		Camera camera = new Camera(new Vector3f(0, 0, -10), new Vector3f(0, 0, 1), new Vector3f(0, -1, 0), 5);
+		// TODO: entire axis system is in reverse!
+		Camera camera = new Camera(new Vector3f(5, 5, 5), new Vector3f(-5, -5, -5), new Vector3f(0, -1, 0), 5);
 		RayTracer rayTracer = new RayTracer(panel, camera);
-		PointLight light1 = new PointLight(new Vector3f(-4, 100, -4));
+		PointLight light1 = new PointLight(new Vector3f(5, 5, 5));
 		rayTracer.addLightSource(light1);
 		
 		// Fancy driehoek, non overlapping

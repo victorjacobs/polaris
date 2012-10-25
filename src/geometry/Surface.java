@@ -11,4 +11,6 @@ public interface Surface {
 	public void boundingBox();
 	public Color getColor();
 	
+	// TODO translate, rotate etc
+	
 }

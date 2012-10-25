@@ -46,7 +46,7 @@ public class Sphere implements Surface {
 		// Normal vector TODO ofwel omgekeerd
 		Vector3f normal = center.minus(where);
 		
-		return new Hit(where, normal, tPlus);
+		return new Hit(this, where, normal, tPlus);
 	}
 
 	@Override

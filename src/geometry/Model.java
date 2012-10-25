@@ -119,16 +119,22 @@ public class Model implements Surface {
 		
 	}
 
+	// NOTE: since this is a bag full of triangles, find all hits, then return closest
 	@Override
 	public Hit hit(Ray ray, float t0, float t1) {
-		Hit hit;
+		Hit hit = null;
+		Hit curHit;
+		float smallestT = t1;
 		
 		for (Triangle triag : triangles) {
-			hit = triag.hit(ray, t0, t1);
-			if (hit != null) return hit;
+			curHit = triag.hit(ray, t0, smallestT);
+			if (curHit != null) {
+				smallestT = curHit.getT();
+				hit = curHit;
+			}
 		}
 		
-		return null;
+		return hit;
 	}
 
 	@Override

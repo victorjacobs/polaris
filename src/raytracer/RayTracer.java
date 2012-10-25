@@ -41,6 +41,7 @@ public class RayTracer {
 		float sumB = 0;
 		
 		float lowestT = Float.POSITIVE_INFINITY;
+		Hit closestHit = null;
 		
 		long start = System.currentTimeMillis();
 		
@@ -49,28 +50,36 @@ public class RayTracer {
 				ray = new Ray(camera, x, y);
 				
 				for (Surface surf : surfaces) {
-					surfaceColor = surf.getColor();
 					hit = surf.hit(ray, 0, lowestT);
 					
 					if (hit != null) {
-						// Shading, maybe refactor to own method
-						sumR = 0;
-						sumG = 0;
-						sumB = 0;
-						
-						// TODO: p84 paragraph 4.5.4
-						for (PointLight light : lightSources) {
-							dotProduct = Math.max(0, hit.getNormal().dotProduct(light.rayTo(hit.getPoint()).normalize()));
-							sumR += surfaceColor.getRed() / 255 * (0.1f + light.color().getRed() / 255 * dotProduct);
-							sumG += surfaceColor.getGreen() / 255 * (0.1f + light.color().getGreen() / 255 * dotProduct);
-							sumB += surfaceColor.getBlue() / 255 * (0.1f + light.color().getBlue() / 255 * dotProduct);
-						}
-						// Paint pixel
-						panel.drawPixel(x, y, Math.min(1, sumR), Math.min(1, sumG), Math.min(1, sumB));
-						
 						lowestT = hit.getT();
+						closestHit = hit;
 					}
 				}
+				
+				// Do shading and color pixel
+				
+				if (closestHit != null) {
+					surfaceColor = closestHit.getSurface().getColor();
+					
+					// Shading, TODO refactor to own method
+					sumR = 0;
+					sumG = 0;
+					sumB = 0;
+					
+					// TODO: p84 paragraph 4.5.4
+					for (PointLight light : lightSources) {
+						dotProduct = Math.max(0, closestHit.getNormal().dotProduct(light.rayTo(closestHit.getPoint()).normalize()));
+						sumR += surfaceColor.getRed() / 255 * (0.1f + (light.intensity() * light.color().getRed()) / 255 * dotProduct);
+						sumG += surfaceColor.getGreen() / 255 * (0.1f + (light.intensity() * light.color().getGreen()) / 255 * dotProduct);
+						sumB += surfaceColor.getBlue() / 255 * (0.1f + (light.intensity() * light.color().getBlue()) / 255 * dotProduct);
+					}
+					// Paint pixel
+					panel.drawPixel(x, y, Math.min(1, sumR), Math.min(1, sumG), Math.min(1, sumB));
+					closestHit = null;
+				}
+				
 				// Reset t for next pixel
 				lowestT = Float.POSITIVE_INFINITY;
 			}
