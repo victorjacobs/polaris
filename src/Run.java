@@ -21,9 +21,7 @@ public class Run {
 		Camera camera = new Camera(new Vector3f(0, 0, -10), new Vector3f(0, 0, 1), new Vector3f(0, -1, 0), 5);
 		RayTracer rayTracer = new RayTracer(panel, camera);
 		PointLight light1 = new PointLight(new Vector3f(-4, 10, -4));
-		PointLight light2 = new PointLight(new Vector3f(-4, 100, 4));
 		rayTracer.addLightSource(light1);
-		rayTracer.addLightSource(light2);
 		
 		// Fancy driehoek, non overlapping
 //		Surface triag1 = new Triangle(5, 0, 10, 5, -7, -3, 5, 0, 0, Color.CYAN);
@@ -55,7 +53,7 @@ public class Run {
 //		rayTracer.addSurface(sphere);
 		
 		// Load object from file
-		Model cylinder = new Model("data/teapot.obj");
+		Model cylinder = new Model("data/table.obj");
 		rayTracer.addSurface(cylinder);
 		
 		rayTracer.trace();

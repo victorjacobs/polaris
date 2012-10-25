@@ -52,7 +52,7 @@ public class RayTracer {
 						float sumG = 0;
 						float sumB = 0;
 						
-						// TODO this won't work if sums go above 1
+						// TODO: p84 paragraph 4.5.4
 						for (PointLight light : lightSources) {
 							dotProduct = Math.max(0, hit.getNormal().dotProduct(light.rayTo(hit.getPoint()).normalize()));
 							sumR += surfaceColor.getRed() / 255 * (0.1f + light.color().getRed() / 255 * dotProduct);
@@ -60,7 +60,7 @@ public class RayTracer {
 							sumB += surfaceColor.getBlue() / 255 * (0.1f + light.color().getBlue() / 255 * dotProduct);
 						}
 						
-						panel.drawPixel(x, y, sumR, sumG, sumB);
+						panel.drawPixel(x, y, Math.min(1, sumR), Math.min(1, sumG), Math.min(1, sumB));
 						lowestT = hit.getT();
 					}
 				}
