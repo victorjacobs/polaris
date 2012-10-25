@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import raytracer.Hit;
 import raytracer.Ray;
 
 /**
@@ -21,8 +22,6 @@ public class Model implements Surface {
 	private ArrayList<Vector3f> points;
 	private ArrayList<Vector3f> normalVectors;
 	private ArrayList<Triangle> triangles;
-	
-	private Vector3f normalInHitPoint;
 	
 	private enum DataTags {
 		V, VT, VN, F
@@ -121,15 +120,15 @@ public class Model implements Surface {
 	}
 
 	@Override
-	public boolean hit(Ray ray, float t0, float t1) {
+	public Hit hit(Ray ray, float t0, float t1) {
+		Hit hit;
+		
 		for (Triangle triag : triangles) {
-			if (triag.hit(ray, t0, t1)) {
-				this.normalInHitPoint = triag.normalInHitPoint();
-				return true;
-			}
+			hit = triag.hit(ray, t0, t1);
+			if (hit != null) return hit;
 		}
 		
-		return false;
+		return null;
 	}
 
 	@Override
@@ -142,19 +141,8 @@ public class Model implements Surface {
 	public Color getColor() {
 		return Color.GREEN;
 	}
-
-	@Override
-	public float getCurrentT() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 	public void move(float x, float y, float z) {
 		
-	}
-
-	@Override
-	public Vector3f normalInHitPoint() {
-		return this.normalInHitPoint;
 	}
 }

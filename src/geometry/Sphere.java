@@ -2,6 +2,7 @@ package geometry;
 
 import java.awt.Color;
 
+import raytracer.Hit;
 import raytracer.Ray;
 
 public class Sphere implements Surface {
@@ -9,7 +10,6 @@ public class Sphere implements Surface {
 	private Vector3f center;
 	private float radius;
 	private Color fillColor;
-	private float currentT;
 	
 	public Sphere(Vector3f center, float radius, Color fillColor) {
 		this.center = center;
@@ -18,7 +18,7 @@ public class Sphere implements Surface {
 	}
 
 	@Override
-	public boolean hit(Ray ray, float t0, float t1) {
+	public Hit hit(Ray ray, float t0, float t1) {
 		// Compute discriminant (see page 77)
 		float A = ray.getDirection().dotProduct(ray.getDirection());
 		float B = ray.getDirection().multiply(2).dotProduct(ray.getCamera().getPosition().minus(center));
@@ -27,7 +27,7 @@ public class Sphere implements Surface {
 		
 		float disc = B * B - 4 * A * C;
 		
-		if (disc < 0) return false;
+		if (disc < 0) return null;
 		
 		// t berekenen voor z buffering
 		float tPlus = (ray.getDirection().negate().dotProduct(C1) + disc) / ray.getDirection().dotProduct(ray.getDirection());
@@ -36,11 +36,9 @@ public class Sphere implements Surface {
 		//float t = Math.min(tPlus, tMin);
 		float t = tPlus;
 		
-		if (t < t0 || t > t1) return false;
+		if (t < t0 || t > t1) return null;
 		
-		this.currentT = tPlus;
-		
-		return true;
+		return new Hit(null, null, tPlus);
 	}
 
 	@Override
@@ -52,17 +50,6 @@ public class Sphere implements Surface {
 	@Override
 	public Color getColor() {
 		return fillColor;
-	}
-
-	@Override
-	public float getCurrentT() {
-		return this.currentT;
-	}
-
-	@Override
-	public Vector3f normalInHitPoint() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

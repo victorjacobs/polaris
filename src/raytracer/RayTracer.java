@@ -34,6 +34,7 @@ public class RayTracer {
 		// Go over all Surfaces and paint them
 		Ray ray;
 		Color surfaceColor;
+		Hit hit;
 		float lowestT = Float.POSITIVE_INFINITY;
 		
 		for (int x = 1; x < panel.getWidth(); x++) {
@@ -42,7 +43,9 @@ public class RayTracer {
 				
 				for (Surface surf : surfaces) {
 					surfaceColor = surf.getColor();
-					if (surf.hit(ray, 0, lowestT)) {
+					hit = surf.hit(ray, 0, lowestT);
+					
+					if (hit != null) {
 						// Shading, maybe refactor to own method
 						float dotProduct;
 						float sumR;
@@ -53,7 +56,7 @@ public class RayTracer {
 						}
 						
 						panel.drawPixel(x, y, surfaceColor.getRed() / 255, surfaceColor.getGreen() / 255, surfaceColor.getBlue() / 255);
-						lowestT = surf.getCurrentT();
+						lowestT = hit.getT();
 					}
 				}
 				// Reset t for next pixel

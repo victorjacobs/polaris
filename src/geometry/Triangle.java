@@ -2,6 +2,7 @@ package geometry;
 
 import java.awt.Color;
 
+import raytracer.Hit;
 import raytracer.Ray;
 
 public class Triangle implements Surface {
@@ -11,8 +12,6 @@ public class Triangle implements Surface {
 	private Vertex v2;
 	private Vertex v3;
 	private Color fillColor;
-	private float currentT;
-	private Vector3f normalInHitPoint;
 	
 	// If single triangle, not in collection
 	public Triangle(Vector3f v1, Vector3f v2, Vector3f v3, Color fillColor) {
@@ -46,7 +45,7 @@ public class Triangle implements Surface {
 	
 	// TODO: eventueel volgorde veranderen voor optimalere berekening, zie p79
 	@Override
-	public boolean hit(Ray ray, float t0, float t1) {
+	public Hit hit(Ray ray, float t0, float t1) {
 		
 		float a = v1.getPoint().x - v2.getPoint().x;
 		float b = v1.getPoint().y - v2.getPoint().y;
@@ -79,20 +78,16 @@ public class Triangle implements Surface {
 		// t
 		float t = - (f * G1 + e * G2 + d * G3) / M;
 		
-		if (t < t0 || t > t1) return false;
-		if (gamma < 0 || gamma > 1) return false;
-		if (beta < 0 || beta > 1 - gamma) return false;
-		
-		this.currentT = t;
+		if (t < t0 || t > t1) return null;
+		if (gamma < 0 || gamma > 1) return null;
+		if (beta < 0 || beta > 1 - gamma) return null;
 		
 		// Calculate normal vector on point of hit via barycentric coordinates, calculated  above (v1 is a)
 		float alpha = 1 - beta - gamma;
 		
 		Vector3f interpolatedNormal = v1.getNormal().multiply(alpha).sum(v2.getNormal().multiply(beta).sum(v3.getNormal().multiply(gamma)));
 		
-		this.normalInHitPoint = interpolatedNormal;
-		
-		return true;
+		return new Hit(null, interpolatedNormal, t);
 	}
 
 	@Override
@@ -104,16 +99,6 @@ public class Triangle implements Surface {
 	@Override
 	public Color getColor() {
 		return this.fillColor;
-	}
-
-	@Override
-	public float getCurrentT() {
-		return currentT;
-	}
-
-	@Override
-	public Vector3f normalInHitPoint() {
-		return this.normalInHitPoint;
 	}
 
 }
