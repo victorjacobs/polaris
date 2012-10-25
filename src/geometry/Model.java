@@ -104,7 +104,7 @@ public class Model implements Surface {
 					
 					// Triangle
 					// TODO: color
-					triag = new Triangle(v1, v2, v3, Color.GREEN);
+					triag = new Triangle(v1, v2, v3, Color.WHITE);
 				}
 				
 				
@@ -139,7 +139,7 @@ public class Model implements Surface {
 
 	@Override
 	public Color getColor() {
-		return Color.GREEN;
+		return Color.WHITE;
 	}
 	
 	public void move(float x, float y, float z) {

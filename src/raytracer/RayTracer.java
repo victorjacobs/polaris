@@ -48,14 +48,19 @@ public class RayTracer {
 					if (hit != null) {
 						// Shading, maybe refactor to own method
 						float dotProduct;
-						float sumR;
+						float sumR = 0;
+						float sumG = 0;
+						float sumB = 0;
 						
-						
+						// TODO this won't work if sums go above 1
 						for (PointLight light : lightSources) {
-							//dotProduct = Math.max(0, surf.normalInHitPoint().dotProduct(light.));
+							dotProduct = Math.max(0, hit.getNormal().dotProduct(light.rayTo(hit.getPoint()).normalize()));
+							sumR += surfaceColor.getRed() / 255 * (0.1f + light.color().getRed() / 255 * dotProduct);
+							sumG += surfaceColor.getGreen() / 255 * (0.1f + light.color().getGreen() / 255 * dotProduct);
+							sumB += surfaceColor.getBlue() / 255 * (0.1f + light.color().getBlue() / 255 * dotProduct);
 						}
 						
-						panel.drawPixel(x, y, surfaceColor.getRed() / 255, surfaceColor.getGreen() / 255, surfaceColor.getBlue() / 255);
+						panel.drawPixel(x, y, sumR, sumG, sumB);
 						lowestT = hit.getT();
 					}
 				}

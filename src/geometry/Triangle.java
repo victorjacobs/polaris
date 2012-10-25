@@ -87,7 +87,10 @@ public class Triangle implements Surface {
 		
 		Vector3f interpolatedNormal = v1.getNormal().multiply(alpha).sum(v2.getNormal().multiply(beta).sum(v3.getNormal().multiply(gamma)));
 		
-		return new Hit(null, interpolatedNormal, t);
+		// Calculate in what point the hit occured
+		Vector3f where = ray.getCamera().getPosition().sum(ray.getDirection().multiply(t));
+		
+		return new Hit(where, interpolatedNormal.normalize(), t);
 	}
 
 	@Override
