@@ -59,4 +59,10 @@ public class Sphere implements Surface {
 		return this.currentT;
 	}
 
+	@Override
+	public Vector3f normalInHitPoint() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -43,7 +43,7 @@ public class RayTracer {
 				for (Surface surf : surfaces) {
 					surfaceColor = surf.getColor();
 					if (surf.hit(ray, 0, lowestT)) {
-						// Shading
+						// Shading, maybe refactor to own method
 						
 						panel.drawPixel(x, y, surfaceColor.getRed() / 255, surfaceColor.getGreen() / 255, surfaceColor.getBlue() / 255);
 						lowestT = surf.getCurrentT();

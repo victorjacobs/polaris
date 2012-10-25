@@ -12,6 +12,7 @@ public class Triangle implements Surface {
 	private Vertex v3;
 	private Color fillColor;
 	private float currentT;
+	private Vector3f normalInHitPoint;
 	
 	// If single triangle, not in collection
 	public Triangle(Vector3f v1, Vector3f v2, Vector3f v3, Color fillColor) {
@@ -83,7 +84,14 @@ public class Triangle implements Surface {
 		if (beta < 0 || beta > 1 - gamma) return false;
 		
 		this.currentT = t;
-				
+		
+		// Calculate normal vector on point of hit via barycentric coordinates, calculated  above (v1 is a)
+		float alpha = 1 - beta - gamma;
+		
+		Vector3f interpolatedNormal = v1.getNormal().multiply(alpha).sum(v2.getNormal().multiply(beta).sum(v3.getNormal().multiply(gamma)));
+		
+		this.normalInHitPoint = interpolatedNormal;
+		
 		return true;
 	}
 
@@ -101,6 +109,11 @@ public class Triangle implements Surface {
 	@Override
 	public float getCurrentT() {
 		return currentT;
+	}
+
+	@Override
+	public Vector3f normalInHitPoint() {
+		return this.normalInHitPoint;
 	}
 
 }

@@ -22,6 +22,8 @@ public class Model implements Surface {
 	private ArrayList<Vector3f> normalVectors;
 	private ArrayList<Triangle> triangles;
 	
+	private Vector3f normalInHitPoint;
+	
 	private enum DataTags {
 		V, VT, VN, F
 	}
@@ -121,7 +123,10 @@ public class Model implements Surface {
 	@Override
 	public boolean hit(Ray ray, float t0, float t1) {
 		for (Triangle triag : triangles) {
-			if (triag.hit(ray, t0, t1)) return true;
+			if (triag.hit(ray, t0, t1)) {
+				this.normalInHitPoint = triag.normalInHitPoint();
+				return true;
+			}
 		}
 		
 		return false;
@@ -146,5 +151,10 @@ public class Model implements Surface {
 	
 	public void move(float x, float y, float z) {
 		
+	}
+
+	@Override
+	public Vector3f normalInHitPoint() {
+		return this.normalInHitPoint;
 	}
 }
