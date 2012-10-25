@@ -20,7 +20,7 @@ public class Run {
 		// TODO: entire axis system is in reverse!
 		Camera camera = new Camera(new Vector3f(5, 5, 5), new Vector3f(-5, -5, -5), new Vector3f(0, -1, 0), 5);
 		RayTracer rayTracer = new RayTracer(panel, camera);
-		PointLight light1 = new PointLight(new Vector3f(5, 5, 5));
+		PointLight light1 = new PointLight(new Vector3f(10, 0, 5));
 		rayTracer.addLightSource(light1);
 		
 		// Fancy driehoek, non overlapping
@@ -53,7 +53,7 @@ public class Run {
 //		rayTracer.addSurface(sphere);
 		
 		// Load object from file
-		Model cylinder = new Model("data/teapot.obj");
+		Model cylinder = new Model("data/sphere.obj");
 		rayTracer.addSurface(cylinder);
 		
 		rayTracer.trace();
