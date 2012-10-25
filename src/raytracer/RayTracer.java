@@ -44,6 +44,13 @@ public class RayTracer {
 					surfaceColor = surf.getColor();
 					if (surf.hit(ray, 0, lowestT)) {
 						// Shading, maybe refactor to own method
+						float dotProduct;
+						float sumR;
+						
+						
+						for (PointLight light : lightSources) {
+							//dotProduct = Math.max(0, surf.normalInHitPoint().dotProduct(light.));
+						}
 						
 						panel.drawPixel(x, y, surfaceColor.getRed() / 255, surfaceColor.getGreen() / 255, surfaceColor.getBlue() / 255);
 						lowestT = surf.getCurrentT();
