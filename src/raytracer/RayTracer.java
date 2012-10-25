@@ -35,6 +35,11 @@ public class RayTracer {
 		Ray ray;
 		Color surfaceColor;
 		Hit hit;
+		float dotProduct;
+		float sumR = 0;
+		float sumG = 0;
+		float sumB = 0;
+		
 		float lowestT = Float.POSITIVE_INFINITY;
 		
 		long start = System.currentTimeMillis();
@@ -49,10 +54,9 @@ public class RayTracer {
 					
 					if (hit != null) {
 						// Shading, maybe refactor to own method
-						float dotProduct;
-						float sumR = 0;
-						float sumG = 0;
-						float sumB = 0;
+						sumR = 0;
+						sumG = 0;
+						sumB = 0;
 						
 						// TODO: p84 paragraph 4.5.4
 						for (PointLight light : lightSources) {
@@ -61,8 +65,9 @@ public class RayTracer {
 							sumG += surfaceColor.getGreen() / 255 * (0.1f + light.color().getGreen() / 255 * dotProduct);
 							sumB += surfaceColor.getBlue() / 255 * (0.1f + light.color().getBlue() / 255 * dotProduct);
 						}
-						
+						// Paint pixel
 						panel.drawPixel(x, y, Math.min(1, sumR), Math.min(1, sumG), Math.min(1, sumB));
+						
 						lowestT = hit.getT();
 					}
 				}
