@@ -1,8 +1,13 @@
-package raytracer;
+package scene.lighting;
 
-import geometry.Vector3f;
+
+
 
 import java.awt.Color;
+
+import scene.geometry.Vector3f;
+
+
 
 public class PointLight {
 	

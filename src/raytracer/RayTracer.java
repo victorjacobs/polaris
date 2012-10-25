@@ -1,9 +1,14 @@
 package raytracer;
-import geometry.Surface;
 import gui.CgPanel;
 
 import java.awt.Color;
 import java.util.HashSet;
+
+import scene.Camera;
+import scene.geometry.Surface;
+import scene.lighting.PointLight;
+
+
 
 // TODO werken met een Scene object ipv alles hier apart toe te voegen
 public class RayTracer {

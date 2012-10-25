@@ -1,4 +1,4 @@
-package geometry;
+package scene.geometry;
 /**
  * A generic 3-element tuple that is represented by
  * single precision-floating point x,y,z coordinates.

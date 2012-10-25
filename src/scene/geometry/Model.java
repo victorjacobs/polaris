@@ -1,4 +1,4 @@
-package geometry;
+package scene.geometry;
 
 import java.awt.Color;
 import java.io.BufferedReader;

@@ -1,11 +1,11 @@
 package test;
 import static org.junit.Assert.assertEquals;
-import geometry.Vector3f;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import raytracer.Camera;
+import scene.Camera;
+import scene.geometry.Vector3f;
 
 
 public class CameraTest {

@@ -1,12 +1,12 @@
-import geometry.Model;
-import geometry.Vector3f;
 import gui.CgPanel;
 
 import javax.swing.JFrame;
 
-import raytracer.Camera;
-import raytracer.PointLight;
 import raytracer.RayTracer;
+import scene.Camera;
+import scene.geometry.Model;
+import scene.geometry.Vector3f;
+import scene.lighting.PointLight;
 
 
 public class Run {

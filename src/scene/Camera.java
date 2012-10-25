@@ -1,5 +1,5 @@
-package raytracer;
-import geometry.Vector3f;
+package scene;
+import scene.geometry.Vector3f;
 
 
 public class Camera {

@@ -1,5 +1,6 @@
 package raytracer;
-import geometry.Vector3f;
+import scene.Camera;
+import scene.geometry.Vector3f;
 
 /**
  * Class representing a ray

@@ -1,4 +1,4 @@
-package geometry;
+package scene.geometry;
 
 /**
  * Class representing a vertex, this means: a point + normal vector in point + texture vector in point
