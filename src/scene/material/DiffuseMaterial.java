@@ -1,5 +1,5 @@
 package scene.material;
 
-public class DiffuseMaterial {
+public class DiffuseMaterial implements Material {
 
 }

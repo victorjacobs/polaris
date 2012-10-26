@@ -7,6 +7,7 @@ public class Camera {
 	private Vector3f up;
 	private Vector3f position;
 	private float distanceToScreen;
+	private float FOV;
 
 	public Camera(Vector3f position, Vector3f gaze, Vector3f up, float distanceToScreen) {
 		setPosition(position);

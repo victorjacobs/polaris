@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 import raytracer.RayTracer;
 import scene.Camera;
+import scene.Scene;
 import scene.geometry.Model;
 import scene.geometry.Vector3f;
 import scene.lighting.PointLight;
@@ -18,10 +19,14 @@ public class Run {
 		frame.setVisible(true);
 		
 		// TODO: entire axis system is in reverse!
-		Camera camera = new Camera(new Vector3f(5, 5, 5), new Vector3f(-5, -5, -5), new Vector3f(0, -1, 0), 5);
-		RayTracer rayTracer = new RayTracer(panel, camera);
+		Camera camera = new Camera(new Vector3f(5, 5, 5), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5);
 		PointLight light1 = new PointLight(new Vector3f(10, 0, 5));
-		rayTracer.addLightSource(light1);
+		
+		Scene scene = new Scene();
+		scene.setCamera(camera);
+		scene.addLightSource(light1);
+		
+		RayTracer rayTracer = new RayTracer(panel, scene);
 		
 		// Fancy driehoek, non overlapping
 //		Surface triag1 = new Triangle(5, 0, 10, 5, -7, -3, 5, 0, 0, Color.CYAN);
@@ -54,7 +59,7 @@ public class Run {
 		
 		// Load object from file
 		Model cylinder = new Model("data/sphere.obj");
-		rayTracer.addSurface(cylinder);
+		scene.addSurface(cylinder);
 		
 		rayTracer.trace();
 		

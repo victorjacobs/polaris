@@ -1,5 +1,5 @@
 package scene.material;
 
-public class PhongMaterial {
+public class PhongMaterial implements Material {
 
 }

@@ -1,5 +1,5 @@
 package scene.material;
 
-public class LinearCombinedMaterial {
+public class LinearCombinedMaterial implements Material {
 
 }
