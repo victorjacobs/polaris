@@ -6,11 +6,7 @@ import java.awt.Color;
 import scene.Scene;
 import scene.geometry.Surface;
 import scene.lighting.Light;
-import scene.lighting.PointLight;
 
-
-
-// TODO werken met een Scene object ipv alles hier apart toe te voegen
 public class RayTracer {
 	public static final int SCREEN_X = 640;
 	public static final int SCREEN_Y = 480;
@@ -64,7 +60,6 @@ public class RayTracer {
 					// TODO: p84 paragraph 4.5.4
 					for (Light light : scene.getLightSources()) {
 						// TODO Shadows: ray from hit point to light source
-						
 						
 						dotProduct = Math.max(0, closestHit.getNormal().dotProduct(light.rayTo(closestHit.getPoint()).normalize()));
 						sumR += surfaceColor.getRed() / 255 * (0.1f + (light.intensity() * light.color().getRed()) / 255 * dotProduct);
