@@ -3,6 +3,7 @@ import gui.CgPanel;
 
 import java.awt.Color;
 
+import scene.Camera;
 import scene.Scene;
 import scene.geometry.Surface;
 import scene.lighting.Light;
@@ -28,6 +29,7 @@ public class RayTracer {
 		float sumR = 0;
 		float sumG = 0;
 		float sumB = 0;
+		Camera cam = scene.getCamera();
 		
 		float lowestT = Float.POSITIVE_INFINITY;
 		Hit closestHit = null;
@@ -36,7 +38,7 @@ public class RayTracer {
 		
 		for (int x = 1; x < panel.getWidth(); x++) {
 			for (int y = 1; y < panel.getHeight(); y++) {
-				ray = new Ray(scene.getCamera(), x, y);
+				ray = cam.rayToPixel(x, y);
 				
 				for (Surface surf : scene.getSurfaces()) {
 					hit = surf.hit(ray, 0, lowestT);

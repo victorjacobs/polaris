@@ -64,9 +64,9 @@ public class Triangle implements Surface {
 		float g = ray.getDirection().x;
 		float h = ray.getDirection().y;
 		float i = ray.getDirection().z;
-		float j = v1.getPoint().x - ray.getCamera().getPosition().x;
-		float k = v1.getPoint().y - ray.getCamera().getPosition().y;
-		float l = v1.getPoint().z - ray.getCamera().getPosition().z;
+		float j = v1.getPoint().x - ray.getOrigin().x;
+		float k = v1.getPoint().y - ray.getOrigin().y;
+		float l = v1.getPoint().z - ray.getOrigin().z;
 		
 		// Compute M
 		float M1 = e * i - h * f;
@@ -96,7 +96,7 @@ public class Triangle implements Surface {
 		Vector3f interpolatedNormal = v1.getNormal().multiply(alpha).sum(v2.getNormal().multiply(beta).sum(v3.getNormal().multiply(gamma)));
 		
 		// Calculate in what point the hit occured
-		Vector3f where = ray.getCamera().getPosition().sum(ray.getDirection().multiply(t));
+		Vector3f where = ray.getOrigin().sum(ray.getDirection().multiply(t));
 		
 		return new Hit(this, where, interpolatedNormal.normalize(), t);
 	}

@@ -1,4 +1,6 @@
 package scene;
+import raytracer.Ray;
+import raytracer.RayTracer;
 import scene.geometry.Vector3f;
 
 
@@ -14,6 +16,26 @@ public class Camera {
 		setGaze(gaze);
 		setUp(up);
 		setDistanceToScreen(distanceToScreen);
+	}
+	
+	public Ray rayToPixel(int x, int y) {
+		// Generate direction
+		// NOTE: l, r, t, b hebben niets te maken met SCREEN!
+		float l = -2.6f;
+		float r = 2.6f;
+		float t = 2;
+		float b = -2;
+		
+		float u = l + ((r - l) * (x + 0.5f)) / RayTracer.SCREEN_X;
+		float v = b + ((t - b) * (y + 0.5f)) / RayTracer.SCREEN_Y;
+		
+		Vector3f direction1 = getW().multiply(getDistanceToScreen()).negate();
+		Vector3f direction2 = getU().multiply(u);
+		Vector3f direction3 = getV().multiply(v);
+		
+		Vector3f direction = direction1.sum(direction2.sum(direction3));
+		
+		return new Ray(position, direction);
 	}
 	
 	public Vector3f getW() {

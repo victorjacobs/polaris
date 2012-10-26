@@ -1,5 +1,4 @@
 package raytracer;
-import scene.Camera;
 import scene.geometry.Vector3f;
 
 /**
@@ -9,38 +8,16 @@ import scene.geometry.Vector3f;
  */
 public class Ray {
 	
-	private Camera camera;
-
+	private Vector3f origin;
 	private Vector3f direction;
-
-	public Ray(Camera cam, float x, float y) {
-		setCamera(cam);
-		
-		// Generate direction
-		// NOTE: l, r, t, b hebben niets te maken met SCREEN!
-		float l = -2.6f;
-		float r = 2.6f;
-		float t = 2;
-		float b = -2;
-		
-		float u = l + ((r - l) * (x + 0.5f)) / RayTracer.SCREEN_X;
-		float v = b + ((t - b) * (y + 0.5f)) / RayTracer.SCREEN_Y;
-		
-		Vector3f direction1 = getCamera().getW().multiply(getCamera().getDistanceToScreen()).negate();
-		Vector3f direction2 = getCamera().getU().multiply(u);
-		Vector3f direction3 = getCamera().getV().multiply(v);
-		
-		Vector3f direction = direction1.sum(direction2.sum(direction3));
-		
-		setDirection(direction);
+	
+	public Ray(Vector3f origin, Vector3f direction) {
+		this.origin = origin;
+		this.direction = direction;
 	}
 	
-	public Camera getCamera() {
-		return camera;
-	}
-
-	public void setCamera(Camera camera) {
-		this.camera = camera;
+	public Vector3f getOrigin() {
+		return origin;
 	}
 	
 	public Vector3f getDirection() {
