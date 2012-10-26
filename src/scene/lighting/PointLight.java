@@ -1,6 +1,6 @@
 package scene.lighting;
 
-import java.awt.Color;
+import scene.material.Color;
 import scene.geometry.Vector3f;
 
 public class PointLight implements Light {
@@ -11,7 +11,7 @@ public class PointLight implements Light {
 	
 	public PointLight(Vector3f position) {
 		this.position = position;
-		this.color = Color.WHITE;
+		this.color = new Color(1, 1, 1);
 		this.intensity = 0.5f;
 	}
 	

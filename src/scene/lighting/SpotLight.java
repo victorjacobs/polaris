@@ -1,6 +1,6 @@
 package scene.lighting;
 
-import java.awt.Color;
+import scene.material.Color;
 
 import scene.geometry.Vector3f;
 

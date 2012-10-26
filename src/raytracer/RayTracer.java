@@ -1,12 +1,11 @@
 package raytracer;
 import gui.CgPanel;
 
-import java.awt.Color;
+import scene.material.Color;
 
 import scene.Camera;
 import scene.Scene;
 import scene.geometry.Surface;
-import scene.lighting.Light;
 
 public class RayTracer {
 	public static final int SCREEN_X = 640;
@@ -21,23 +20,19 @@ public class RayTracer {
 	}
 	
 	public void trace() {
-		// Go over all Surfaces and paint them
 		Ray ray;
-		Color surfaceColor;
-		Hit hit;
-		float dotProduct;
-		float sumR = 0;
-		float sumG = 0;
-		float sumB = 0;
+		Hit hit, closestHit = null;
 		Camera cam = scene.getCamera();
 		
-		float lowestT = Float.POSITIVE_INFINITY;
-		Hit closestHit = null;
+		float lowestT;
 		
 		long start = System.currentTimeMillis();
 		
 		for (int x = 1; x < panel.getWidth(); x++) {
 			for (int y = 1; y < panel.getHeight(); y++) {
+				// Reset t for next pixel
+				lowestT = Float.POSITIVE_INFINITY;
+				
 				ray = cam.rayToPixel(x, y);
 				
 				for (Surface surf : scene.getSurfaces()) {
@@ -52,29 +47,14 @@ public class RayTracer {
 				// Do shading and color pixel
 				
 				if (closestHit != null) {
-					surfaceColor = closestHit.getSurface().getMaterial().getColor();
-					
-					// Shading, TODO refactor to own method
-					sumR = 0;
-					sumG = 0;
-					sumB = 0;
-					
-					// TODO: p84 paragraph 4.5.4
-					for (Light light : scene.getLightSources()) {
-						// TODO Shadows: ray from hit point to light source
-						
-						dotProduct = Math.max(0, closestHit.getNormal().dotProduct(light.rayTo(closestHit.getPoint()).normalize()));
-						sumR += surfaceColor.getRed() / 255 * (0.1f + (light.intensity() * light.color().getRed()) / 255 * dotProduct);
-						sumG += surfaceColor.getGreen() / 255 * (0.1f + (light.intensity() * light.color().getGreen()) / 255 * dotProduct);
-						sumB += surfaceColor.getBlue() / 255 * (0.1f + (light.intensity() * light.color().getBlue()) / 255 * dotProduct);
-					}
+					Color pixelColor = closestHit.getSurface().getMaterial().getColor(scene.getLightSources(), closestHit);
+
 					// Paint pixel
-					panel.drawPixel(x, y, Math.min(1, sumR), Math.min(1, sumG), Math.min(1, sumB));
+					panel.drawPixel(x, y, pixelColor.getRed(), pixelColor.getGreen(), pixelColor.getBlue());
+					//System.out.println("Drawing on (" + x + ", " + y + "), color " + pixelColor);
+					
 					closestHit = null;
 				}
-				
-				// Reset t for next pixel
-				lowestT = Float.POSITIVE_INFINITY;
 			}
 		}
 		

@@ -1,6 +1,6 @@
 package scene.material;
 
-import java.awt.Color;
+import scene.material.Color;
 
 public class PhongMaterial extends DiffuseMaterial {
 
