@@ -1,5 +1,7 @@
 import gui.CgPanel;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 
 import raytracer.RayTracer;
@@ -8,6 +10,8 @@ import scene.Scene;
 import scene.geometry.Model;
 import scene.geometry.Vector3f;
 import scene.lighting.PointLight;
+import scene.material.DiffuseMaterial;
+import scene.material.Material;
 
 
 public class Run {
@@ -58,7 +62,8 @@ public class Run {
 //		rayTracer.addSurface(sphere);
 		
 		// Load object from file
-		Model cylinder = new Model("data/sphere.obj");
+		Material mat = new DiffuseMaterial(Color.WHITE);
+		Model cylinder = new Model("data/sphere.obj", mat);
 		scene.addSurface(cylinder);
 		
 		rayTracer.trace();

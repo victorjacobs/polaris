@@ -1,5 +1,7 @@
 package scene.material;
 
-public interface Material {
+import java.awt.Color;
 
+public interface Material {
+	public Color getColor();
 }

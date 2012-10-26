@@ -1,9 +1,8 @@
 package scene.geometry;
 
-import java.awt.Color;
-
 import raytracer.Hit;
 import raytracer.Ray;
+import scene.material.Material;
 
 public class Triangle implements Surface {
 	
@@ -11,10 +10,10 @@ public class Triangle implements Surface {
 	private Vertex v1;
 	private Vertex v2;
 	private Vertex v3;
-	private Color fillColor;
+	private Material material;
 	
 	// If single triangle, not in collection
-	public Triangle(Vector3f v1, Vector3f v2, Vector3f v3, Color fillColor) {
+	public Triangle(Vector3f v1, Vector3f v2, Vector3f v3, Material mat) {
 		// Calculate normal vector for triangle and store in vertices
 		Vector3f U = v2.minus(v1);
 		Vector3f V = v3.minus(v1);
@@ -28,20 +27,29 @@ public class Triangle implements Surface {
 		this.v1 = vert1;
 		this.v2 = vert2;
 		this.v3 = vert3;
-		this.fillColor = fillColor;
+		this.material = mat;
+	}
+	
+	public Triangle(Vector3f v1, Vector3f v2, Vector3f v3) {
+		this(v1, v2, v3, null);
 	}
 	
 	// Triangle made out of vertices that have normal vectors 
-	public Triangle(Vertex v1, Vertex v2, Vertex v3, Color fillColor) {
+	public Triangle(Vertex v1, Vertex v2, Vertex v3, Material mat) {
 		this.v1 = v1;
 		this.v2 = v2;
 		this.v3 = v3;
-		this.fillColor = fillColor;
+		this.material = mat;
 	}
 	
-	public Triangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, Color fillColor) {
-		this(new Vector3f(x1, y1, z1), new Vector3f(x2, y2, z2), new Vector3f(x3, y3, z3), fillColor);
+	public Triangle(Vertex v1, Vertex v2, Vertex v3) {
+		this(v1, v2, v3, null);
 	}
+	
+	public Triangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, Material mat) {
+		this(new Vector3f(x1, y1, z1), new Vector3f(x2, y2, z2), new Vector3f(x3, y3, z3), mat);
+	}
+	
 	
 	// TODO: eventueel volgorde veranderen voor optimalere berekening, zie p79
 	@Override
@@ -100,8 +108,14 @@ public class Triangle implements Surface {
 	}
 
 	@Override
-	public Color getColor() {
-		return this.fillColor;
+	public Material getMaterial() {
+		return this.material;
+	}
+
+	@Override
+	public void setMaterial(Material mat) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

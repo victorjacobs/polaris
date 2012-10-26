@@ -1,6 +1,5 @@
 package scene.geometry;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,6 +10,7 @@ import java.util.ArrayList;
 
 import raytracer.Hit;
 import raytracer.Ray;
+import scene.material.Material;
 
 /**
  * Class that represents a model made up out of a number of triangles
@@ -22,19 +22,21 @@ public class Model implements Surface {
 	private ArrayList<Vector3f> points;
 	private ArrayList<Vector3f> normalVectors;
 	private ArrayList<Triangle> triangles;
+	private Material material;
 	
 	private enum DataTags {
 		V, VT, VN, F
 	}
 	
 	// TODO eventueel parser uit halen en ergens anders zetten
-	public Model(String fileName) {
+	public Model(String fileName, Material mat) {
 		System.out.println("Loading model from file " + fileName);
 		points = new ArrayList<Vector3f>();
 		normalVectors = new ArrayList<Vector3f>();
 		triangles = new ArrayList<Triangle>();
 		
 		parseFile(fileName);
+		this.material = mat;
 	}
 	
 	private void parseFile(String fileName) {
@@ -63,6 +65,7 @@ public class Model implements Surface {
 	}
 	
 	// TODO: now we assume that all planes are triangles
+	// NOTE: when creating triangles, set material to null, keep the material stored here
 	private void parseLine(String line) {
 		String[] lineTokenized = line.split(" ");
 		
@@ -92,7 +95,7 @@ public class Model implements Surface {
 				Triangle triag;
 				
 				if (indices.length == 1) {
-					triag = new Triangle(points.get(Integer.parseInt(indices[0]) - 1), points.get(Integer.parseInt(indices[0]) - 1), points.get(Integer.parseInt(indices[0]) - 1), Color.GREEN);
+					triag = new Triangle(points.get(Integer.parseInt(indices[0]) - 1), points.get(Integer.parseInt(indices[0]) - 1), points.get(Integer.parseInt(indices[0]) - 1), material);
 				} else {
 					Vertex v1 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
 					
@@ -104,7 +107,7 @@ public class Model implements Surface {
 					
 					// Triangle
 					// TODO: color
-					triag = new Triangle(v1, v2, v3, Color.WHITE);
+					triag = new Triangle(v1, v2, v3, material);
 				}
 				
 				
@@ -134,7 +137,14 @@ public class Model implements Surface {
 			}
 		}
 		
-		return hit;
+		// Don't just return the hit gotten from one of the triangles, change the surface in Hit to the model
+		// NIet heel mooi maar bon
+		
+		if (hit == null) {
+			return null;
+		} else {
+			return new Hit(this, hit.getPoint(), hit.getNormal(), hit.getT());
+		}
 	}
 
 	@Override
@@ -144,8 +154,13 @@ public class Model implements Surface {
 	}
 
 	@Override
-	public Color getColor() {
-		return Color.WHITE;
+	public Material getMaterial() {
+		return this.material;
+	}
+	
+	@Override
+	public void setMaterial(Material mat) {
+		this.material = mat;
 	}
 	
 	public void move(float x, float y, float z) {

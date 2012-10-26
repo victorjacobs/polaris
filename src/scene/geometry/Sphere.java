@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import raytracer.Hit;
 import raytracer.Ray;
+import scene.material.Material;
 
 public class Sphere implements Surface {
 	
@@ -56,8 +57,14 @@ public class Sphere implements Surface {
 	}
 
 	@Override
-	public Color getColor() {
-		return fillColor;
+	public Material getMaterial() {
+		return null;
+	}
+
+	@Override
+	public void setMaterial(Material mat) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

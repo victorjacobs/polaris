@@ -54,7 +54,7 @@ public class RayTracer {
 				// Do shading and color pixel
 				
 				if (closestHit != null) {
-					surfaceColor = closestHit.getSurface().getColor();
+					surfaceColor = closestHit.getSurface().getMaterial().getColor();
 					
 					// Shading, TODO refactor to own method
 					sumR = 0;
