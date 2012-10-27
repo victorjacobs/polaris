@@ -5,12 +5,13 @@ import javax.swing.JFrame;
 
 import scene.Camera;
 import scene.Scene;
-import scene.geometry.Model;
+import scene.geometry.Sphere;
+import scene.geometry.Surface;
 import scene.geometry.Vector3f;
 import scene.lighting.PointLight;
 import scene.material.Color;
+import scene.material.DiffuseMaterial;
 import scene.material.Material;
-import scene.material.PhongMaterial;
 
 
 public class Run {
@@ -22,7 +23,7 @@ public class Run {
 		frame.setVisible(true);
 		
 		Camera camera = new Camera(new Vector3f(5, 5, 5), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
-		PointLight light1 = new PointLight(new Vector3f(0, 10, 5));
+		PointLight light1 = new PointLight(new Vector3f(10, -10, 15));
 		
 		Scene scene = new Scene();
 		scene.setCamera(camera);
@@ -30,43 +31,14 @@ public class Run {
 		
 		Renderer renderer = new Renderer(scene, panel);
 		
-		// Fancy driehoek, non overlapping
-//		Surface triag1 = new Triangle(5, 0, 10, 5, -7, -3, 5, 0, 0, Color.CYAN);
-//		Surface triag2 = new Triangle(5, 0, 10, 5, 7, -3, 5, 0, 0, Color.RED);
-//		Surface triag3 = new Triangle(5, 0, 0, 5, -7, -3, 5, 7, -3, Color.BLUE);
-//		
-//		rayTracer.addSurface(triag1);
-//		rayTracer.addSurface(triag2);
-//		rayTracer.addSurface(triag3);
-		
-		// Driehoeken, overlapping
-//		Surface triag1 = new Triangle(5, 0, 10, 5, 5, 0, 5, -5, 0, Color.BLUE);
-//		Surface triag2 = new Triangle(3, 0, 2, 3, 3, 0, 3, -3, 0, Color.GREEN);
-//		
-//		rayTracer.addSurface(triag1);
-//		rayTracer.addSurface(triag2);
-		
-		// Sphere, overlapping
-		// TODO als rand overlapt met andere bol
-//		Surface sphere1 = new Sphere(new Vector3f(1, 5, 10), 1, Color.GREEN);
-//		Surface sphere2 = new Sphere(new Vector3f(2, 0, 100), 3, Color.YELLOW);
-//		
-//		rayTracer.addSurface(sphere1);
-//		rayTracer.addSurface(sphere2);
-		
-		// Enkele sphere
-//		Surface sphere = new Sphere(new Vector3f(0, 0, 10), 1, new Color(0, 1, 0));
-//		scene.addSurface(sphere);
-//		
-//		rayTracer.addSurface(sphere);
-		
 		// Load object from file
-		Material mat = new PhongMaterial(new Color(1, 1, 1), 100);
-		Model cylinder = new Model("data/venus.obj", mat);
-		scene.addSurface(cylinder);
+		Material mat = new DiffuseMaterial(new Color(1, 1, 1));
+		Surface sphere = new Sphere(new Vector3f(0, 0, 0), 1, mat);
+		Surface sphere2 = new Sphere(new Vector3f(2, 0, 0), 1, mat);
+		scene.addSurface(sphere);
+		scene.addSurface(sphere2);
 		
 		renderer.render(16);
 		
-		//panel.repaint();
 	}
 }

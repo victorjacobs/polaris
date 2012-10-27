@@ -8,10 +8,12 @@ public class Sphere implements Surface {
 	
 	private Vector3f center;
 	private float radius;
+	private Material material;
 	
-	public Sphere(Vector3f center, float radius) {
+	public Sphere(Vector3f center, float radius, Material mat) {
 		this.center = center;
 		this.radius = radius;
+		this.material = mat;
 	}
 
 	@Override
@@ -27,13 +29,13 @@ public class Sphere implements Surface {
 		if (disc < 0) return null;
 		
 		// t berekenen voor z buffering
-		float tPlus = (ray.getDirection().negate().dotProduct(C1) + disc) / ray.getDirection().dotProduct(ray.getDirection());
-		float tMin = (ray.getDirection().negate().dotProduct(C1) - disc) / ray.getDirection().dotProduct(ray.getDirection());
+		float tPlus = (ray.getDirection().negate().dotProduct(C1) + (float)Math.sqrt(disc)) / ray.getDirection().dotProduct(ray.getDirection());
+		float tMin = (ray.getDirection().negate().dotProduct(C1) - (float)Math.sqrt(disc)) / ray.getDirection().dotProduct(ray.getDirection());
 		
-		System.out.println("tPlus: " + tPlus + " tMin: " + tMin);
+		//System.out.println("tPlus: " + tPlus + " tMin: " + tMin);
 		
-		//float t = Math.min(tPlus, tMin);
-		float t = Math.abs(Math.min(tPlus, tMin));
+		float t = Math.min(tPlus, tMin);
+		//float t = Math.abs(Math.min(tPlus, tMin));
 		
 		if (t < t0 || t > t1) return null;
 		
@@ -41,7 +43,7 @@ public class Sphere implements Surface {
 		Vector3f where = ray.getOrigin().sum(ray.getDirection().multiply(t));
 		
 		// Normal vector TODO ofwel omgekeerd
-		Vector3f normal = center.minus(where);
+		Vector3f normal = where.minus(center);
 		
 		return new Hit(ray, this, where, normal, tPlus);
 	}
@@ -54,13 +56,12 @@ public class Sphere implements Surface {
 
 	@Override
 	public Material getMaterial() {
-		return null;
+		return this.material;
 	}
 
 	@Override
 	public void setMaterial(Material mat) {
-		// TODO Auto-generated method stub
-		
+		this.material = mat;
 	}
 
 }

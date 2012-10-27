@@ -34,8 +34,8 @@ public class Renderer {
 		Hit hit;
 		
 		// x and y are in the middle of the area that's being painted
-		for (int x = 0; x < panel.getWidth(); x += depth) {
-			for (int y = 0; y < panel.getHeight(); y += depth) {
+		for (int x = 1; x < panel.getWidth(); x += depth) {
+			for (int y = 1; y < panel.getHeight(); y += depth) {
 				if (cache[x][y]) {
 					// Pixel in the middle has right color
 					//break;
