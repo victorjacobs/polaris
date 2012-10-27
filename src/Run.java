@@ -23,7 +23,7 @@ public class Run {
 		frame.setVisible(true);
 		
 		Camera camera = new Camera(new Vector3f(10, 10, 10), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
-		PointLight light1 = new PointLight(new Vector3f(5, 10, 5));
+		PointLight light1 = new PointLight(new Vector3f(5, 0, 5));
 		
 		Scene scene = new Scene();
 		scene.setCamera(camera);
@@ -65,7 +65,7 @@ public class Run {
 		Model cylinder = new Model("data/venus.obj", mat);
 		scene.addSurface(cylinder);
 		
-		rayTracer.trace(1);
+		rayTracer.trace(16);
 		
 		//panel.repaint();
 	}

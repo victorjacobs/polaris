@@ -26,6 +26,7 @@ public class DiffuseMaterial implements Material {
 		// TODO: p84 paragraph 4.5.4
 		for (Light light : lights) {
 			// TODO Shadows: ray from hit point to light source
+			// TODO move ambient lighting somewhere else
 			
 			dotProduct = Math.max(0, hit.getNormal().dotProduct(light.rayTo(hit.getPoint()).normalize()));
 			sumR += baseColor.getRed() * (0.1f + (light.intensity() * light.color().getRed()) * dotProduct);
