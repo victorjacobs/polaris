@@ -9,8 +9,8 @@ import scene.geometry.Model;
 import scene.geometry.Vector3f;
 import scene.lighting.PointLight;
 import scene.material.Color;
+import scene.material.DiffuseMaterial;
 import scene.material.Material;
-import scene.material.PhongMaterial;
 
 
 public class Run {
@@ -21,8 +21,7 @@ public class Run {
 		frame.getContentPane().add(panel);
 		frame.setVisible(true);
 		
-		// TODO: entire axis system is in reverse!
-		Camera camera = new Camera(new Vector3f(5, 5, 5), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5);
+		Camera camera = new Camera(new Vector3f(5, 5, 5), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
 		PointLight light1 = new PointLight(new Vector3f(10, 0, 5));
 		
 		Scene scene = new Scene();
@@ -61,12 +60,12 @@ public class Run {
 //		rayTracer.addSurface(sphere);
 		
 		// Load object from file
-		Material mat = new PhongMaterial(new Color(1, 1, 1));
+		Material mat = new DiffuseMaterial(new Color(1, 1, 1));
 		Model cylinder = new Model("data/sphere.obj", mat);
 		scene.addSurface(cylinder);
 		
-		rayTracer.trace();
+		rayTracer.trace(8);
 		
-		panel.repaint();
+		//panel.repaint();
 	}
 }

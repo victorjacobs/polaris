@@ -19,17 +19,25 @@ public class RayTracer {
 		this.scene = scene;
 	}
 	
-	public void trace() {
+	public void trace(int depth) {
+		long start = System.currentTimeMillis();
+		
+		traceRecursiveStep(depth);
+		
+		long stop = System.currentTimeMillis();
+		
+		System.out.println("Render completed in " + Math.round((stop - start) / 1000) + "s");
+	}
+	
+	public void traceRecursiveStep(int depth) {
 		Ray ray;
 		Hit hit, closestHit = null;
 		Camera cam = scene.getCamera();
 		
 		float lowestT;
 		
-		long start = System.currentTimeMillis();
-		
-		for (int x = 1; x < panel.getWidth(); x++) {
-			for (int y = 1; y < panel.getHeight(); y++) {
+		for (int x = 1; x < panel.getWidth(); x += depth) {
+			for (int y = 1; y < panel.getHeight(); y += depth) {
 				// Reset t for next pixel
 				lowestT = Float.POSITIVE_INFINITY;
 				
@@ -45,21 +53,31 @@ public class RayTracer {
 				}
 				
 				// Do shading and color pixel
-				
-				if (closestHit != null) {
-					Color pixelColor = closestHit.getSurface().getMaterial().getColor(scene.getLightSources(), closestHit);
-
-					// Paint pixel
-					panel.drawPixel(x, y, pixelColor.getRed(), pixelColor.getGreen(), pixelColor.getBlue());
-					
-					closestHit = null;
+				Color pixelColor;
+				if (closestHit == null) {
+					pixelColor = new Color(0, 0, 0);
+				} else {
+					pixelColor = closestHit.getSurface().getMaterial().getColor(scene.getLightSources(), closestHit);
 				}
+				
+				
+				// Paint pixel
+				// TODO cache pixels
+				
+				for (int i = x; i < x + depth; i++) {
+					for (int j = y; j < y + depth; j++) {
+						panel.drawPixel(i, j, pixelColor.getRed(), pixelColor.getGreen(), pixelColor.getBlue());
+						panel.repaint();
+					}
+				}
+				
+				closestHit = null;
 			}
 		}
 		
-		long stop = System.currentTimeMillis();
+		if (depth == 1) return;
 		
-		System.out.println("Render completed in " + Math.round((stop - start) / 1000) + "s");
+		trace(depth / 2);
 	}
 	
 	

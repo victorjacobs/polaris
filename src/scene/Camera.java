@@ -11,20 +11,23 @@ public class Camera {
 	private float distanceToScreen;
 	private float FOV;
 
-	public Camera(Vector3f position, Vector3f gaze, Vector3f up, float distanceToScreen) {
+	public Camera(Vector3f position, Vector3f gaze, Vector3f up, float distanceToScreen, float FOV) {
 		setPosition(position);
 		setGaze(gaze);
 		setUp(up);
 		setDistanceToScreen(distanceToScreen);
+		setFOV(FOV);
 	}
 	
 	public Ray rayToPixel(int x, int y) {
 		// Generate direction
 		// NOTE: l, r, t, b hebben niets te maken met SCREEN!
-		float l = -2.6f;
-		float r = 2.6f;
-		float t = 2;
-		float b = -2;
+		float aspectRatio = (float)RayTracer.SCREEN_Y / RayTracer.SCREEN_X;
+		
+		float r = getDistanceToScreen() * (float) Math.tan(getFOV() / 2);
+		float l = -r;
+		float b = aspectRatio * r;	// TODO this isn't a real fix... ach wel.
+		float t = aspectRatio * l;
 		
 		float u = l + ((r - l) * (x + 0.5f)) / RayTracer.SCREEN_X;
 		float v = b + ((t - b) * (y + 0.5f)) / RayTracer.SCREEN_Y;
@@ -81,5 +84,13 @@ public class Camera {
 
 	public void setDistanceToScreen(float distanceToScreen) {
 		this.distanceToScreen = distanceToScreen;
+	}
+	
+	public float getFOV() {
+		return FOV;
+	}
+
+	public void setFOV(float FOV) {
+		this.FOV = FOV;
 	}
 }

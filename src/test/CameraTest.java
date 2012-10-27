@@ -14,7 +14,7 @@ public class CameraTest {
 	
 	@Before
 	public void setup() {
-		cam = new Camera(new Vector3f(-10, 0, 0), new Vector3f(1, 0, 0), new Vector3f(0, 0, 1), 10);
+		cam = new Camera(new Vector3f(-10, 0, 0), new Vector3f(1, 0, 0), new Vector3f(0, 0, 1), 10, 45);
 	}
 	
 	@Test
