@@ -14,7 +14,7 @@ public class Scene {
 	
 	public Scene(String file) {
 		// TODO Parse from file xml
-		super();
+		this();
 	}
 	
 	public Scene() {

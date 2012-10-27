@@ -1,15 +1,14 @@
 import gui.CgPanel;
+import gui.Renderer;
 
 import javax.swing.JFrame;
 
-import raytracer.RayTracer;
 import scene.Camera;
 import scene.Scene;
 import scene.geometry.Model;
 import scene.geometry.Vector3f;
 import scene.lighting.PointLight;
 import scene.material.Color;
-import scene.material.DiffuseMaterial;
 import scene.material.Material;
 import scene.material.PhongMaterial;
 
@@ -29,7 +28,7 @@ public class Run {
 		scene.setCamera(camera);
 		scene.addLightSource(light1);
 		
-		RayTracer rayTracer = new RayTracer(panel, scene);
+		Renderer renderer = new Renderer(scene, panel);
 		
 		// Fancy driehoek, non overlapping
 //		Surface triag1 = new Triangle(5, 0, 10, 5, -7, -3, 5, 0, 0, Color.CYAN);
@@ -65,7 +64,7 @@ public class Run {
 		Model cylinder = new Model("data/venus.obj", mat);
 		scene.addSurface(cylinder);
 		
-		rayTracer.trace(16);
+		renderer.render(16);
 		
 		//panel.repaint();
 	}
