@@ -9,11 +9,11 @@ import scene.lighting.Light;
 public class PhongMaterial extends DiffuseMaterial {
 
 	private Color phongColor = new Color(1, 1, 1);
-	private float phongExponent = 1000f;
+	private float phongExponent;
 	
-	public PhongMaterial(Color baseColor) {
+	public PhongMaterial(Color baseColor, float phongExponent) {
 		super(baseColor);
-		// TODO Auto-generated constructor stub
+		this.phongExponent = phongExponent;
 	}
 	
 	@Override
@@ -27,7 +27,8 @@ public class PhongMaterial extends DiffuseMaterial {
 		float sumB = 0;
 		
 		for (Light light : lights) {
-			halfVector = hit.getRay().getDirection().sum(light.rayTo(hit.getPoint())).normalize();
+			// Note: negate ray direction because we need viewing vector
+			halfVector = hit.getRay().getDirection().negate().sum(light.rayTo(hit.getPoint())).normalize();
 			
 			dotProduct = (float) Math.pow(Math.max(0, hit.getNormal().dotProduct(halfVector)), phongExponent);
 			
@@ -36,8 +37,7 @@ public class PhongMaterial extends DiffuseMaterial {
 			sumB += phongColor.getBlue() * light.intensity() * light.color().getBlue() * dotProduct;
 		}
 		
-		//return new Color(diffuseShading.getRed() + sumR, diffuseShading.getGreen() + sumG, diffuseShading.getBlue() + sumB);
-		return new Color(sumR, sumG, sumB);
+		return new Color(diffuseShading.getRed() + sumR, diffuseShading.getGreen() + sumG, diffuseShading.getBlue() + sumB);
 	}
 
 }
