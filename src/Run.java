@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 
 import scene.Camera;
 import scene.Scene;
+import scene.geometry.Model;
 import scene.geometry.Sphere;
 import scene.geometry.Surface;
 import scene.geometry.Vector3f;
@@ -12,6 +13,7 @@ import scene.lighting.PointLight;
 import scene.material.Color;
 import scene.material.DiffuseMaterial;
 import scene.material.Material;
+import scene.material.PhongMaterial;
 
 
 public class Run {
@@ -22,8 +24,9 @@ public class Run {
 		frame.getContentPane().add(panel);
 		frame.setVisible(true);
 		
-		Camera camera = new Camera(new Vector3f(5, 5, 5), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
-		PointLight light1 = new PointLight(new Vector3f(10, -10, 15));
+		Camera camera = new Camera(new Vector3f(2, 2, 2), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
+		PointLight light1 = new PointLight(new Vector3f(0, 2, 1));
+		//PointLight light1 = new PointLight(new Vector3f(0, 4, 0));
 		
 		Scene scene = new Scene();
 		scene.setCamera(camera);
@@ -33,12 +36,15 @@ public class Run {
 		
 		// Load object from file
 		Material mat = new DiffuseMaterial(new Color(1, 1, 1));
-		Surface sphere = new Sphere(new Vector3f(0, 0, 0), 1, mat);
-		Surface sphere2 = new Sphere(new Vector3f(2, 0, 0), 1, mat);
+		Material mat2 = new PhongMaterial(new Color(1, 1, 1), 100);
+		Surface plane = new Model("data/plane.obj", mat);
+		Surface sphere = new Sphere(new Vector3f(0, 1.1f, 0), 1f, mat);
+		Surface sphere2 = new Sphere(new Vector3f(0.5f, 0.5f, 0), 0.5f, mat);
 		scene.addSurface(sphere);
-		scene.addSurface(sphere2);
+		//scene.addSurface(sphere2);
+		scene.addSurface(plane);
 		
-		renderer.render(16);
+		renderer.render(1);
 		
 	}
 }
