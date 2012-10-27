@@ -22,7 +22,7 @@ public class Run {
 		frame.setVisible(true);
 		
 		Camera camera = new Camera(new Vector3f(10, 10, 10), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
-		PointLight light1 = new PointLight(new Vector3f(5, 0, 5));
+		PointLight light1 = new PointLight(new Vector3f(0, 10, 5));
 		
 		Scene scene = new Scene();
 		scene.setCamera(camera);
@@ -55,16 +55,17 @@ public class Run {
 //		rayTracer.addSurface(sphere2);
 		
 		// Enkele sphere
-//		Surface sphere = new Sphere(new Vector3f(0, 0, 10), 1, Color.GREEN);
+//		Surface sphere = new Sphere(new Vector3f(0, 0, 10), 1, new Color(0, 1, 0));
+//		scene.addSurface(sphere);
 //		
 //		rayTracer.addSurface(sphere);
 		
 		// Load object from file
-		Material mat = new PhongMaterial(new Color(1, 1, 1), 10);
+		Material mat = new PhongMaterial(new Color(1, 1, 1), 100);
 		Model cylinder = new Model("data/venus.obj", mat);
 		scene.addSurface(cylinder);
 		
-		renderer.render(16);
+		renderer.render(4);
 		
 		//panel.repaint();
 	}

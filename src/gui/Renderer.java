@@ -33,7 +33,7 @@ public class Renderer {
 				if (hit == null) {
 					pixelColor = new Color(0, 0, 0);
 				} else {
-					pixelColor = hit.getSurface().getMaterial().getColor(scene.getLightSources(), hit);
+					pixelColor = hit.getSurface().getMaterial().getColor(scene.getLightSources(), hit, rayTracer);
 				}
 				
 				

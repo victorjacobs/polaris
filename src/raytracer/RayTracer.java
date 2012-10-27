@@ -13,11 +13,15 @@ public class RayTracer {
 	}
 	
 	public Hit trace(Ray ray) {
+		return trace(ray, 0);
+	}
+	
+	public Hit trace(Ray ray, float eps) {
 		float lowestT = Float.POSITIVE_INFINITY;
 		Hit hit, closestHit = null;
 		
 		for (Surface surf : scene.getSurfaces()) {
-			hit = surf.hit(ray, 0, lowestT);
+			hit = surf.hit(ray, eps, lowestT);
 			
 			if (hit != null) {
 				lowestT = hit.getT();
@@ -26,20 +30,6 @@ public class RayTracer {
 		}
 		
 		return closestHit;
-	}
-	
-	public void trace(int depth) {
-		long start = System.currentTimeMillis();
-		
-		traceRecursiveStep(depth);
-		
-		long stop = System.currentTimeMillis();
-		
-		System.out.println("Render completed in " + Math.round((stop - start) / 1000) + "s");
-	}
-	
-	public void traceRecursiveStep(int depth) {
-
 	}
 	
 	

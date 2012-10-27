@@ -3,6 +3,7 @@ package scene.material;
 import java.util.HashSet;
 
 import raytracer.Hit;
+import raytracer.RayTracer;
 import scene.geometry.Vector3f;
 import scene.lighting.Light;
 
@@ -17,8 +18,9 @@ public class PhongMaterial extends DiffuseMaterial {
 	}
 	
 	@Override
-	public Color getColor(HashSet<Light> lights, Hit hit) {
-		Color diffuseShading = super.getColor(lights, hit);
+	// TODO this might mess with shadows, which are computed in DiffuseMaterial
+	public Color getColor(HashSet<Light> lights, Hit hit, RayTracer tracer) {
+		Color diffuseShading = super.getColor(lights, hit, tracer);
 		Vector3f halfVector;
 		float dotProduct;
 		
