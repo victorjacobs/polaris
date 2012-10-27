@@ -13,9 +13,9 @@ public class Color {
 	private float b;
 	
 	public Color(float r, float g, float b) {
-		this.r = r;
-		this.g = g;
-		this.b = b;
+		this.r = (r > 1) ? 1 : r;
+		this.g = (g > 1) ? 1 : g;
+		this.b = (b > 1) ? 1 : b;
 	}
 	
 	public float getRed() {

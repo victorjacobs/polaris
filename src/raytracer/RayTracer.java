@@ -51,7 +51,6 @@ public class RayTracer {
 
 					// Paint pixel
 					panel.drawPixel(x, y, pixelColor.getRed(), pixelColor.getGreen(), pixelColor.getBlue());
-					//System.out.println("Drawing on (" + x + ", " + y + "), color " + pixelColor);
 					
 					closestHit = null;
 				}

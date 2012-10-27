@@ -98,7 +98,7 @@ public class Triangle implements Surface {
 		// Calculate in what point the hit occured
 		Vector3f where = ray.getOrigin().sum(ray.getDirection().multiply(t));
 		
-		return new Hit(this, where, interpolatedNormal.normalize(), t);
+		return new Hit(ray, this, where, interpolatedNormal.normalize(), t);
 	}
 
 	@Override

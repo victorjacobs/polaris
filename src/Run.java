@@ -1,7 +1,5 @@
 import gui.CgPanel;
 
-import scene.material.Color;
-
 import javax.swing.JFrame;
 
 import raytracer.RayTracer;
@@ -10,8 +8,9 @@ import scene.Scene;
 import scene.geometry.Model;
 import scene.geometry.Vector3f;
 import scene.lighting.PointLight;
-import scene.material.DiffuseMaterial;
+import scene.material.Color;
 import scene.material.Material;
+import scene.material.PhongMaterial;
 
 
 public class Run {
@@ -62,7 +61,7 @@ public class Run {
 //		rayTracer.addSurface(sphere);
 		
 		// Load object from file
-		Material mat = new DiffuseMaterial(new Color(1, 1, 1));
+		Material mat = new PhongMaterial(new Color(1, 1, 1));
 		Model cylinder = new Model("data/sphere.obj", mat);
 		scene.addSurface(cylinder);
 		

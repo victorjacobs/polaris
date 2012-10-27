@@ -143,7 +143,7 @@ public class Model implements Surface {
 		if (hit == null) {
 			return null;
 		} else {
-			return new Hit(this, hit.getPoint(), hit.getNormal(), hit.getT());
+			return new Hit(ray, this, hit.getPoint(), hit.getNormal(), hit.getT());
 		}
 	}
 
