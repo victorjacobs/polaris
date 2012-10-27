@@ -19,11 +19,29 @@ public class Renderer {
 	}
 	
 	public void render(int depth) {
+		long start = System.currentTimeMillis();
+		
+		boolean[][] cache = new boolean[panel.getWidth() + depth][panel.getHeight() + depth];	// cache[x][y]
+		renderRecursive(depth, cache);
+		
+		long end = System.currentTimeMillis();
+		
+		System.out.println("Render completed in " + Math.round((end - start) / 1000) + "s, in " + depth + " passes");
+	}
+	
+	private void renderRecursive(int depth, boolean[][] cache) {
 		Ray ray;
 		Hit hit;
 		
-		for (int x = 1; x < panel.getWidth(); x += depth) {
-			for (int y = 1; y < panel.getHeight(); y += depth) {
+		// x and y are in the middle of the area that's being painted
+		for (int x = 0; x < panel.getWidth(); x += depth) {
+			for (int y = 0; y < panel.getHeight(); y += depth) {
+				if (cache[x][y]) {
+					// Pixel in the middle has right color
+					//break;
+					// TODO this does weird things
+				}
+				
 				ray = scene.getCamera().rayToPixel(x, y);
 				
 				hit = rayTracer.trace(ray);
@@ -36,6 +54,8 @@ public class Renderer {
 					pixelColor = hit.getSurface().getMaterial().getColor(scene.getLightSources(), hit, rayTracer);
 				}
 				
+				// Fill cache
+				cache[x][y] = true;
 				
 				// Paint pixel
 				// TODO cache pixels
@@ -51,7 +71,7 @@ public class Renderer {
 		
 		if (depth == 1) return;
 		
-		render(depth / 2);
+		renderRecursive(depth / 2, cache);
 	}
 	
 }
