@@ -53,7 +53,7 @@ public class DiffuseMaterial implements Material {
 		return new Color3f(Math.min(1, sumR), Math.min(1, sumG), Math.min(1, sumB));
 	}
 	
-	public boolean isInShade() {
+	protected boolean isInShade() {
 		return this.isInShade;
 	}
 	
