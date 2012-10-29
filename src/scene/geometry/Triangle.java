@@ -51,7 +51,6 @@ public class Triangle implements Surface {
 	}
 	
 	
-	// TODO: eventueel volgorde veranderen voor optimalere berekening, zie p79
 	@Override
 	public Hit hit(Ray ray, float t0, float t1) {
 		

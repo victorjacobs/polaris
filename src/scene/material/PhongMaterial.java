@@ -19,9 +19,11 @@ public class PhongMaterial extends DiffuseMaterial {
 	}
 	
 	@Override
-	// TODO this might mess with shadows, which are computed in DiffuseMaterial (or not because things and words)
 	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer) {
 		Color3f diffuseShading = super.getColor(lights, hit, tracer);
+		
+		if (isInShade()) return diffuseShading;		// In this case parent calculated that said pixel is in the shade of something else, don't do anything then
+		
 		Vector3f halfVector;
 		float dotProduct;
 		

@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import javax.imageio.*;
+
+import scene.material.Color3f;
+
 import java.io.*;
 
 
@@ -29,6 +32,10 @@ public class CgPanel extends JPanel  implements ComponentListener {
    public CgPanel() {
       addComponentListener(this);
       componentResized(new ComponentEvent(this, ComponentEvent.COMPONENT_RESIZED));
+   }
+   
+   public void drawPixel(int x, int y, Color3f c) {
+	   drawPixel(x, y, c.getRed(), c.getGreen(), c.getBlue());
    }
 
    /**

@@ -11,6 +11,7 @@ import scene.lighting.Light;
 public class DiffuseMaterial implements Material {
 
 	private Color3f baseColor;
+	private boolean isInShade = false;
 	
 	public DiffuseMaterial(Color3f baseColor) {
 		this.baseColor = baseColor;
@@ -26,9 +27,6 @@ public class DiffuseMaterial implements Material {
 		
 		// TODO: p84 paragraph 4.5.4
 		for (Light light : lights) {
-			// TODO Shadows: ray from hit point to light source
-			// TODO move ambient lighting somewhere else
-			
 			if (light instanceof AmbientLight) {
 				// Always add ambient lighting
 				sumR += light.intensity() * light.color().getRed();
@@ -41,6 +39,8 @@ public class DiffuseMaterial implements Material {
 					sumR += (light.intensity() * light.color().getRed()) * dotProduct;
 					sumG += (light.intensity() * light.color().getGreen()) * dotProduct;
 					sumB += (light.intensity() * light.color().getBlue()) * dotProduct;
+				} else {
+					isInShade = true;
 				}
 			}
 			
@@ -51,6 +51,10 @@ public class DiffuseMaterial implements Material {
 		sumB *= baseColor.getBlue();
 		
 		return new Color3f(Math.min(1, sumR), Math.min(1, sumG), Math.min(1, sumB));
+	}
+	
+	public boolean isInShade() {
+		return this.isInShade;
 	}
 	
 }

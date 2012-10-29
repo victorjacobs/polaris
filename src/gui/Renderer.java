@@ -38,7 +38,7 @@ public class Renderer {
 			for (int y = 1; y < panel.getHeight(); y += depth) {
 				if (cache[x][y]) {
 					// Pixel in the middle has right color
-					//break;
+					break;
 					// TODO this does weird things
 				}
 				
@@ -62,10 +62,11 @@ public class Renderer {
 				
 				for (int i = x; i < x + depth; i++) {
 					for (int j = y; j < y + depth; j++) {
-						panel.drawPixel(i, j, pixelColor.getRed(), pixelColor.getGreen(), pixelColor.getBlue());
-						panel.repaint();
+						panel.drawPixel(i, j, pixelColor);
 					}
 				}
+				
+				panel.repaint();
 			}
 		}
 		
