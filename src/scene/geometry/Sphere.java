@@ -34,14 +34,13 @@ public class Sphere implements Surface {
 		
 		
 		float t = Math.min(tPlus, tMin);
-		//float t = Math.abs(Math.min(tPlus, tMin));
 		
 		if (t < t0 || t > t1) return null;
 		
 		// Calculate hit point
 		Vector3f where = ray.getOrigin().sum(ray.getDirection().multiply(t));
 		
-		// Normal vector TODO ofwel omgekeerd
+		// Normal vector
 		Vector3f normal = where.minus(center).normalize();
 		
 		return new Hit(ray, this, where, normal, t);
