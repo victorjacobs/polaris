@@ -20,7 +20,7 @@ public class Sphere implements Surface {
 	public Hit hit(Ray ray, float t0, float t1) {
 		// Compute discriminant (see page 77)
 		float A = ray.getDirection().dotProduct(ray.getDirection());
-		float B = ray.getDirection().multiply(2).dotProduct(ray.getOrigin().minus(center));
+		float B = ray.getOrigin().minus(center).multiply(2).dotProduct(ray.getDirection());
 		Vector3f C1 = ray.getOrigin().minus(center);
 		float C = C1.dotProduct(C1) - radius * radius;
 		
@@ -29,8 +29,8 @@ public class Sphere implements Surface {
 		if (disc <= 0) return null;
 		
 		// t berekenen voor z buffering
-		float tPlus = (ray.getDirection().negate().dotProduct(C1) + (float)Math.sqrt(disc)) / ray.getDirection().dotProduct(ray.getDirection());
-		float tMin = (ray.getDirection().negate().dotProduct(C1) - (float)Math.sqrt(disc)) / ray.getDirection().dotProduct(ray.getDirection());
+		float tPlus = (-B + (float)Math.sqrt(disc)) / (2 * A);
+		float tMin = (-B - (float)Math.sqrt(disc)) / (2 * A);
 		
 		
 		float t = Math.min(tPlus, tMin);
