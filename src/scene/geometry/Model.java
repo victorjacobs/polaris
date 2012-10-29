@@ -106,7 +106,6 @@ public class Model implements Surface {
 					Vertex v3 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
 					
 					// Triangle
-					// TODO: color
 					triag = new Triangle(v1, v2, v3, material);
 				}
 				

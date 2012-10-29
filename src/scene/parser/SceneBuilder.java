@@ -89,11 +89,7 @@ public class SceneBuilder implements ParserHandler
         return scene;
     }
 
-    /*
-     *  (non-Javadoc)
-     * ParserHandler callbacks
-     */	
-
+    // Start file
     public void startSdl() throws Exception
     {
     }
@@ -102,6 +98,8 @@ public class SceneBuilder implements ParserHandler
     {
     }
 
+    
+    // Start cameras
     public void startCameras() throws Exception
     {
     }
@@ -118,7 +116,9 @@ public class SceneBuilder implements ParserHandler
     public void endCamera() throws Exception
     {
     }
-
+    
+    
+    // Lighting
     public void startLights() throws Exception
     {
     }
@@ -154,6 +154,8 @@ public class SceneBuilder implements ParserHandler
     {
     }
 
+    
+    // Geometry
     public void startGeometry() throws Exception
     {
     }
@@ -213,6 +215,8 @@ public class SceneBuilder implements ParserHandler
     {
     }
 
+    
+    // Textures
     public void startTextures() throws Exception
     {
     }
@@ -228,7 +232,9 @@ public class SceneBuilder implements ParserHandler
     public void endTexture() throws Exception
     {
     }
-
+    
+    
+    // Materials
     public void startMaterials() throws Exception
     {
     }
@@ -263,6 +269,8 @@ public class SceneBuilder implements ParserHandler
     {
     }
 
+    
+    // Start scene
     public void startScene(String cameraName, String [] lightNames, Color3f background) throws Exception
     {
     }
@@ -279,6 +287,8 @@ public class SceneBuilder implements ParserHandler
     {
     }
 
+    
+    // Transforms
     public void startRotate(Vector3f axis, float angle) throws Exception
     {
     }
