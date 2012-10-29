@@ -5,14 +5,15 @@ import java.util.HashSet;
 import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.RayTracer;
+import scene.lighting.AmbientLight;
 import scene.lighting.Light;
 
 public class DiffuseMaterial implements Material {
 
-	private Color3f baseColor3f;
+	private Color3f baseColor;
 	
-	public DiffuseMaterial(Color3f baseColor3f) {
-		this.baseColor3f = baseColor3f;
+	public DiffuseMaterial(Color3f baseColor) {
+		this.baseColor = baseColor;
 	}
 	
 	@Override
@@ -28,19 +29,26 @@ public class DiffuseMaterial implements Material {
 			// TODO Shadows: ray from hit point to light source
 			// TODO move ambient lighting somewhere else
 			
-			if (tracer.traceAny(new Ray(hit.getPoint(), light.rayTo(hit.getPoint())), 0.01f) == null) {
-				// doesn't hit something
-				dotProduct = Math.max(0, hit.getNormal().dotProduct(light.rayTo(hit.getPoint()).normalize()));
-				sumR += baseColor3f.getRed() * (0.1f + (light.intensity() * light.color().getRed()) * dotProduct);
-				sumG += baseColor3f.getGreen() * (0.1f + (light.intensity() * light.color().getGreen()) * dotProduct);
-				sumB += baseColor3f.getBlue() * (0.1f + (light.intensity() * light.color().getBlue()) * dotProduct);
+			if (light instanceof AmbientLight) {
+				// Always add ambient lighting
+				sumR += light.intensity() * light.color().getRed();
+				sumG += light.intensity() * light.color().getGreen();
+				sumB += light.intensity() * light.color().getBlue();
 			} else {
-				sumR = 0.1f;
-				sumG = 0.1f;
-				sumB = 0.1f;
+				if (tracer.traceAny(new Ray(hit.getPoint(), light.rayTo(hit.getPoint())), 0.01f) == null) {
+					// doesn't hit something
+					dotProduct = Math.max(0, hit.getNormal().dotProduct(light.rayTo(hit.getPoint()).normalize()));
+					sumR += (light.intensity() * light.color().getRed()) * dotProduct;
+					sumG += (light.intensity() * light.color().getGreen()) * dotProduct;
+					sumB += (light.intensity() * light.color().getBlue()) * dotProduct;
+				}
 			}
 			
 		}
+		
+		sumR *= baseColor.getRed();
+		sumG *= baseColor.getGreen();
+		sumB *= baseColor.getBlue();
 		
 		return new Color3f(Math.min(1, sumR), Math.min(1, sumG), Math.min(1, sumB));
 	}

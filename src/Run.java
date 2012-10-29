@@ -9,6 +9,7 @@ import scene.geometry.Model;
 import scene.geometry.Sphere;
 import scene.geometry.Surface;
 import scene.geometry.Vector3f;
+import scene.lighting.AmbientLight;
 import scene.lighting.PointLight;
 import scene.material.Color3f;
 import scene.material.DiffuseMaterial;
@@ -28,10 +29,12 @@ public class Run {
 		//Camera camera = new Camera(new Vector3f(-2, 0, 0), new Vector3f(1, 0, 0), new Vector3f(0, 1, 0), 5, 45);
 		PointLight light1 = new PointLight(new Vector3f(-20, 10, 0));
 		//PointLight light1 = new PointLight(new Vector3f(0, 4, 0));
+		AmbientLight aLight = new AmbientLight(new Color3f(1, 1, 1), 0.1f);
 		
 		Scene scene = new Scene();
 		scene.setCamera(camera);
 		scene.addLightSource(light1);
+		scene.addLightSource(aLight);
 		
 		Renderer renderer = new Renderer(scene, panel);
 		

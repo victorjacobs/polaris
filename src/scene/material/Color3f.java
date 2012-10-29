@@ -31,7 +31,8 @@ public class Color3f extends Tuple3f implements Serializable
 
     public Color3f(float r, float g, float b)
     {
-        super(r, g, b);
+    	// Ensure that r, g and b are NOT higher than 1
+        super((r > 1) ? 1 : r, (g > 1) ? 1 : g, (b > 1) ? 1 : b);
     }
 
 
