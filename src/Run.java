@@ -24,8 +24,9 @@ public class Run {
 		frame.getContentPane().add(panel);
 		frame.setVisible(true);
 		
-		Camera camera = new Camera(new Vector3f(2, 2, 2), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
-		PointLight light1 = new PointLight(new Vector3f(0, 2, 1));
+		//Camera camera = new Camera(new Vector3f(2, 2, 2), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
+		Camera camera = new Camera(new Vector3f(-2, 0, 0), new Vector3f(1, 0, 0), new Vector3f(0, 1, 0), 5, 45);
+		PointLight light1 = new PointLight(new Vector3f(-2, 0, -3));
 		//PointLight light1 = new PointLight(new Vector3f(0, 4, 0));
 		
 		Scene scene = new Scene();
@@ -37,10 +38,10 @@ public class Run {
 		// Load object from file
 		Material mat = new DiffuseMaterial(new Color3f(1, 1, 1));
 		Material mat2 = new PhongMaterial(new Color3f(1, 1, 1), 100);
-		Surface plane = new Model("data/plane.obj", mat);
-		Surface sphere3 = new Model("data/sphere.obj", mat2);
-		Surface sphere = new Sphere(new Vector3f(-0.5f, 0.5f, 0.5f), 0.5f, mat);
-		Surface sphere2 = new Sphere(new Vector3f(0f, 0.5f, 0), 0.5f, mat);
+		Surface plane = new Model("data/objects/plane.obj", mat);
+		Surface sphere3 = new Model("data/objects/sphere.obj", mat2);
+		Surface sphere = new Sphere(new Vector3f(2f, 0, 0.5f), 0.5f, mat);
+		Surface sphere2 = new Sphere(new Vector3f(1f, 0, 0), 0.2f, mat);
 		scene.addSurface(sphere);
 		scene.addSurface(sphere2);
 		//scene.addSurface(sphere3);

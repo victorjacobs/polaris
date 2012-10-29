@@ -26,7 +26,7 @@ public class Sphere implements Surface {
 		
 		float disc = B * B - 4 * A * C;
 		
-		if (disc < 0) return null;
+		if (disc <= 0) return null;
 		
 		// t berekenen voor z buffering
 		float tPlus = (ray.getDirection().negate().dotProduct(C1) + (float)Math.sqrt(disc)) / ray.getDirection().dotProduct(ray.getDirection());
@@ -44,7 +44,7 @@ public class Sphere implements Surface {
 		// Normal vector TODO ofwel omgekeerd
 		Vector3f normal = where.minus(center).normalize();
 		
-		return new Hit(ray, this, where, normal, tPlus);
+		return new Hit(ray, this, where, normal, t);
 	}
 
 	@Override

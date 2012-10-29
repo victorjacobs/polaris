@@ -28,7 +28,7 @@ public class DiffuseMaterial implements Material {
 			// TODO Shadows: ray from hit point to light source
 			// TODO move ambient lighting somewhere else
 			
-			if (tracer.trace(new Ray(hit.getPoint(), light.rayTo(hit.getPoint())), 0.01f) == null) {
+			if (tracer.traceAny(new Ray(hit.getPoint(), light.rayTo(hit.getPoint())), 0.01f) == null) {
 				// doesn't hit something
 				dotProduct = Math.max(0, hit.getNormal().dotProduct(light.rayTo(hit.getPoint()).normalize()));
 				sumR += baseColor3f.getRed() * (0.1f + (light.intensity() * light.color().getRed()) * dotProduct);

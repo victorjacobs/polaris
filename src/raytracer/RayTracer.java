@@ -32,5 +32,17 @@ public class RayTracer {
 		return closestHit;
 	}
 	
+	public Hit traceAny(Ray ray, float eps) {
+		Hit hit;
+		
+		for (Surface surf : scene.getSurfaces()) {
+			hit = surf.hit(ray, eps, Float.POSITIVE_INFINITY);
+			
+			if (hit != null) return hit;
+		}
+		
+		return null;
+	}
+	
 	
 }
