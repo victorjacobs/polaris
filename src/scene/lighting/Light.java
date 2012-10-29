@@ -1,8 +1,7 @@
 package scene.lighting;
 
-import scene.material.Color;
-
 import scene.geometry.Vector3f;
+import scene.material.Color3f;
 
 public interface Light {
 
@@ -10,6 +9,6 @@ public interface Light {
 
 	public abstract float intensity();
 
-	public abstract Color color();
+	public abstract Color3f color();
 
 }

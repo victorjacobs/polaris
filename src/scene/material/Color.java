@@ -6,6 +6,7 @@ package scene.material;
  * @author Victor
  *
  */
+@Deprecated
 public class Color {
 	
 	private float r;

@@ -9,18 +9,18 @@ import scene.lighting.Light;
 
 public class PhongMaterial extends DiffuseMaterial {
 
-	private Color phongColor = new Color(1, 1, 1);
+	private Color3f phongColor = new Color3f(1, 1, 1);
 	private float phongExponent;
 	
-	public PhongMaterial(Color baseColor, float phongExponent) {
+	public PhongMaterial(Color3f baseColor, float phongExponent) {
 		super(baseColor);
 		this.phongExponent = phongExponent;
 	}
 	
 	@Override
 	// TODO this might mess with shadows, which are computed in DiffuseMaterial (or not because things and words)
-	public Color getColor(HashSet<Light> lights, Hit hit, RayTracer tracer) {
-		Color diffuseShading = super.getColor(lights, hit, tracer);
+	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer) {
+		Color3f diffuseShading = super.getColor(lights, hit, tracer);
 		Vector3f halfVector;
 		float dotProduct;
 		
@@ -39,7 +39,7 @@ public class PhongMaterial extends DiffuseMaterial {
 			sumB += phongColor.getBlue() * light.intensity() * light.color().getBlue() * dotProduct;
 		}
 		
-		return new Color(diffuseShading.getRed() + sumR, diffuseShading.getGreen() + sumG, diffuseShading.getBlue() + sumB);
+		return new Color3f(diffuseShading.getRed() + sumR, diffuseShading.getGreen() + sumG, diffuseShading.getBlue() + sumB);
 	}
 
 }

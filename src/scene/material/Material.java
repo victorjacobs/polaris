@@ -7,5 +7,5 @@ import raytracer.RayTracer;
 import scene.lighting.Light;
 
 public interface Material {
-	public Color getColor(HashSet<Light> lights, Hit hit, RayTracer tracer);
+	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer);
 }

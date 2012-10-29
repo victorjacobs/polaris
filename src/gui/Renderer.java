@@ -4,7 +4,7 @@ import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.RayTracer;
 import scene.Scene;
-import scene.material.Color;
+import scene.material.Color3f;
 
 public class Renderer {
 	
@@ -47,9 +47,9 @@ public class Renderer {
 				hit = rayTracer.trace(ray);
 				
 				// Do shading and color pixel
-				Color pixelColor;
+				Color3f pixelColor;
 				if (hit == null) {
-					pixelColor = new Color(0, 0, 0);
+					pixelColor = new Color3f(0, 0, 0);
 				} else {
 					pixelColor = hit.getSurface().getMaterial().getColor(scene.getLightSources(), hit, rayTracer);
 				}

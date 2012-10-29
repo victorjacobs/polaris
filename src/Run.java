@@ -10,7 +10,7 @@ import scene.geometry.Sphere;
 import scene.geometry.Surface;
 import scene.geometry.Vector3f;
 import scene.lighting.PointLight;
-import scene.material.Color;
+import scene.material.Color3f;
 import scene.material.DiffuseMaterial;
 import scene.material.Material;
 import scene.material.PhongMaterial;
@@ -35,14 +35,21 @@ public class Run {
 		Renderer renderer = new Renderer(scene, panel);
 		
 		// Load object from file
-		Material mat = new DiffuseMaterial(new Color(1, 1, 1));
-		Material mat2 = new PhongMaterial(new Color(1, 1, 1), 100);
+		Material mat = new DiffuseMaterial(new Color3f(1, 1, 1));
+		Material mat2 = new PhongMaterial(new Color3f(1, 1, 1), 100);
 		Surface plane = new Model("data/plane.obj", mat);
-		Surface sphere = new Sphere(new Vector3f(0, 1.1f, 0), 1f, mat);
-		Surface sphere2 = new Sphere(new Vector3f(0.5f, 0.5f, 0), 0.5f, mat);
+		Surface sphere3 = new Model("data/sphere.obj", mat2);
+		Surface sphere = new Sphere(new Vector3f(-0.5f, 0.5f, 0.5f), 0.5f, mat);
+		Surface sphere2 = new Sphere(new Vector3f(0f, 0.5f, 0), 0.5f, mat);
 		scene.addSurface(sphere);
-		//scene.addSurface(sphere2);
-		scene.addSurface(plane);
+		scene.addSurface(sphere2);
+		//scene.addSurface(sphere3);
+		//scene.addSurface(plane);
+		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+		}
 		
 		renderer.render(1);
 		

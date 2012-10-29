@@ -1,8 +1,7 @@
 package scene.lighting;
 
-import scene.material.Color;
-
 import scene.geometry.Vector3f;
+import scene.material.Color3f;
 
 public class DirectionalLight implements Light {
 
@@ -19,7 +18,7 @@ public class DirectionalLight implements Light {
 	}
 
 	@Override
-	public Color color() {
+	public Color3f color() {
 		// TODO Auto-generated method stub
 		return null;
 	}

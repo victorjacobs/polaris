@@ -118,4 +118,19 @@ public class Triangle implements Surface {
 		
 	}
 
+	@Override
+	public void applyTransformation(Matrix4f transformation) {
+		Vector4f point1 = new Vector4f(v1.getPoint());
+		point1 = transformation.multiply(point1);
+		v1.setPoint(new Vector3f(point1.x, point1.y, point1.z));
+		
+		Vector4f point2 = new Vector4f(v2.getPoint());
+		point2 = transformation.multiply(point2);
+		v2.setPoint(new Vector3f(point2.x, point2.y, point2.z));
+		
+		Vector4f point3 = new Vector4f(v2.getPoint());
+		point3 = transformation.multiply(point3);
+		v3.setPoint(new Vector3f(point3.x, point3.y, point3.z));
+	}
+
 }

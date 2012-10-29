@@ -63,4 +63,10 @@ public class Sphere implements Surface {
 		this.material = mat;
 	}
 
+	@Override
+	public void applyTransformation(Matrix4f transformation) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

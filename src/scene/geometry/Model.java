@@ -166,4 +166,11 @@ public class Model implements Surface {
 	public void move(float x, float y, float z) {
 		
 	}
+
+	@Override
+	public void applyTransformation(Matrix4f transformation) {
+		for (Triangle triag : triangles) {
+			triag.applyTransformation(transformation);
+		}
+	}
 }

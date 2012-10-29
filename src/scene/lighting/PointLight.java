@@ -1,17 +1,17 @@
 package scene.lighting;
 
-import scene.material.Color;
 import scene.geometry.Vector3f;
+import scene.material.Color3f;
 
 public class PointLight implements Light {
 	
 	private Vector3f position;
-	private Color color;		// Eventueel voor later
+	private Color3f color;		// Eventueel voor later
 	private float intensity;
 	
 	public PointLight(Vector3f position) {
 		this.position = position;
-		this.color = new Color(1, 1, 1);
+		this.color = new Color3f(1, 1, 1);
 		this.intensity = 0.5f;
 	}
 	
@@ -35,7 +35,7 @@ public class PointLight implements Light {
 	 * @see scene.lighting.Light#color()
 	 */
 	@Override
-	public Color color() {
+	public Color3f color() {
 		return this.color;
 	}
 }
