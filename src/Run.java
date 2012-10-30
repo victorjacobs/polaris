@@ -15,6 +15,7 @@ import scene.material.Color3f;
 import scene.material.DiffuseMaterial;
 import scene.material.Material;
 import scene.material.PhongMaterial;
+import scene.material.ReflectiveMaterial;
 
 
 public class Run {
@@ -38,7 +39,8 @@ public class Run {
 		
 		// Load object from file
 		Material mat = new DiffuseMaterial(new Color3f(1, 1, 1));
-		Material redMat = new DiffuseMaterial(new Color3f(1, 0, 0));
+		//Material redMat = new DiffuseMaterial(new Color3f(1, 0, 0));
+		Material redMat = new ReflectiveMaterial();
 		Material mat2 = new PhongMaterial(new Color3f(0, 1, 0), 100);
 		Surface plane = new Model("data/objects/plane.obj", mat);
 		Surface sphere = new Sphere(new Vector3f(0, 0.5f, 0), 0.5f, mat2);
