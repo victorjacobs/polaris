@@ -8,7 +8,7 @@ import scene.geometry.Vector3f;
 import scene.lighting.AmbientLight;
 import scene.lighting.Light;
 
-public class PhongMaterial extends DiffuseMaterial {
+public class PhongMaterial extends Material {
 	// TODO add intensity
 	private Color3f phongColor = new Color3f(1, 1, 1);
 	private float phongExponent;
@@ -20,9 +20,11 @@ public class PhongMaterial extends DiffuseMaterial {
 	
 	@Override
 	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer) {
-		Color3f diffuseShading = super.getColor(lights, hit, tracer);
+		Color3f ambientLight = super.getColor(lights, hit, tracer);
 		
-		if (isInShade()) return diffuseShading;		// In this case parent calculated that said pixel is in the shade of something else, don't do anything then
+		if (isInShade(lights, hit, tracer)) {
+			return ambientLight;
+		}
 		
 		Vector3f halfVector;
 		float dotProduct;
@@ -44,7 +46,7 @@ public class PhongMaterial extends DiffuseMaterial {
 			}
 		}
 		
-		return new Color3f(diffuseShading.getRed() + sumR, diffuseShading.getGreen() + sumG, diffuseShading.getBlue() + sumB);
+		return new Color3f(ambientLight.getRed() + sumR, ambientLight.getGreen() + sumG, ambientLight.getBlue() + sumB);
 	}
 
 }
