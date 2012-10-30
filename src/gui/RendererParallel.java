@@ -18,7 +18,7 @@ public class RendererParallel {
 	private final int cores = Runtime.getRuntime().availableProcessors();
 	
 	public RendererParallel(Scene scene, CgPanel panel) {
-		threadPool = Executors.newFixedThreadPool(2);
+		threadPool = Executors.newFixedThreadPool(cores);
 		this.scene = scene;
 		this.panel = panel;
 		this.rayTracer = new RayTracer(scene);
