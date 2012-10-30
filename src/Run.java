@@ -1,5 +1,5 @@
 import gui.CgPanel;
-import gui.Renderer;
+import gui.RendererParallel;
 
 import javax.swing.JFrame;
 
@@ -34,7 +34,7 @@ public class Run {
 		scene.addLightSource(light1);
 		scene.addLightSource(aLight);
 		
-		Renderer renderer = new Renderer(scene, panel);
+		RendererParallel renderer = new RendererParallel(scene, panel);
 		
 		// Load object from file
 		Material mat = new DiffuseMaterial(new Color3f(1, 1, 1));
@@ -52,7 +52,7 @@ public class Run {
 		} catch (InterruptedException e) {
 		}
 		
-		renderer.render(1);
+		renderer.render(16);
 		
 	}
 }
