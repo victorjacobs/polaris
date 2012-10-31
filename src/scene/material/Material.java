@@ -30,6 +30,7 @@ public abstract class Material {
 		return new Color3f(0, 0, 0);
 	}
 	
+	// NOTE: raakvlakken zijn *normaal* geen probleem aangezien deze bedekt zijn door 1 vd vlakken
 	public boolean isInShade(HashSet<Light> lights, Hit hit, RayTracer tracer) {
 		for (Light light : lights) {
 			if (!(light instanceof AmbientLight)) {

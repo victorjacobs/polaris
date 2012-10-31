@@ -20,11 +20,11 @@ public class ReflectiveMaterial extends PhongMaterial {
 		
 		// Construct ray from hit (angle incoming ray and normal same for outgoing and normal)
 		float projectionOnNormal = hit.getRay().getDirection().dotProduct(hit.getNormal());
-		Vector3f rayDirection = hit.getNormal().multiply(2 * projectionOnNormal).minus(hit.getRay().getDirection());
+		Vector3f rayDirection = hit.getRay().getDirection().minus(hit.getNormal().multiply(2 * projectionOnNormal));
 		
 		Ray outgoingRay = new Ray(hit.getPoint(), rayDirection);
 		
-		Hit nextSurfaceHit = tracer.trace(outgoingRay, 0.1f);
+		Hit nextSurfaceHit = tracer.trace(outgoingRay);
 		
 		Color3f other;
 		
