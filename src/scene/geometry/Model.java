@@ -67,7 +67,11 @@ public class Model implements Surface {
 	// TODO: now we assume that all planes are triangles
 	// NOTE: when creating triangles, set material to null, keep the material stored here
 	private void parseLine(String line) {
+		line = line.replaceAll("  ", " ");
+		
 		String[] lineTokenized = line.split(" ");
+		
+		if (line.trim().equals("")) return;
 		
 		try {
 			switch (DataTags.valueOf(lineTokenized[0].toUpperCase())) {
@@ -91,12 +95,13 @@ public class Model implements Surface {
 				// Generate vertices
 				// TODO make more general?
 				// TODO als geen textuur/normaal
+				// TODO CLEAN THIS CODE DUPLICATION
 				String[] indices = lineTokenized[1].split("/");
 				Triangle triag;
 				
 				if (lineTokenized.length == 4) {
 					if (indices.length == 1) {
-						triag = new Triangle(points.get(Integer.parseInt(indices[0]) - 1), points.get(Integer.parseInt(indices[0]) - 1), points.get(Integer.parseInt(indices[0]) - 1), material);
+						triag = new Triangle(points.get(Integer.parseInt(lineTokenized[1]) - 1), points.get(Integer.parseInt(lineTokenized[2]) - 1), points.get(Integer.parseInt(lineTokenized[3]) - 1), material);
 					} else {
 						Vertex v1 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
 						
@@ -114,13 +119,41 @@ public class Model implements Surface {
 					triangles.add(triag);
 				} else if (lineTokenized.length == 5) {
 					// Squares
+					if (indices.length == 1) {
+						triag = new Triangle(points.get(Integer.parseInt(lineTokenized[1]) - 1), points.get(Integer.parseInt(lineTokenized[2]) - 1), points.get(Integer.parseInt(lineTokenized[3]) - 1), material);
+						triangles.add(triag);
+						
+						triag = new Triangle(points.get(Integer.parseInt(lineTokenized[2]) - 1), points.get(Integer.parseInt(lineTokenized[3]) - 1), points.get(Integer.parseInt(lineTokenized[4]) - 1), material);
+						triangles.add(triag);
+					} else {
+						Vertex v1 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
+						
+						indices = lineTokenized[2].split("/");
+						Vertex v2 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
+						
+						indices = lineTokenized[3].split("/");
+						Vertex v3 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
+						
+						indices = lineTokenized[4].split("/");
+						Vertex v4 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
+						
+						// Triangles
+						triag = new Triangle(v1, v2, v3, material);
+						triangles.add(triag);
+						triag = new Triangle(v2, v3, v4, material);
+						triangles.add(triag);
+						triag = new Triangle(v1, v2, v4, material);
+						triangles.add(triag);
+						triag = new Triangle(v1, v4, v3, material);
+						triangles.add(triag);
+					}
 				}
 				
 				break;
 			}
 		} catch (Exception e) {
 			// Just ignore the message
-			//System.err.println("Unsupported message");
+			//e.printStackTrace();
 		}
 		
 	}
