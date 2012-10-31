@@ -105,6 +105,13 @@ public class Vector3f extends Tuple3f implements Serializable
     	return x * other.x + y * other.y + z * other.z;
     }
     
+    public Vector3f reflectOver(Vector3f normal) {
+		float projectionOnNormal = dotProduct(normal);
+		Vector3f reflection = minus(normal.multiply(2 * projectionOnNormal));
+		
+		return reflection;
+    }
+    
     @Override
     public boolean equals(Object o) {
     	if (this == o) return true;

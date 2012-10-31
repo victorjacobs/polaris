@@ -40,9 +40,9 @@ public class PhongMaterial extends Material {
 				
 				dotProduct = (float) Math.pow(Math.max(0, hit.getNormal().dotProduct(halfVector)), phongExponent);
 				
-				sumR += phongColor.getRed() * light.intensity() * light.color().getRed() * dotProduct;
-				sumG += phongColor.getGreen() * light.intensity() * light.color().getGreen() * dotProduct;
-				sumB += phongColor.getBlue() * light.intensity() * light.color().getBlue() * dotProduct;
+				sumR += phongColor.getRed() * light.color().getRed() * dotProduct;
+				sumG += phongColor.getGreen() * light.color().getGreen() * dotProduct;
+				sumB += phongColor.getBlue() * light.color().getBlue() * dotProduct;
 			}
 		}
 		

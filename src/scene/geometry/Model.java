@@ -94,23 +94,27 @@ public class Model implements Surface {
 				String[] indices = lineTokenized[1].split("/");
 				Triangle triag;
 				
-				if (indices.length == 1) {
-					triag = new Triangle(points.get(Integer.parseInt(indices[0]) - 1), points.get(Integer.parseInt(indices[0]) - 1), points.get(Integer.parseInt(indices[0]) - 1), material);
-				} else {
-					Vertex v1 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
+				if (lineTokenized.length == 4) {
+					if (indices.length == 1) {
+						triag = new Triangle(points.get(Integer.parseInt(indices[0]) - 1), points.get(Integer.parseInt(indices[0]) - 1), points.get(Integer.parseInt(indices[0]) - 1), material);
+					} else {
+						Vertex v1 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
+						
+						indices = lineTokenized[2].split("/");
+						Vertex v2 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
+						
+						indices = lineTokenized[3].split("/");
+						Vertex v3 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
+						
+						// Triangle
+						triag = new Triangle(v1, v2, v3, material);
+					}
 					
-					indices = lineTokenized[2].split("/");
-					Vertex v2 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
 					
-					indices = lineTokenized[3].split("/");
-					Vertex v3 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
-					
-					// Triangle
-					triag = new Triangle(v1, v2, v3, material);
+					triangles.add(triag);
+				} else if (lineTokenized.length == 5) {
+					// Squares
 				}
-				
-				
-				triangles.add(triag);
 				
 				break;
 			}
