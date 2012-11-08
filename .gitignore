@@ -4,3 +4,5 @@
 bin/
 /data/crawler.obj
 .DS_Store
+/.idea/
+/Polaris.iml

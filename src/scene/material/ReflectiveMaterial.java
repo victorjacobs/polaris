@@ -35,7 +35,9 @@ public class ReflectiveMaterial extends PhongMaterial {
 			other = new Color3f(0.1f, 0.1f, 0.1f);
 		}
 		
-		return new Color3f(reflectionCoefficient * other.getRed() + phongShading.getRed(), reflectionCoefficient * other.getGreen() + phongShading.getGreen(), reflectionCoefficient * other.getBlue() + phongShading.getBlue());
+		return new Color3f(reflectionCoefficient * other.getRed() + phongShading.getRed(),
+				reflectionCoefficient * other.getGreen() + phongShading.getGreen(),
+				reflectionCoefficient * other.getBlue() + phongShading.getBlue());
 	}
 
 }

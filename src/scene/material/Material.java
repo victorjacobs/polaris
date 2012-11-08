@@ -42,7 +42,7 @@ public abstract class Material {
 	public boolean isInShade(HashSet<Light> lights, Hit hit, RayTracer tracer) {
 		for (Light light : lights) {
 			if (!(light instanceof AmbientLight)) {
-				if (tracer.traceAny(new Ray(hit.getPoint(), light.rayTo(hit.getPoint())), 0.01f) != null) {
+				if (tracer.traceAny(new Ray(hit.getPoint(), light.rayTo(hit.getPoint())), 0.000001f) != null) {
 					return true;
 				}
 			}

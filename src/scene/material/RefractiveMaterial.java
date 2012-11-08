@@ -8,17 +8,19 @@ import raytracer.RayTracer;
 import scene.geometry.Vector3f;
 import scene.lighting.Light;
 
-public class RefractiveMaterial extends Material {
+public class RefractiveMaterial extends PhongMaterial {
 	private float refractionCoefficient;
 	private float n = 1;		// n where ray is travelling in
 	
 	public RefractiveMaterial(Color3f baseColor, float refractionCoefficient) {
-		super(baseColor);
+		super(baseColor, 100);
 		this.refractionCoefficient = refractionCoefficient;
 	}
 	
 	@Override
 	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer) {
+		Color3f phong = super.getColor(lights, hit, tracer);
+
 		Vector3f reflect = hit.getRay().getDirection().reflectOver(hit.getNormal());
 		float c, kr, kg, kb;
 		Vector3f innerRay = getRefractedRay(hit.getRay().getDirection(), hit.getNormal(), refractionCoefficient);
@@ -65,9 +67,9 @@ public class RefractiveMaterial extends Material {
 		
 		R = 0.05f;
 		
-		return new Color3f(kr * (R * colorReflected.getRed() + (1 - R) * colorRefracted.getRed()),
-				kg * (R * colorReflected.getGreen() + (1 - R) * colorRefracted.getGreen()),
-				kb * (R * colorReflected.getBlue() + (1 - R) * colorRefracted.getBlue()));
+		return new Color3f(phong.getRed() + kr * (R * colorReflected.getRed() + (1 - R) * colorRefracted.getRed()),
+				phong.getGreen() + kg * (R * colorReflected.getGreen() + (1 - R) * colorRefracted.getGreen()),
+				phong.getBlue() + kb * (R * colorReflected.getBlue() + (1 - R) * colorRefracted.getBlue()));
 	}
 	
 	private boolean internalReflection(Vector3f direction, Vector3f normal, float refractionIndex) {
