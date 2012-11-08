@@ -43,7 +43,7 @@ public class RunLoadsOfReflectiveSpheres {
 		Material notSoReflectiveMaterial = new ReflectiveMaterial(0.2f);
 		Material veryReflectiveMaterial = new ReflectiveMaterial(0.9f);
 		Material greenDiffuseMaterial = new DiffuseMaterial(new Color3f(0, 1, 0));
-		Material glass = new ReflectiveMaterial(2);
+		Material glass = new RefractiveMaterial(new Color3f(1, 1, 1), 1.33f);
 
 		Surface plane = new Model("data/objects/plane.obj", notSoReflectiveMaterial);
 

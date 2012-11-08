@@ -19,7 +19,7 @@ public class LinearCombinedMaterial extends Material {
 	}
 
 	@Override
-	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer) {
+	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer, int recursionDepth) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -5,6 +5,7 @@ import scene.geometry.Surface;
 public class RayTracer {
 	public static final int SCREEN_X = 640;
 	public static final int SCREEN_Y = 480;
+	public static final int MAX_RECURSION_DEPTH = 5;
 	
 	private Scene scene;
 	

@@ -18,6 +18,8 @@ import scene.material.ReflectiveMaterial;
 import scene.material.RefractiveMaterial;
 
 /*
+ * TODO optimalisatie schaduwstralen: check inwendig product normaal ding en straal
+ * TODO: verschil tussen shading normaal en echte normaal op een vlak!!!
  * TODO parse squares
  * TODO refactor material hierarchy
  * TODO Fix reflections
@@ -54,7 +56,6 @@ public class Run {
 		
 		// Load object from file
 		Material mat = new DiffuseMaterial(new Color3f(1, 1, 1));
-		Surface foo = new Model("data/objects/banana.obj", mat);
 		//Material redMat = new DiffuseMaterial(new Color3f(1, 0, 0));
 		Material redMat = new ReflectiveMaterial(0.5f);
 		Material glass = new RefractiveMaterial(new Color3f(1, 1, 1), 2f);
@@ -62,7 +63,7 @@ public class Run {
 		Surface plane = new Model("data/objects/plane.obj", mat);
 		Surface sphere = new Sphere(new Vector3f(0, 0.5f, 0), 0.5f, mat2);
 		Surface sphere3 = new Sphere(new Vector3f(0.5f, 0.5f, -1.5f), 0.5f, mat2);
-		Surface sphere2 = new Sphere(new Vector3f(1f, 0.5f, -0.5f), 0.5f, glass);
+		Surface sphere2 = new Sphere(new Vector3f(1f, 0.5f, -0.5f), 0.5f, redMat);
 		scene.addSurface(sphere);
 		scene.addSurface(sphere2);
 		scene.addSurface(plane);

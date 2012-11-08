@@ -18,8 +18,10 @@ public class ReflectiveMaterial extends PhongMaterial {
 	}
 
 	@Override
-	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer) {
-		Color3f phongShading = super.getColor(lights, hit, tracer);
+	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer, int recursionDepth) {
+		if (recursionDepth > RayTracer.MAX_RECURSION_DEPTH) return new Color3f(0, 0, 0);
+
+		Color3f phongShading = super.getColor(lights, hit, tracer, recursionDepth);
 		
 		// Construct ray from hit (angle incoming ray and normal same for outgoing and normal)
 		Vector3f rayDirection = hit.getRay().getDirection().reflectOver(hit.getNormal());
@@ -30,7 +32,7 @@ public class ReflectiveMaterial extends PhongMaterial {
 		Color3f other;
 		
 		if (nextSurfaceHit != null) {
-			other = nextSurfaceHit.getSurface().getMaterial().getColor(lights, nextSurfaceHit, tracer);
+			other = nextSurfaceHit.getSurface().getMaterial().getColor(lights, nextSurfaceHit, tracer, recursionDepth + 1);
 		} else {
 			other = new Color3f(0.1f, 0.1f, 0.1f);
 		}

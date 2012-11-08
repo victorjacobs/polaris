@@ -14,8 +14,8 @@ public class DiffuseMaterial extends Material {
 	}
 	
 	@Override
-	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer) {
-		Color3f ambientLight = super.getColor(lights, hit, tracer);
+	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer, int recursionDepth) {
+		Color3f ambientLight = super.getColor(lights, hit, tracer, recursionDepth);
 		
 		if (isInShade(lights, hit, tracer)) {
 			return ambientLight;

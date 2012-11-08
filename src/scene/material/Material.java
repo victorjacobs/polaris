@@ -21,10 +21,14 @@ public abstract class Material {
 		this.baseColor = baseColor;
 		this.needsAmbientLighting = needsAmbientLighting;
 	}
-	
+
+	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer) {
+		return getColor(lights, hit, tracer, 1);
+	}
+
 	// Implements ambient light
 	// TODO doesn't take in account the color of object
-	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer) {
+	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer, int recursionDepth) {
 		if (!needsAmbientLighting) return new Color3f(0, 0, 0);
 		
 		for (Light light : lights) {
