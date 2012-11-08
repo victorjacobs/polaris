@@ -101,6 +101,7 @@ public class CgPanel extends JPanel  implements ComponentListener {
    public void update(Graphics g) {
       mis.newPixels();
       g.drawImage(image,0,0,this);
+	  RepaintManager.currentManager(this).markCompletelyClean(this);
    }
    
    
