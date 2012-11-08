@@ -24,19 +24,17 @@ public class RefractiveMaterial extends PhongMaterial {
 
 		Ray internalRay = refractedRay(hit, hit.getNormal(), n, refractionCoefficient);
 
-		System.out.println(internalRay.getDirection());
-
-		return new Color3f(0, Math.abs(internalRay.getDirection().y * 3), Math.abs(internalRay.getDirection().z * 3));
-
 		//System.out.println("Incoming: " + hit.getRay().getDirection() + " internal: " + internalRay.getDirection());
 
-//		Hit otherSideHit = tracer.trace(internalRay, 0.01f);
-//
-//		if (otherSideHit == null) return new Color3f(0, 0, 0);
-//
-//		Ray exitingRay = refractedRay(otherSideHit, otherSideHit.getNormal().negate() , refractionCoefficient, n);
-//
-//		// Find color other side
+		Hit otherSideHit = tracer.trace(internalRay, 0.001f);
+
+		if (otherSideHit == null) return new Color3f(0, 0, 0);
+
+		Ray exitingRay = refractedRay(otherSideHit, otherSideHit.getNormal().negate() , refractionCoefficient, n);
+
+		return new Color3f(0, Math.abs(exitingRay.getDirection().y * 3), Math.abs(exitingRay.getDirection().z * 3));
+
+		// Find color other side
 //		Hit finalHit = tracer.trace(exitingRay, 0.01f);
 //
 //		if (finalHit != null) {

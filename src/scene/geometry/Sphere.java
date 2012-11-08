@@ -26,14 +26,15 @@ public class Sphere implements Surface {
 		
 		float disc = B * B - 4 * A * C;
 		
-		if (disc <= 0) return null;
-		
+		if (disc < 0) return null;
+
 		// t berekenen voor z buffering
 		float tPlus = (-B + (float)Math.sqrt(disc)) / (2 * A);
+		tPlus = (tPlus < 0) ? Float.POSITIVE_INFINITY : tPlus;
 		float tMin = (-B - (float)Math.sqrt(disc)) / (2 * A);
-		
-		
-		float t = Math.min(tPlus, tMin);
+		tMin = (tMin < 0) ? Float.POSITIVE_INFINITY : tMin;
+
+		float t = tPlus;
 		
 		if (t < t0 || t > t1) return null;
 		
