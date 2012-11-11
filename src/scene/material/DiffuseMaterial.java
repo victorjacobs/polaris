@@ -27,7 +27,6 @@ public class DiffuseMaterial extends Material {
 		sumG = 0;
 		sumB = 0;
 		
-		// TODO: p84 paragraph 4.5.4
 		for (Light light : lights) {
 			if (!(light instanceof AmbientLight)) {
 				dotProduct = Math.max(0, hit.getNormal().dotProduct(light.rayTo(hit.getPoint()).normalize()));

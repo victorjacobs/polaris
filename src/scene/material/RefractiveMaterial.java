@@ -13,7 +13,7 @@ public class RefractiveMaterial extends PhongMaterial {
 	private float n = 1;		// n where ray is travelling in
 	
 	public RefractiveMaterial(Color3f baseColor, float refractionCoefficient) {
-		super(baseColor, 10);
+		super(baseColor, 100);
 		this.refractionCoefficient = refractionCoefficient;
 	}
 	

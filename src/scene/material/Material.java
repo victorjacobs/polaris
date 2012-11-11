@@ -11,15 +11,9 @@ import java.util.HashSet;
 public abstract class Material {
 	
 	protected Color3f baseColor;
-	private boolean needsAmbientLighting;
 	
 	public Material(Color3f baseColor) {
-		this(baseColor, true);
-	}
-	
-	public Material(Color3f baseColor, boolean needsAmbientLighting) {
 		this.baseColor = baseColor;
-		this.needsAmbientLighting = needsAmbientLighting;
 	}
 
 	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer) {
@@ -29,9 +23,7 @@ public abstract class Material {
 	// Implements ambient light
 	// TODO doesn't take in account the color of object
 	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer, int recursionDepth) {
-		if (!needsAmbientLighting) return new Color3f(0, 0, 0);
-		
-		for (Light light : lights) {
+			for (Light light : lights) {
 			if (light instanceof AmbientLight) {
 				return new Color3f(baseColor.getRed() * light.intensity() * light.color().getRed(),
 									baseColor.getGreen() * light.intensity() * light.color().getGreen(),
