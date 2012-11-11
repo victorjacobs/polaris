@@ -1,8 +1,8 @@
 package scene.material;
 
-import java.io.Serializable;
-
 import scene.geometry.Tuple2f;
+
+import java.io.Serializable;
 
 public class TexCoord2f extends Tuple2f implements Serializable
 {

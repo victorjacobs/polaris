@@ -1,13 +1,13 @@
 package gui;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.RayTracer;
 import scene.Scene;
 import scene.material.Color3f;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class RendererParallel {
 	ExecutorService threadPool;

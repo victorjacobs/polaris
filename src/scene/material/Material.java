@@ -1,12 +1,12 @@
 package scene.material;
 
-import java.util.HashSet;
-
 import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.RayTracer;
 import scene.lighting.AmbientLight;
 import scene.lighting.Light;
+
+import java.util.HashSet;
 
 public abstract class Material {
 	

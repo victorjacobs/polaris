@@ -1,13 +1,13 @@
 package scene.parser;
 
-import java.util.StringTokenizer;
-
 import scene.geometry.Point3f;
 import scene.geometry.Tuple2f;
 import scene.geometry.Tuple3f;
 import scene.geometry.Vector3f;
 import scene.material.Color3f;
 import scene.material.TexCoord2f;
+
+import java.util.StringTokenizer;
 
 /**
  * Util class used to parse Strings, floats, arrays of floats, ...

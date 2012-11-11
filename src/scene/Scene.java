@@ -1,9 +1,9 @@
 package scene;
 
-import java.util.HashSet;
-
 import scene.geometry.Surface;
 import scene.lighting.Light;
+
+import java.util.HashSet;
 
 // TODO matrix stack voor transformaties van surfaces
 // TODO multiple cameras

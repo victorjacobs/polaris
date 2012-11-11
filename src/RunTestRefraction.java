@@ -2,10 +2,16 @@ import gui.CgPanel;
 import gui.RendererParallel;
 import scene.Camera;
 import scene.Scene;
-import scene.geometry.*;
+import scene.geometry.Sphere;
+import scene.geometry.Surface;
+import scene.geometry.Triangle;
+import scene.geometry.Vector3f;
 import scene.lighting.AmbientLight;
 import scene.lighting.PointLight;
-import scene.material.*;
+import scene.material.Color3f;
+import scene.material.DiffuseMaterial;
+import scene.material.Material;
+import scene.material.RefractiveMaterial;
 
 import javax.swing.*;
 

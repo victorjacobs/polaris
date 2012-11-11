@@ -1,11 +1,10 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
-
 import scene.geometry.Matrix4f;
 import scene.geometry.Vector4f;
+
+import static org.junit.Assert.assertEquals;
 
 public class Matrix4fTest {
 	

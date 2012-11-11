@@ -1,13 +1,15 @@
 package gui;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-import javax.imageio.*;
 
 import scene.material.Color3f;
 
-import java.io.*;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.MemoryImageSource;
+import java.io.File;
 
 
 /**

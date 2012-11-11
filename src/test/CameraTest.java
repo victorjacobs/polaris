@@ -1,11 +1,11 @@
 package test;
-import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import scene.Camera;
 import scene.geometry.Vector3f;
+
+import static org.junit.Assert.assertEquals;
 
 
 public class CameraTest {

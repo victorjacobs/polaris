@@ -1,16 +1,15 @@
 package scene.parser;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 import org.xml.sax.InputSource;
-
 import scene.Scene;
 import scene.geometry.Point3f;
 import scene.geometry.Vector3f;
 import scene.material.Color3f;
 import scene.material.TexCoord2f;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 /**
   * Class used to build a scene from a given sdl file.

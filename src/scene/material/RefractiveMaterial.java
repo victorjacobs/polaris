@@ -1,32 +1,32 @@
 package scene.material;
 
-import java.util.HashSet;
-
 import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.RayTracer;
 import scene.geometry.Vector3f;
 import scene.lighting.Light;
 
-public class RefractiveMaterial extends Material {
+import java.util.HashSet;
+
+public class RefractiveMaterial extends PhongMaterial {
 	private float refractionCoefficient;
 	private float n = 1;		// n where ray is travelling in
 	
 	public RefractiveMaterial(Color3f baseColor, float refractionCoefficient) {
-		super(baseColor);
+		super(baseColor, 10);
 		this.refractionCoefficient = refractionCoefficient;
 	}
 	
 	@Override
 	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer, int recursionDepth) {
 		if (recursionDepth > RayTracer.MAX_RECURSION_DEPTH) return new Color3f(0, 0, 0);
-		//Color3f phong = super.getColor(lights, hit, tracer);
+		Color3f phong = super.getColor(lights, hit, tracer, recursionDepth);
 
 		Ray nextRay;
 		Hit nextHit;
 
-		if (hit.getRay().getDirection().dotProduct(hit.getNormal()) < 0) {
-			// Normal oriented different direction than normal, this is an inside ray
+		if (hit.getRay().getDirection().dotProduct(hit.getNormal()) > 0) {
+			// Normal oriented in same direction as ray, this is an inside ray
 			nextRay = refractedRay(hit, hit.getNormal().negate(), refractionCoefficient, n);
 		} else {
 			nextRay = refractedRay(hit, hit.getNormal(), n, refractionCoefficient);
@@ -36,17 +36,15 @@ public class RefractiveMaterial extends Material {
 			// Internal reflection
 			Vector3f reflectedDirection = hit.getRay().getDirection().reflectOver(hit.getNormal().negate());
 
-			nextHit = tracer.trace(new Ray(hit.getPoint(), reflectedDirection), recursionDepth + 1);
+			nextHit = tracer.trace(new Ray(hit.getPoint(), reflectedDirection), RayTracer.EPS);
 		} else {
-			nextHit = tracer.trace(nextRay, recursionDepth + 1);
+			nextHit = tracer.trace(nextRay, RayTracer.EPS);
 		}
 
 		if (nextHit != null) {
-//			return new Color3f(nextHit.getRay().getDirection().x, nextHit.getRay().getDirection().y, nextHit.getRay().getDirection().z);
-//			return new Color3f(nextRay.getDirection().x, nextRay.getDirection().y, nextRay.getDirection().z);
-			return nextHit.getSurface().getMaterial().getColor(lights, hit, tracer);
+			return nextHit.getSurface().getMaterial().getColor(lights, hit, tracer, recursionDepth + 1).sum(phong);
 		} else {
-			return new Color3f(0, 0, 1);
+			return phong;
 		}
 
 	}

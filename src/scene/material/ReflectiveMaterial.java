@@ -1,12 +1,12 @@
 package scene.material;
 
-import java.util.HashSet;
-
 import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.RayTracer;
 import scene.geometry.Vector3f;
 import scene.lighting.Light;
+
+import java.util.HashSet;
 
 public class ReflectiveMaterial extends PhongMaterial {
 
@@ -34,7 +34,7 @@ public class ReflectiveMaterial extends PhongMaterial {
 		if (nextSurfaceHit != null) {
 			other = nextSurfaceHit.getSurface().getMaterial().getColor(lights, nextSurfaceHit, tracer, recursionDepth + 1);
 		} else {
-			other = new Color3f(0.1f, 0.1f, 0.1f);
+			other = new Color3f(0.1f, 0.1f, 0.1f);	// TODO
 		}
 		
 		return new Color3f(reflectionCoefficient * other.getRed() + phongShading.getRed(),

@@ -1,9 +1,9 @@
 package scene.material;
 
+import scene.geometry.Tuple3f;
+
 import java.awt.Color;
 import java.io.Serializable;
-
-import scene.geometry.Tuple3f;
 
 public class Color3f extends Tuple3f implements Serializable
 {
@@ -116,5 +116,9 @@ public class Color3f extends Tuple3f implements Serializable
 
 	public float getBlue() {
 		return z;
+	}
+
+	public Color3f sum(Color3f other) {
+		return new Color3f(other.x + x, other.y + y, other.z + z);
 	}
 }

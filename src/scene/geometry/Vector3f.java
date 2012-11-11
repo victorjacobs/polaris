@@ -106,8 +106,8 @@ public class Vector3f extends Tuple3f implements Serializable
     }
     
     public Vector3f reflectOver(Vector3f normal) {
-		float projectionOnNormal = dotProduct(normal);
-		Vector3f reflection = minus(normal.multiply(2 * projectionOnNormal));
+		float projectionOnNormal = this.dotProduct(normal);
+		Vector3f reflection = this.minus(normal.multiply(2 * projectionOnNormal));
 		
 		return reflection;
     }

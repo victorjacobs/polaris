@@ -1,19 +1,14 @@
 package scene.parser;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
-
 import scene.geometry.Point3f;
 import scene.geometry.Vector3f;
 import scene.material.Color3f;
 import scene.material.TexCoord2f;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 public final class Parser extends DefaultHandler
 {

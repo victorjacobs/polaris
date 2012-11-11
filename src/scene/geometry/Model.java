@@ -1,16 +1,11 @@
 package scene.geometry;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-
 import raytracer.Hit;
 import raytracer.Ray;
 import scene.material.Material;
+
+import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Class that represents a model made up out of a number of triangles
