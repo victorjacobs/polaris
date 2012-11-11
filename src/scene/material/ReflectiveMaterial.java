@@ -27,7 +27,7 @@ public class ReflectiveMaterial extends PhongMaterial {
 		Vector3f rayDirection = hit.getRay().getDirection().reflectOver(hit.getNormal());
 		Ray outgoingRay = new Ray(hit.getPoint(), rayDirection);
 		
-		Hit nextSurfaceHit = tracer.trace(outgoingRay, 0.000001f);
+		Hit nextSurfaceHit = tracer.trace(outgoingRay, RayTracer.EPS);
 		
 		Color3f other;
 		

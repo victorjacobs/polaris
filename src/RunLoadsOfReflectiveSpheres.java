@@ -54,7 +54,13 @@ public class RunLoadsOfReflectiveSpheres {
 		for (float z = 0.2f; z <= 2; z += 0.5f) {
 			for (float x = -1f; x <= 1f; x += 0.5f) {
 				for (float y = -1f; y <= 1f; y += 0.5f) {
-					surf = new Sphere(new Vector3f(x, z, y), 0.2f, veryReflectiveMaterial);
+
+					if ((x) % 2 == 0 || y % 2 == 0) {
+						surf = new Sphere(new Vector3f(x, z, y), 0.2f, greenDiffuseMaterial);
+					} else {
+						surf = new Sphere(new Vector3f(x, z, y), 0.2f, veryReflectiveMaterial);
+					}
+
 					scene.addSurface(surf);
 				}
 			}

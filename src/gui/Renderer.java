@@ -6,6 +6,7 @@ import raytracer.RayTracer;
 import scene.Scene;
 import scene.material.Color3f;
 
+@Deprecated
 public class Renderer {
 	
 	private Scene scene;
