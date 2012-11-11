@@ -8,6 +8,10 @@ import scene.lighting.Light;
 
 import java.util.HashSet;
 
+/**
+ * Class representing a material, the color that is contained herein is the so called "ambient color".
+ * Normally the colors of all the effects are the same as this one.
+ */
 public abstract class Material {
 	
 	protected Color3f baseColor;
@@ -21,7 +25,6 @@ public abstract class Material {
 	}
 
 	// Implements ambient light
-	// TODO doesn't take in account the color of object
 	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer, int recursionDepth) {
 			for (Light light : lights) {
 			if (light instanceof AmbientLight) {

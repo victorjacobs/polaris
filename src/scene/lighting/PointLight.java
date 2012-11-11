@@ -10,9 +10,13 @@ public class PointLight implements Light {
 	private float intensity;
 	
 	public PointLight(Vector3f position) {
+		this(position, 0.5f);
+	}
+
+	public PointLight(Vector3f position, float intensity) {
 		this.position = position;
 		this.color = new Color3f(1, 1, 1);
-		this.intensity = 0.5f;
+		this.intensity = intensity;
 	}
 	
 	/* (non-Javadoc)

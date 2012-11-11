@@ -29,12 +29,14 @@ public class RunLoadsOfReflectiveSpheres {
 
 		Camera camera = new Camera(new Vector3f(2, 2, 2), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
 		//PointLight light1 = new PointLight(new Vector3f(-20, 10, 0));
-		PointLight light1 = new PointLight(new Vector3f(10, 10, 0));
+		PointLight light1 = new PointLight(new Vector3f(-10, 10, -10), 0.9f);
+		PointLight light2 = new PointLight(new Vector3f(-10, 10, -10), 0.7f);
 		AmbientLight aLight = new AmbientLight(new Color3f(1, 1, 1), 0.1f);
 
 		Scene scene = new Scene();
 		scene.setCamera(camera);
 		scene.addLightSource(light1);
+		//scene.addLightSource(light2);
 		scene.addLightSource(aLight);
 
 		RendererParallel renderer = new RendererParallel(scene, panel);
