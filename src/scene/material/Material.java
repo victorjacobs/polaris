@@ -26,7 +26,7 @@ public abstract class Material {
 
 	// Implements ambient light
 	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer, int recursionDepth) {
-			for (Light light : lights) {
+		for (Light light : lights) {
 			if (light instanceof AmbientLight) {
 				return new Color3f(baseColor.getRed() * light.intensity() * light.color().getRed(),
 									baseColor.getGreen() * light.intensity() * light.color().getGreen(),

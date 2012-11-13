@@ -32,12 +32,18 @@ public class Sphere implements Surface {
 		float tPlus = (-B + (float)Math.sqrt(disc)) / (2 * A);
 		float tMin = (-B - (float)Math.sqrt(disc)) / (2 * A);
 
-		if (tPlus < 0 && tMin < 0) return null;
+		float t;
 
-		float t = Math.min(tPlus, tMin);
-		
-		if (t < t0 || t > t1) return null;
-		
+		// TODO FUCK DIT
+
+		if (tMin > t0 && tMin < t1) {
+			t = tMin;
+		} else if (tPlus > t0 && tPlus < t1) {
+			t = tPlus;
+		} else {
+			return null;
+		}
+
 		// Calculate hit point
 		Vector3f where = ray.getOrigin().sum(ray.getDirection().multiply(t));
 		

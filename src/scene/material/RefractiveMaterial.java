@@ -3,6 +3,7 @@ package scene.material;
 import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.RayTracer;
+import scene.geometry.Sphere;
 import scene.geometry.Vector3f;
 import scene.lighting.Light;
 
@@ -11,10 +12,13 @@ import java.util.HashSet;
 public class RefractiveMaterial extends PhongMaterial {
 	private float refractionCoefficient;
 	private float n = 1;		// n where ray is travelling in
+	private float ar, ag, ab;
 	
 	public RefractiveMaterial(Color3f baseColor, float refractionCoefficient) {
 		super(baseColor, 100);
 		this.refractionCoefficient = refractionCoefficient;
+
+		ar = ag = ab = 0.1f;
 	}
 	
 	@Override
@@ -24,16 +28,23 @@ public class RefractiveMaterial extends PhongMaterial {
 
 		Ray nextRay;
 		Hit nextHit;
+		float kr, kg, kb;
 
 		if (hit.getRay().getDirection().dotProduct(hit.getNormal()) > 0) {
-			// Normal oriented in same direction as ray, this is an inside ray
+			// Normal oriented in same direction as ray, this is an inner ray
 			nextRay = refractedRay(hit, hit.getNormal().negate(), refractionCoefficient, n);
+			// Set k to something
+			kr = (float)Math.exp(- ar * hit.getT());
+			kg = (float)Math.exp(- ag * hit.getT());
+			kb = (float)Math.exp(- ab * hit.getT());
 		} else {
+			// Ray entering from the outside
 			nextRay = refractedRay(hit, hit.getNormal(), n, refractionCoefficient);
+			kr = kg = kb = 1;
 		}
 
 		if (nextRay == null) {
-			// Internal reflection
+			// Complete internal reflection
 			Vector3f reflectedDirection = hit.getRay().getDirection().reflectOver(hit.getNormal().negate());
 
 			nextHit = tracer.trace(new Ray(hit.getPoint(), reflectedDirection), RayTracer.EPS);
@@ -42,7 +53,9 @@ public class RefractiveMaterial extends PhongMaterial {
 		}
 
 		if (nextHit != null) {
-			return nextHit.getSurface().getMaterial().getColor(lights, hit, tracer, recursionDepth + 1).sum(phong);
+			Color3f colorUnattenuated = nextHit.getSurface().getMaterial().getColor(lights, hit, tracer, recursionDepth + 1).sum(phong);
+
+			return new Color3f(kr * colorUnattenuated.getRed(), kg * colorUnattenuated.getGreen(), kb * colorUnattenuated.getBlue());
 		} else {
 			return phong;
 		}
