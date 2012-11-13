@@ -37,7 +37,7 @@ public class Run {
 		frame.getContentPane().add(panel);
 		frame.setVisible(true);
 
-		Camera camera = new Camera(new Vector3f(2, 2, 2), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
+		Camera camera = new Camera(new Vector3f(5, 5, 5), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
 		//PointLight light1 = new PointLight(new Vector3f(-20, 10, 0));
 		PointLight light1 = new PointLight(new Vector3f(10, 10, 0));
 		AmbientLight aLight = new AmbientLight(new Color3f(1, 1, 1), 0.1f);
@@ -50,27 +50,20 @@ public class Run {
 		Renderer renderer = new Renderer(scene, panel);
 
 		// Load object from file
-		Material mat = new DiffuseMaterial(new Color3f(1, 1, 1));
-		Surface foo = new Model("data/objects/banana.obj", mat);
-		//Material redMat = new DiffuseMaterial(new Color3f(1, 0, 0));
-		Material redMat = new ReflectiveMaterial(0.5f);
-		Material glass = new RefractiveMaterial(new Color3f(1, 1, 1), 4f);
-		Material mat2 = new DiffuseMaterial(new Color3f(0, 1, 0));
-		Surface plane = new Model("data/objects/plane.obj", mat);
-		Surface sphere = new Sphere(new Vector3f(0, 0.5f, 0), 0.5f, redMat);
-		Surface sphere3 = new Sphere(new Vector3f(0.5f, 0.5f, -2f), 0.5f, mat2);
-		Surface sphere2 = new Sphere(new Vector3f(1f, 0.5f, -0.5f), 0.5f, glass);
-		scene.addSurface(sphere);
-		scene.addSurface(sphere2);
-		scene.addSurface(plane);
-		scene.addSurface(sphere3);
+		Material glass = new RefractiveMaterial(new Color3f(1, 1, 1), 1.33f);
+		Material green = new DiffuseMaterial(new Color3f(0, 1, 0));
+		Surface teapot = new Model("data/objects/teapot.obj", glass);
+		Surface sphere = new Sphere(new Vector3f(0, 0, 0), 1, green);
+
+		scene.addSurface(teapot);
+		//scene.addSurface(sphere);
 
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
 		}
 
-		renderer.render(16);
+		renderer.render(1);
 
 	}
 }
