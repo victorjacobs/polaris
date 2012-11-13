@@ -3,6 +3,7 @@ package scene.material;
 import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.RayTracer;
+import scene.Scene;
 import scene.geometry.Sphere;
 import scene.geometry.Vector3f;
 import scene.lighting.Light;
@@ -22,9 +23,9 @@ public class RefractiveMaterial extends PhongMaterial {
 	}
 	
 	@Override
-	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer, int recursionDepth) {
+	public Color3f getColor(Scene scene, Hit hit, int recursionDepth) {
 		if (recursionDepth > RayTracer.MAX_RECURSION_DEPTH) return new Color3f(0, 0, 0);
-		Color3f phong = super.getColor(lights, hit, tracer, recursionDepth);
+		Color3f phong = super.getColor(scene, hit, recursionDepth);
 
 		Ray nextRay;
 		Hit nextHit;
@@ -47,13 +48,13 @@ public class RefractiveMaterial extends PhongMaterial {
 			// Complete internal reflection
 			Vector3f reflectedDirection = hit.getRay().getDirection().reflectOver(hit.getNormal().negate());
 
-			nextHit = tracer.trace(new Ray(hit.getPoint(), reflectedDirection), RayTracer.EPS);
+			nextHit = scene.trace(new Ray(hit.getPoint(), reflectedDirection), RayTracer.EPS);
 		} else {
-			nextHit = tracer.trace(nextRay, RayTracer.EPS);
+			nextHit = scene.trace(nextRay, RayTracer.EPS);
 		}
 
 		if (nextHit != null) {
-			Color3f colorUnattenuated = nextHit.getSurface().getMaterial().getColor(lights, hit, tracer, recursionDepth + 1).sum(phong);
+			Color3f colorUnattenuated = nextHit.getSurface().getMaterial().getColor(scene, hit, recursionDepth + 1).sum(phong);
 
 			return new Color3f(kr * colorUnattenuated.getRed(), kg * colorUnattenuated.getGreen(), kb * colorUnattenuated.getBlue());
 		} else {

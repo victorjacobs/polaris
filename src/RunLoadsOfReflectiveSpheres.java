@@ -1,5 +1,5 @@
-import gui.CgPanel;
-import gui.RendererParallel;
+import gui.*;
+import gui.Renderer;
 import scene.Camera;
 import scene.Scene;
 import scene.geometry.Model;
@@ -39,7 +39,7 @@ public class RunLoadsOfReflectiveSpheres {
 		//scene.addLightSource(light2);
 		scene.addLightSource(aLight);
 
-		RendererParallel renderer = new RendererParallel(scene, panel);
+		Renderer renderer = new gui.Renderer(scene, panel);
 
 		// Add some stuff to the scene
 		Material notSoReflectiveMaterial = new ReflectiveMaterial(0.2f);

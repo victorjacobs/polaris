@@ -2,6 +2,7 @@ package raytracer;
 import scene.Scene;
 import scene.geometry.Surface;
 
+@Deprecated
 public class RayTracer {
 	public static final int SCREEN_X = 640;
 	public static final int SCREEN_Y = 480;

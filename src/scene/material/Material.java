@@ -3,6 +3,7 @@ package scene.material;
 import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.RayTracer;
+import scene.Scene;
 import scene.lighting.AmbientLight;
 import scene.lighting.Light;
 
@@ -20,13 +21,13 @@ public abstract class Material {
 		this.baseColor = baseColor;
 	}
 
-	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer) {
-		return getColor(lights, hit, tracer, 1);
+	public Color3f getColor(Scene scene, Hit hit) {
+		return getColor(scene, hit, 1);
 	}
 
 	// Implements ambient light
-	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer, int recursionDepth) {
-		for (Light light : lights) {
+	public Color3f getColor(Scene scene, Hit hit, int recursionDepth) {
+		for (Light light : scene.getLightSources()) {
 			if (light instanceof AmbientLight) {
 				return new Color3f(baseColor.getRed() * light.intensity() * light.color().getRed(),
 									baseColor.getGreen() * light.intensity() * light.color().getGreen(),
@@ -38,10 +39,10 @@ public abstract class Material {
 	}
 	
 	// NOTE: raakvlakken zijn *normaal* geen probleem aangezien deze bedekt zijn door 1 vd vlakken
-	public boolean isInShade(HashSet<Light> lights, Hit hit, RayTracer tracer) {
-		for (Light light : lights) {
+	public boolean isInShade(Scene scene, Hit hit) {
+		for (Light light : scene.getLightSources()) {
 			if (!(light instanceof AmbientLight)) {
-				if (tracer.traceAny(new Ray(hit.getPoint(), light.rayTo(hit.getPoint())), RayTracer.EPS) != null) {
+				if (scene.traceAny(new Ray(hit.getPoint(), light.rayTo(hit.getPoint())), RayTracer.EPS) != null) {
 					return true;
 				}
 			}

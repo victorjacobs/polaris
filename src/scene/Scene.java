@@ -1,5 +1,7 @@
 package scene;
 
+import raytracer.Hit;
+import raytracer.Ray;
 import scene.geometry.Surface;
 import scene.lighting.Light;
 
@@ -15,6 +17,34 @@ public class Scene {
 	public Scene(String file) {
 		// TODO Parse from file xml
 		this();
+	}
+
+	public Hit trace(Ray ray, float eps) {
+		float lowestT = Float.POSITIVE_INFINITY;
+		Hit hit, closestHit = null;
+
+		for (Surface surf : getSurfaces()) {
+			hit = surf.hit(ray, eps, lowestT);
+
+			if (hit != null) {
+				lowestT = hit.getT();
+				closestHit = hit;
+			}
+		}
+
+		return closestHit;
+	}
+
+	public Hit traceAny(Ray ray, float eps) {
+		Hit hit;
+
+		for (Surface surf : getSurfaces()) {
+			hit = surf.hit(ray, eps, Float.POSITIVE_INFINITY);
+
+			if (hit != null) return hit;
+		}
+
+		return null;
 	}
 	
 	public Scene() {

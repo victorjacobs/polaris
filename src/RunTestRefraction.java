@@ -1,5 +1,5 @@
-import gui.CgPanel;
-import gui.RendererParallel;
+import gui.*;
+import gui.Renderer;
 import scene.Camera;
 import scene.Scene;
 import scene.geometry.Sphere;
@@ -41,7 +41,7 @@ public class RunTestRefraction {
 		scene.addLightSource(light1);
 		scene.addLightSource(aLight);
 
-		RendererParallel renderer = new RendererParallel(scene, panel);
+		Renderer renderer = new gui.Renderer(scene, panel);
 
 		Material glass = new RefractiveMaterial(new Color3f(1, 1, 1), 1.33f);
 		Material green = new DiffuseMaterial(new Color3f(0, 1, 0));

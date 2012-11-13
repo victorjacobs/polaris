@@ -1,8 +1,7 @@
-import gui.CgPanel;
-import gui.RendererParallel;
+import gui.*;
+import gui.Renderer;
 import scene.Camera;
 import scene.Scene;
-import scene.geometry.Model;
 import scene.geometry.Sphere;
 import scene.geometry.Surface;
 import scene.geometry.Vector3f;
@@ -47,7 +46,7 @@ public class Run {
 		scene.addLightSource(light1);
 		scene.addLightSource(aLight);
 		
-		RendererParallel renderer = new RendererParallel(scene, panel);
+		Renderer renderer = new gui.Renderer(scene, panel);
 		
 		// Load object from file
 		Material mat = new DiffuseMaterial(new Color3f(0, 1, 0));

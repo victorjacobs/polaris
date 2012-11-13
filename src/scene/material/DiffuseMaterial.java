@@ -2,6 +2,7 @@ package scene.material;
 
 import raytracer.Hit;
 import raytracer.RayTracer;
+import scene.Scene;
 import scene.lighting.AmbientLight;
 import scene.lighting.Light;
 
@@ -14,10 +15,10 @@ public class DiffuseMaterial extends Material {
 	}
 	
 	@Override
-	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer, int recursionDepth) {
-		Color3f ambientLight = super.getColor(lights, hit, tracer, recursionDepth);
+	public Color3f getColor(Scene scene, Hit hit, int recursionDepth) {
+		Color3f ambientLight = super.getColor(scene, hit, recursionDepth);
 		
-		if (isInShade(lights, hit, tracer)) {
+		if (isInShade(scene, hit)) {
 			return ambientLight;
 		}
 		
@@ -27,7 +28,7 @@ public class DiffuseMaterial extends Material {
 		sumG = 0;
 		sumB = 0;
 		
-		for (Light light : lights) {
+		for (Light light : scene.getLightSources()) {
 			if (!(light instanceof AmbientLight)) {
 				dotProduct = Math.max(0, hit.getNormal().dotProduct(light.rayTo(hit.getPoint()).normalize()));
 				sumR += (light.intensity() * light.color().getRed()) * dotProduct;

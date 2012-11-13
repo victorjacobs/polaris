@@ -3,6 +3,7 @@ package scene.material;
 import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.RayTracer;
+import scene.Scene;
 import scene.geometry.Vector3f;
 import scene.lighting.Light;
 
@@ -18,21 +19,21 @@ public class ReflectiveMaterial extends PhongMaterial {
 	}
 
 	@Override
-	public Color3f getColor(HashSet<Light> lights, Hit hit, RayTracer tracer, int recursionDepth) {
+	public Color3f getColor(Scene scene, Hit hit, int recursionDepth) {
 		if (recursionDepth > RayTracer.MAX_RECURSION_DEPTH) return new Color3f(0, 0, 0);
 
-		Color3f phongShading = super.getColor(lights, hit, tracer, recursionDepth);
+		Color3f phongShading = super.getColor(scene, hit, recursionDepth);
 		
 		// Construct ray from hit (angle incoming ray and normal same for outgoing and normal)
 		Vector3f rayDirection = hit.getRay().getDirection().reflectOver(hit.getNormal());
 		Ray outgoingRay = new Ray(hit.getPoint(), rayDirection);
 		
-		Hit nextSurfaceHit = tracer.trace(outgoingRay, RayTracer.EPS);
+		Hit nextSurfaceHit = scene.trace(outgoingRay, RayTracer.EPS);
 		
 		Color3f other;
 		
 		if (nextSurfaceHit != null) {
-			other = nextSurfaceHit.getSurface().getMaterial().getColor(lights, nextSurfaceHit, tracer, recursionDepth + 1);
+			other = nextSurfaceHit.getSurface().getMaterial().getColor(scene, nextSurfaceHit, recursionDepth + 1);
 		} else {
 			//other = new Color3f(0.1f, 0.1f, 0.1f);	// TODO
 			other = new Color3f(0, 0, 0);
