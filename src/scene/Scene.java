@@ -19,6 +19,10 @@ public class Scene {
 		this();
 	}
 
+	public Hit trace(Ray ray) {
+		return trace(ray, 0);
+	}
+
 	public Hit trace(Ray ray, float eps) {
 		float lowestT = Float.POSITIVE_INFINITY;
 		Hit hit, closestHit = null;
