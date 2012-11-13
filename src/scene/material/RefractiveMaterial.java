@@ -2,13 +2,9 @@ package scene.material;
 
 import raytracer.Hit;
 import raytracer.Ray;
-import raytracer.RayTracer;
+import raytracer.Settings;
 import scene.Scene;
-import scene.geometry.Sphere;
 import scene.geometry.Vector3f;
-import scene.lighting.Light;
-
-import java.util.HashSet;
 
 public class RefractiveMaterial extends PhongMaterial {
 	private float refractionCoefficient;
@@ -24,7 +20,7 @@ public class RefractiveMaterial extends PhongMaterial {
 	
 	@Override
 	public Color3f getColor(Scene scene, Hit hit, int recursionDepth) {
-		if (recursionDepth > RayTracer.MAX_RECURSION_DEPTH) return new Color3f(0, 0, 0);
+		if (recursionDepth > Settings.MAX_RECURSION_DEPTH) return new Color3f(0, 0, 0);
 		Color3f phong = super.getColor(scene, hit, recursionDepth);
 
 		Ray nextRay;
@@ -48,9 +44,9 @@ public class RefractiveMaterial extends PhongMaterial {
 			// Complete internal reflection
 			Vector3f reflectedDirection = hit.getRay().getDirection().reflectOver(hit.getNormal().negate());
 
-			nextHit = scene.trace(new Ray(hit.getPoint(), reflectedDirection), RayTracer.EPS);
+			nextHit = scene.trace(new Ray(hit.getPoint(), reflectedDirection), Settings.EPS);
 		} else {
-			nextHit = scene.trace(nextRay, RayTracer.EPS);
+			nextHit = scene.trace(nextRay, Settings.EPS);
 		}
 
 		if (nextHit != null) {

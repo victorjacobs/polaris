@@ -1,11 +1,7 @@
 package scene.material;
 
 import raytracer.Hit;
-import raytracer.RayTracer;
 import scene.Scene;
-import scene.lighting.Light;
-
-import java.util.HashSet;
 
 public class LinearCombinedMaterial extends Material {
 

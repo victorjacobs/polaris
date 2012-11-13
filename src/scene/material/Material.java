@@ -2,12 +2,10 @@ package scene.material;
 
 import raytracer.Hit;
 import raytracer.Ray;
-import raytracer.RayTracer;
+import raytracer.Settings;
 import scene.Scene;
 import scene.lighting.AmbientLight;
 import scene.lighting.Light;
-
-import java.util.HashSet;
 
 /**
  * Class representing a material, the color that is contained herein is the so called "ambient color".
@@ -42,7 +40,7 @@ public abstract class Material {
 	public boolean isInShade(Scene scene, Hit hit) {
 		for (Light light : scene.getLightSources()) {
 			if (!(light instanceof AmbientLight)) {
-				if (scene.traceAny(new Ray(hit.getPoint(), light.rayTo(hit.getPoint())), RayTracer.EPS) != null) {
+				if (scene.traceAny(new Ray(hit.getPoint(), light.rayTo(hit.getPoint())), Settings.EPS) != null) {
 					return true;
 				}
 			}

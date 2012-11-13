@@ -1,6 +1,6 @@
 package scene;
 import raytracer.Ray;
-import raytracer.RayTracer;
+import raytracer.Settings;
 import scene.geometry.Vector3f;
 
 
@@ -22,15 +22,15 @@ public class Camera {
 	public Ray rayToPixel(int x, int y) {
 		// Generate direction
 		// NOTE: l, r, t, b hebben niets te maken met SCREEN!
-		float aspectRatio = (float)RayTracer.SCREEN_Y / RayTracer.SCREEN_X;
+		float aspectRatio = (float) Settings.SCREEN_Y / Settings.SCREEN_X;
 		
 		float r = getDistanceToScreen() * (float) Math.tan(getFOV() / 2);
 		float l = -r;
 		float b = aspectRatio * r;	// TODO this isn't a real fix... ach wel.
 		float t = aspectRatio * l;
 		
-		float u = l + ((r - l) * (x + 0.5f)) / RayTracer.SCREEN_X;
-		float v = b + ((t - b) * (y + 0.5f)) / RayTracer.SCREEN_Y;
+		float u = l + ((r - l) * (x + 0.5f)) / Settings.SCREEN_X;
+		float v = b + ((t - b) * (y + 0.5f)) / Settings.SCREEN_Y;
 		
 		Vector3f direction1 = getW().multiply(getDistanceToScreen()).negate();
 		Vector3f direction2 = getU().multiply(u);
