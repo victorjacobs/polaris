@@ -38,7 +38,7 @@ public class Camera {
 		
 		Vector3f direction = direction1.sum(direction2.sum(direction3));
 		
-		return new Ray(position, direction);
+		return new Ray(position, direction.normalize());
 	}
 	
 	public Vector3f getW() {

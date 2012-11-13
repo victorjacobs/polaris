@@ -51,15 +51,17 @@ public class Run {
 		// Load object from file
 		Material mat = new DiffuseMaterial(new Color3f(0, 1, 0));
 		Material redMat = new DiffuseMaterial(new Color3f(1, 0, 0));
-		Material glass = new RefractiveMaterial(new Color3f(1, 1, 1), 4f);
+		Material glass = new RefractiveMaterial(new Color3f(1, 1, 1), 1.33f);
 
 		Surface sphereGlass = new Sphere(new Vector3f(20, 0, 0), 4, glass);
+		Surface sphereGreen3 = new Sphere(new Vector3f(40, 7, 0), 2, mat);
 		Surface sphereGreen = new Sphere(new Vector3f(40, -10, 0), 4, mat);
 		Surface sphereGreen2 = new Sphere(new Vector3f(40, 10, 5), 4, redMat);
 
 		scene.addSurface(sphereGlass);
 		scene.addSurface(sphereGreen);
 		scene.addSurface(sphereGreen2);
+		scene.addSurface(sphereGreen3);
 
 		try {
 			Thread.sleep(100);

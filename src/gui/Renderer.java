@@ -2,7 +2,6 @@ package gui;
 
 import raytracer.Hit;
 import raytracer.Ray;
-import raytracer.RayTracer;
 import scene.Scene;
 import scene.material.Color3f;
 
@@ -26,9 +25,16 @@ public class Renderer {
 		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent mouseEvent) {
-				System.out.println(mouseEvent.getXOnScreen());
+				// Just render one pixel
+				int x = mouseEvent.getX();
+				int y = mouseEvent.getY();
+
+				System.out.println("Rendering pixel (" + x + ", " + y + ")");
+
+				renderPixel(x, y);
 			}
 		});
+
 	}
 
 	private Color3f renderPixel(int x, int y) {

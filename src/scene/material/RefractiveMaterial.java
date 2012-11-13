@@ -54,7 +54,7 @@ public class RefractiveMaterial extends PhongMaterial {
 		}
 
 		if (nextHit != null) {
-			Color3f colorUnattenuated = nextHit.getSurface().getMaterial().getColor(scene, hit, recursionDepth + 1).sum(phong);
+			Color3f colorUnattenuated = nextHit.getSurface().getMaterial().getColor(scene, nextHit, recursionDepth + 1).sum(phong);
 
 			return new Color3f(kr * colorUnattenuated.getRed(), kg * colorUnattenuated.getGreen(), kb * colorUnattenuated.getBlue());
 		} else {
