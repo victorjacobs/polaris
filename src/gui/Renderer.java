@@ -5,8 +5,9 @@ import raytracer.Ray;
 import scene.Scene;
 import scene.material.Color3f;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.event.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -14,7 +15,7 @@ public class Renderer {
 	ExecutorService threadPool;
 	
 	private Scene scene;
-	private CgPanel panel;
+	private final CgPanel panel;
 	private final int cores = Runtime.getRuntime().availableProcessors();
 	
 	public Renderer(Scene scene, CgPanel panel) {
@@ -25,13 +26,34 @@ public class Renderer {
 		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent mouseEvent) {
-				// Just render one pixel
 				int x = mouseEvent.getX();
 				int y = mouseEvent.getY();
 
-				System.out.println("Rendering pixel (" + x + ", " + y + ")");
+				if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
+					// Just render one pixel
+					System.out.println("Rendering pixel (" + x + ", " + y + ")");
 
-				renderPixel(x, y);
+					renderPixel(x, y);
+				} else {
+					// Show context menu
+					JPopupMenu context = new JPopupMenu();
+					JMenuItem saveToFile = new JMenuItem("Save");
+
+					saveToFile.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							JFileChooser filePicker = new JFileChooser();
+							FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG", "png");
+							filePicker.addChoosableFileFilter(filter);
+							filePicker.showSaveDialog(Renderer.this.panel);
+
+							Renderer.this.panel.saveImage(filePicker.getSelectedFile().getPath() + ".png");
+						}
+					});
+
+					context.add(saveToFile);
+					context.show(Renderer.this.panel, x, y);
+				}
 			}
 		});
 

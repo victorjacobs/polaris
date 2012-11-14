@@ -36,7 +36,7 @@ public class Model implements Surface {
 	
 	private void parseFile(String fileName) {
 		BufferedReader reader;
-		String line = "";
+		String line;
 		
 		try {
 			File data = new File(fileName);

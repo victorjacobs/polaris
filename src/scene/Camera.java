@@ -12,11 +12,11 @@ public class Camera {
 	private float FOV;
 
 	public Camera(Vector3f position, Vector3f gaze, Vector3f up, float distanceToScreen, float FOV) {
-		setPosition(position);
-		setGaze(gaze);
-		setUp(up);
-		setDistanceToScreen(distanceToScreen);
-		setFOV(FOV);
+		this.position = position;
+		this.gaze = gaze;
+		this.up = up;
+		this.distanceToScreen = distanceToScreen;
+		this.FOV = FOV;
 	}
 	
 	public Ray rayToPixel(int x, int y) {
@@ -58,39 +58,19 @@ public class Camera {
 		return gaze;
 	}
 
-	public void setGaze(Vector3f gaze) {
-		this.gaze = gaze;
-	}
-
 	public Vector3f getUp() {
 		return up;
-	}
-
-	public void setUp(Vector3f up) {
-		this.up = up;
 	}
 
 	public Vector3f getPosition() {
 		return position;
 	}
-
-	public void setPosition(Vector3f position) {
-		this.position = position;
-	}
 	
 	public float getDistanceToScreen() {
 		return distanceToScreen;
 	}
-
-	public void setDistanceToScreen(float distanceToScreen) {
-		this.distanceToScreen = distanceToScreen;
-	}
 	
 	public float getFOV() {
 		return FOV;
-	}
-
-	public void setFOV(float FOV) {
-		this.FOV = FOV;
 	}
 }

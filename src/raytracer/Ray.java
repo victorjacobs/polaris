@@ -23,18 +23,10 @@ public class Ray {
 	public Vector3f getDirection() {
 		return direction;
 	}
-
-	public void setDirection(Vector3f direction) {
-		this.direction = direction;
-	}
 	
 	@Override
 	public String toString() {
-		StringBuilder str = new StringBuilder();
-		
-		str.append("Direction: " + getDirection().toString());
-		
-		return str.toString();
+		return "Direction: " + getDirection().toString();
 	}
 	
 }
