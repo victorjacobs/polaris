@@ -2,7 +2,7 @@
 /.project
 /.settings/
 bin/
-/data/crawler.obj
+/data/*
 .DS_Store
 /.idea/
 /Polaris.iml

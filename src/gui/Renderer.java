@@ -114,16 +114,15 @@ public class Renderer {
 							panel.drawPixel(i, j, pixelColor);
 						}
 					}
-
-					panel.repaint();
 				}
 			}
-			
 
 			long end = System.currentTimeMillis();
 			
 			System.out.println("Job for slice " + sliceNo + " depth " + depth + " finished execution");
-			
+
+			panel.repaint();
+
 			if (depth == 1) return;
 			
 			threadPool.execute(new renderJob(sliceNo, depth / 2));
