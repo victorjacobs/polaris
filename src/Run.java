@@ -36,7 +36,7 @@ public class Run {
 		frame.getContentPane().add(panel);
 		frame.setVisible(true);
 
-		Camera camera = new Camera(new Vector3f(2, 2, 2), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
+		Camera camera = new Camera(new Vector3f(2, 2, 2), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 60);
 		//PointLight light1 = new PointLight(new Vector3f(-20, 10, 0));
 		PointLight light1 = new PointLight(new Vector3f(10, 10, 0));
 		AmbientLight aLight = new AmbientLight(new Color3f(1, 1, 1), 0.1f);

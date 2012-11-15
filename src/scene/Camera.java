@@ -16,7 +16,7 @@ public class Camera {
 		this.gaze = gaze;
 		this.up = up;
 		this.distanceToScreen = distanceToScreen;
-		this.FOV = FOV;
+		this.FOV = (float)Math.toRadians(FOV);
 	}
 	
 	public Ray rayToPixel(int x, int y) {
