@@ -1,6 +1,7 @@
 package scene.material;
 
 import raytracer.Hit;
+import raytracer.Ray;
 import scene.Scene;
 import scene.geometry.Vector3f;
 import scene.lighting.AmbientLight;
@@ -20,19 +21,15 @@ public class PhongMaterial extends Material {
 	public Color3f getColor(Scene scene, Hit hit, int recursionDepth) {
 		Color3f ambientLight = super.getColor(scene, hit, recursionDepth);
 		
-		if (isInShade(scene, hit)) {
-			return ambientLight;
-		}
-		
 		Vector3f halfVector;
 		float dotProduct;
 		
-		float sumR = 0;
-		float sumG = 0;
-		float sumB = 0;
+		float sumR = ambientLight.getRed();
+		float sumG = ambientLight.getGreen();
+		float sumB = ambientLight.getBlue();
 		
 		for (Light light : scene.getLightSources()) {
-			if (!(light instanceof AmbientLight)) {
+			if (!(light instanceof AmbientLight) && !scene.isInShade(hit.getPoint(), light)) {
 				// Note: negate ray direction because we need viewing vector
 				halfVector = hit.getRay().getDirection().negate().sum(light.rayTo(hit.getPoint())).normalize();
 				

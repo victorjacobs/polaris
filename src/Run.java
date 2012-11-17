@@ -15,7 +15,6 @@ import javax.swing.*;
 
 /*
  * TODO optimalisatie schaduwstralen: check inwendig product normaal ding en straal
- * TODO: verschil tussen shading normaal en echte normaal op een vlak!!!
  * TODO parse squares
  * TODO Fix reflections
  * 		+ recursive with reflection coefficient
@@ -37,7 +36,7 @@ public class Run {
 		frame.setVisible(true);
 
 		Camera camera = new Camera(new Vector3f(2, 2, 2), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 60);
-		//PointLight light1 = new PointLight(new Vector3f(-20, 10, 0));
+		PointLight light2 = new PointLight(new Vector3f(-20, 10, 0), 0.2f);
 		PointLight light1 = new PointLight(new Vector3f(10, 10, 0));
 		AmbientLight aLight = new AmbientLight(new Color3f(1, 1, 1), 0.1f);
 
@@ -45,6 +44,7 @@ public class Run {
 		scene.setCamera(camera);
 		scene.addLightSource(light1);
 		scene.addLightSource(aLight);
+		scene.addLightSource(light2);
 
 		Renderer renderer = new Renderer(scene, panel);
 

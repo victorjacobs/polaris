@@ -2,7 +2,9 @@ package scene;
 
 import raytracer.Hit;
 import raytracer.Ray;
+import raytracer.Settings;
 import scene.geometry.Surface;
+import scene.geometry.Vector3f;
 import scene.lighting.Light;
 
 import java.util.HashSet;
@@ -78,5 +80,9 @@ public class Scene {
 	
 	public HashSet<Surface> getSurfaces() {
 		return new HashSet<Surface>(surfaces);
+	}
+
+	public boolean isInShade(Vector3f point, Light light) {
+		return traceAny(new Ray(point, light.rayTo(point)), Settings.EPS) != null;
 	}
 }
