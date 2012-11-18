@@ -6,6 +6,7 @@ import raytracer.Settings;
 import scene.geometry.Surface;
 import scene.geometry.Vector3f;
 import scene.lighting.Light;
+import scene.material.Color3f;
 
 import java.util.HashSet;
 
@@ -16,15 +17,20 @@ public class Scene {
 	private HashSet<Surface> surfaces;
 	private HashSet<Light> lights;
 	private Camera camera;
-	
-	public Scene(String file) {
-		// TODO Parse from file xml
-		this();
-	}
+	private Color3f background;
 
 	public Scene() {
 		surfaces = new HashSet<Surface>();
 		lights = new HashSet<Light>();
+		background = new Color3f(0, 0, 0);
+	}
+
+	public void setBackground(Color3f background) {
+		this.background = background;
+	}
+
+	public Color3f getBackground() {
+		return background;
 	}
 	
 	public void setCamera(Camera cam) {

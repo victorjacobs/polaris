@@ -9,7 +9,11 @@ public class Sphere implements Surface {
 	private Vector3f center;
 	private float radius;
 	private Material material;
-	
+
+	public Sphere(float radius) {
+		this.radius = radius;
+	}
+
 	public Sphere(Vector3f center, float radius, Material mat) {
 		this.center = center;
 		this.radius = radius;

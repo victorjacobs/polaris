@@ -4,12 +4,12 @@ import org.xml.sax.InputSource;
 import scene.Camera;
 import scene.Scene;
 import scene.geometry.Point3f;
+import scene.geometry.Sphere;
 import scene.geometry.Surface;
 import scene.geometry.Vector3f;
 import scene.lighting.Light;
-import scene.material.Color3f;
-import scene.material.Material;
-import scene.material.TexCoord2f;
+import scene.lighting.PointLight;
+import scene.material.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -85,7 +85,7 @@ public class SceneBuilder implements ParserHandler
         // also, if loading a large file (with lots of triangles), set echo to false
         // you should leave validate to true
         // if the docuement is not validated, the parser will not detect syntax errors
-        if (parser.parse(inputSource, /* validate */ true, /* echo */ true) == false)
+        if (parser.parse(inputSource, /* validate */ true, /* echo */ false) == false)
         {
             scene = null;
         }
@@ -102,6 +102,7 @@ public class SceneBuilder implements ParserHandler
 	private Map<String, Light> lights;
 	private Map<String, Surface> surfaces;
 	private Map<String, Material> materials;
+	private MatrixStack matrixStack;
 
     // Start file
     public void startSdl() throws Exception
@@ -127,7 +128,8 @@ public class SceneBuilder implements ParserHandler
 
     public void startCamera(Point3f position, Vector3f direction, Vector3f up, float fovy, String name) throws Exception
     {
-		//cameras.put(name, new Camera(position, direction, up, , fovy));
+		System.out.println("Adding " + name);
+		cameras.put(name, new Camera(position, direction, up, fovy));
     }
 
     public void endCamera() throws Exception
@@ -143,15 +145,13 @@ public class SceneBuilder implements ParserHandler
     // Lighting
     public void startLights() throws Exception
     {
-    }
-
-    public void endLights() throws Exception
-    {
+		System.out.println("Start parsing lights");
     }
 
     public void startDirectionalLight(Vector3f direction, float intensity, Color3f color, String name) throws Exception
     {
-
+		// TODO what's difference with pointlight?
+		throw new UnsupportedOperationException();
     }
 
     public void endDirectionalLight() throws Exception
@@ -160,7 +160,8 @@ public class SceneBuilder implements ParserHandler
 
     public void startPointLight(Point3f position, float intensity, Color3f color, String name) throws Exception
     {
-
+		System.out.println("Adding " + name);
+		lights.put(name, new PointLight(new Vector3f(position), intensity, color));
     }
 
     public void endPointLight() throws Exception
@@ -169,26 +170,29 @@ public class SceneBuilder implements ParserHandler
 
     public void startSpotLight(Point3f position, Vector3f direction, float angle, float intensity, Color3f color, String name) throws Exception
     {
-
+		throw new UnsupportedOperationException();
     }
 
     public void endSpotLight() throws Exception
     {
     }
 
+	public void endLights() throws Exception
+	{
+		System.out.println("Finished parsing lights");
+	}
     
     // Geometry
+	// TODO add file loading
     public void startGeometry() throws Exception
     {
-    }
-
-    public void endGeometry() throws Exception
-    {
+		System.out.println("Started parsing geometry");
     }
 
     public void startSphere(float radius, String name) throws Exception
     {
-
+		System.out.println("Adding sphere " + name);
+		surfaces.put(name, new Sphere(radius));
     }
 
     public void endSphere() throws Exception
@@ -197,6 +201,7 @@ public class SceneBuilder implements ParserHandler
 
     public void startCylinder(float radius, float height, boolean capped, String name) throws Exception
     {
+		System.err.println("StartCylinder not supported");
     }
 
     public void endCylinder() throws Exception
@@ -205,7 +210,7 @@ public class SceneBuilder implements ParserHandler
 
     public void startCone(float radius, float height, boolean capped, String name) throws Exception
     {
-
+		System.err.println("StartCone not supported");
     }
 
     public void endCone() throws Exception
@@ -214,6 +219,7 @@ public class SceneBuilder implements ParserHandler
 
     public void startTorus(float innerRadius, float outerRadius, String name) throws Exception
     {
+		System.err.println("StartTorus not supported");
     }
 
     public void endTorus() throws Exception
@@ -222,7 +228,7 @@ public class SceneBuilder implements ParserHandler
 
     public void startTeapot(float size, String name) throws Exception
     {
-
+		System.err.println("StartTeapot not supported");
     }
 
     public void endTeapot() throws Exception
@@ -231,11 +237,17 @@ public class SceneBuilder implements ParserHandler
 
     public void startIndexedTriangleSet(Point3f [] coordinates, Vector3f [] normals, TexCoord2f [] textureCoordinates, int [] coordinateIndices, int [] normalIndices, int [] textureCoordinateIndices, String name) throws Exception
     {
+		System.err.println("StartIndexedTriangleSet not supported");
     }
 
     public void endIndexedTriangleSet() throws Exception
     {
     }
+
+	public void endGeometry() throws Exception
+	{
+		System.out.println("Finished parsing geometry");
+	}
 
     
     // Textures
@@ -259,15 +271,13 @@ public class SceneBuilder implements ParserHandler
     // Materials
     public void startMaterials() throws Exception
     {
-    }
-
-    public void endMaterials() throws Exception
-    {
+		System.out.println("Started parsing materials");
     }
 
     public void startDiffuseMaterial(Color3f color, String name) throws Exception
     {
-
+		System.out.println("Adding diffuse material " + name);
+		materials.put(name, new DiffuseMaterial(color));
     }
 
     public void endDiffuseMaterial() throws Exception
@@ -276,7 +286,8 @@ public class SceneBuilder implements ParserHandler
 
     public void startPhongMaterial(Color3f color, float shininess, String name) throws Exception
     {
-
+		System.out.println("Adding phong material " + name);
+		materials.put(name, new PhongMaterial(color, shininess));
     }
 
     public void endPhongMaterial() throws Exception
@@ -285,16 +296,44 @@ public class SceneBuilder implements ParserHandler
 
     public void startLinearCombinedMaterial(String material1Name, float weight1, String material2Name, float weight2, String name) throws Exception
     {
+		System.err.println("StartLinearCombinedMaterial not supported");
     }
 
     public void endLinearCombinedMaterial() throws Exception
     {
     }
 
+	public void endMaterials() throws Exception
+	{
+		System.out.println("Finished parsing materials");
+	}
+
     
     // Start scene
     public void startScene(String cameraName, String [] lightNames, Color3f background) throws Exception
     {
+		System.out.println("Starting scene");
+
+		// Set camera
+		Camera mainCamera = cameras.get(cameraName);
+		if (mainCamera == null)
+			throw new IllegalArgumentException("Unable to start scene, camera " + cameraName + " not found");
+		scene.setCamera(mainCamera);
+
+		// Set all lights
+		Light light;
+		for (String lightName : lightNames) {
+			light = lights.get(lightName);
+			if (light != null) {
+				scene.addLightSource(light);
+			}
+		}
+
+		// Set background
+		scene.setBackground(background);
+
+		// Start matrix stack and apply at endpoint
+		matrixStack = new MatrixStack();
     }
 
     public void endScene() throws Exception

@@ -56,7 +56,7 @@ public class Run {
 		Material glass = new RefractiveMaterial(new Color3f(1, 1, 1), 1.33f);
 		Material mat2 = new DiffuseMaterial(new Color3f(0, 1, 0));
 		Surface plane = new Model("data/objects/plane.obj", mat);
-		Surface sphere = new Sphere(new Vector3f(0, 0.5f, 0), 0.5f, mat2);
+		Surface sphere = new Sphere(new Vector3f(0, 0.5f, 0), 0.5f, redMat);
 		Surface sphere3 = new Sphere(new Vector3f(0.5f, 0.5f, -2f), 0.5f, mat2);
 		Surface sphere2 = new Sphere(new Vector3f(1f, 0.5f, -0.5f), 0.5f, glass);
 		scene.addSurface(sphere);

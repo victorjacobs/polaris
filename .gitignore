@@ -2,7 +2,8 @@
 /.project
 /.settings/
 bin/
-/data/*
+/data/objects/*.obj
+/data/scenes/*.sdl
 .DS_Store
 /.idea/
 /Polaris.iml

@@ -17,7 +17,8 @@ public class Renderer {
 	private Scene scene;
 	private final CgPanel panel;
 	private final int cores = Runtime.getRuntime().availableProcessors();
-	
+	private long startTime;
+
 	public Renderer(Scene scene, CgPanel panel) {
 		threadPool = Executors.newFixedThreadPool(cores);
 		this.scene = scene;
@@ -67,7 +68,7 @@ public class Renderer {
 		// Do shading and color pixel
 		Color3f pixelColor;
 		if (hit == null) {
-			pixelColor = new Color3f(0, 0, 0);
+			pixelColor = scene.getBackground();
 		} else {
 			pixelColor = hit.getSurface().getMaterial().getColor(scene, hit);
 		}
@@ -76,6 +77,7 @@ public class Renderer {
 	}
 	
 	public void render(int startDepth) {
+		startTime = System.currentTimeMillis();
 		// Split up the canvas in blocks to dispatch to the threadpool
 		for (int i = 0; i < cores; i++) {
 			threadPool.execute(new renderJob(i, startDepth));
@@ -87,17 +89,12 @@ public class Renderer {
 		private int depth;
 		
 		public renderJob(int sliceNo, int depth) {
-			System.out.println("Job for slice " + sliceNo + " depth " + depth + " queued for execution");
-
 			this.sliceNo = sliceNo;
 			this.depth = depth;
 		}
 
 		@Override
 		public void run() {
-			System.out.println("Job for slice " + sliceNo + " depth " + depth + " started execution");
-			
-			long start = System.currentTimeMillis();
 			Color3f pixelColor;
 			
 			for (int x = sliceNo * (panel.getWidth() / cores) + 1; x <= (sliceNo + 1) * (panel.getWidth() / cores); x += depth) {
@@ -117,17 +114,15 @@ public class Renderer {
 				}
 			}
 
-			long end = System.currentTimeMillis();
-			
-			System.out.println("Job for slice " + sliceNo + " depth " + depth + " finished execution");
-
 			panel.repaint();
 
-			if (depth == 1) return;
+			if (depth == 1) {
+				long endTime = System.currentTimeMillis();
+				System.out.println("Slice " + sliceNo + " took " + Math.round((endTime - startTime) / 1000) + "s");
+				return;
+			}
 			
 			threadPool.execute(new renderJob(sliceNo, depth / 2));
-			
-			System.out.println("Render completed in " + Math.round((end - start) / 1000) + "s");
 		}
 	}
 }

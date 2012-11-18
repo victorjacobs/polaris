@@ -1,6 +1,7 @@
 package scene;
 import raytracer.Ray;
 import raytracer.Settings;
+import scene.geometry.Point3f;
 import scene.geometry.Vector3f;
 
 
@@ -10,6 +11,11 @@ public class Camera {
 	private Vector3f position;
 	private float distanceToScreen;
 	private float FOV;
+
+	// TODO toegelaten distance to screen te hardcoden voor algemeen geval?
+	public Camera(Point3f position, Vector3f gaze, Vector3f up, float FOV) {
+		this(new Vector3f(position), gaze, up, 5, FOV);
+	}
 
 	public Camera(Vector3f position, Vector3f gaze, Vector3f up, float distanceToScreen, float FOV) {
 		this.position = position;
