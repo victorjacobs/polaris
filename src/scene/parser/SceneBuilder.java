@@ -1,15 +1,21 @@
 package scene.parser;
 
 import org.xml.sax.InputSource;
+import scene.Camera;
 import scene.Scene;
 import scene.geometry.Point3f;
+import scene.geometry.Surface;
 import scene.geometry.Vector3f;
+import scene.lighting.Light;
 import scene.material.Color3f;
+import scene.material.Material;
 import scene.material.TexCoord2f;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
   * Class used to build a scene from a given sdl file.
@@ -26,7 +32,7 @@ import java.io.FileNotFoundException;
 public class SceneBuilder implements ParserHandler
 {
 
-    // the scene being build
+    // the scene being built
     private Scene scene = null;
 
     private Scene getScene() { return scene; }
@@ -88,33 +94,50 @@ public class SceneBuilder implements ParserHandler
         return scene;
     }
 
+	/*
+	 * START OF OWN IMPLEMENTATION
+	 */
+
+	private Map<String, Camera> cameras;
+	private Map<String, Light> lights;
+	private Map<String, Surface> surfaces;
+	private Map<String, Material> materials;
+
     // Start file
     public void startSdl() throws Exception
     {
+		System.out.println("Start parsing SDL");
+		cameras = new HashMap<String, Camera>();
+		lights = new HashMap<String, Light>();
+		surfaces = new HashMap<String, Surface>();
+		materials = new HashMap<String, Material>();
     }
 
     public void endSdl() throws Exception
     {
+		System.out.println("Finished parsing SDL");
     }
 
     
     // Start cameras
     public void startCameras() throws Exception
     {
-    }
-
-    public void endCameras() throws Exception
-    {
+		System.out.println("Start parsing cameras");
     }
 
     public void startCamera(Point3f position, Vector3f direction, Vector3f up, float fovy, String name) throws Exception
     {
-
+		//cameras.put(name, new Camera(position, direction, up, , fovy));
     }
 
     public void endCamera() throws Exception
     {
     }
+
+	public void endCameras() throws Exception
+	{
+		System.out.println("Finished parsing cameras");
+	}
     
     
     // Lighting

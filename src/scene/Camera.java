@@ -26,9 +26,9 @@ public class Camera {
 		
 		float r = getDistanceToScreen() * (float) Math.tan(getFOV() / 2);
 		float l = -r;
-		float b = aspectRatio * r;	// TODO this isn't a real fix... ach wel.
 		float t = aspectRatio * l;
-		
+		float b = -t;
+
 		float u = l + ((r - l) * (x + 0.5f)) / Settings.SCREEN_X;
 		float v = b + ((t - b) * (y + 0.5f)) / Settings.SCREEN_Y;
 		
