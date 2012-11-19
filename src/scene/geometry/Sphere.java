@@ -12,6 +12,7 @@ public class Sphere implements Surface {
 
 	public Sphere(float radius) {
 		this.radius = radius;
+		this.center = new Vector3f(0, 0, 0);
 	}
 
 	public Sphere(Vector3f center, float radius, Material mat) {
@@ -37,8 +38,6 @@ public class Sphere implements Surface {
 		float tMin = (-B - (float)Math.sqrt(disc)) / (2 * A);
 
 		float t;
-
-		// TODO FUCK DIT
 
 		if (tMin > t0 && tMin < t1) {
 			t = tMin;
@@ -75,8 +74,10 @@ public class Sphere implements Surface {
 
 	@Override
 	public void applyTransformation(Matrix4f transformation) {
-		// TODO Auto-generated method stub
-		
+		Vector4f homogenous = new Vector4f(center);
+		Vector4f transformedCenter = transformation.multiply(homogenous);
+
+		center = new Vector3f(transformedCenter.x, transformedCenter.z, transformedCenter.z);
 	}
 
 }
