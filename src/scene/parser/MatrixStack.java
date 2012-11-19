@@ -3,8 +3,7 @@ package scene.parser;
 import scene.geometry.Matrix4f;
 
 /**
- * Created with IntelliJ IDEA. User: victor Date: 18/11/12 Time: 23:38 To change this template use File | Settings |
- * File Templates.
+ * Used for traversing the scenegraph, holds a stack of transformationmatrices, pushing one on top will multiply it with the current top
  */
 public class MatrixStack {
 
@@ -16,6 +15,10 @@ public class MatrixStack {
 		startMatrix.setIdentity();
 
 		top = new StackElement(startMatrix, null);
+	}
+
+	public Matrix4f peek() {
+		return top.getData();
 	}
 
 	public Matrix4f pop() {

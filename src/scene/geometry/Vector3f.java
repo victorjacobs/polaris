@@ -110,6 +110,29 @@ public class Vector3f extends Tuple3f implements Serializable
 
 		return this.minus(normal.multiply(2 * projectionOnNormal));
     }
+
+	public Vector3f replaceSmallestComponentWith(float replace) {
+		float[] values = new float[3];
+		values[0] = x;
+		values[1] = y;
+		values[2] = z;
+
+		int smallest = 0;
+		float newX, newY, newZ;
+
+		if (y < values[smallest]) {
+			smallest = 1;
+		}
+		if (z < values[smallest]) {
+			smallest = 2;
+		}
+
+		newX = (smallest == 0) ? replace : x;
+		newY = (smallest == 1) ? replace : y;
+		newZ = (smallest == 2) ? replace : z;
+
+		return new Vector3f(newX, newY, newZ);
+	}
     
     @Override
     public boolean equals(Object o) {

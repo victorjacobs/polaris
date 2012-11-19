@@ -1,5 +1,13 @@
+import gui.CgPanel;
+import gui.Renderer;
+import raytracer.Settings;
+import scene.Scene;
+import scene.geometry.Vector3f;
+import scene.parser.AffineTransformation;
 import scene.parser.SceneBuilder;
 
+import javax.swing.*;
+import java.awt.geom.AffineTransform;
 import java.io.FileNotFoundException;
 
 /**
@@ -8,9 +16,25 @@ import java.io.FileNotFoundException;
  */
 public class RunSDLTest {
 	public static void main(String[] args) {
-		SceneBuilder builder = new SceneBuilder();
 		try {
-			builder.loadScene("data/scenes/example.sdl");
+			SceneBuilder builder = new SceneBuilder();
+			Scene scene = builder.loadScene("data/scenes/example.sdl");
+
+			CgPanel panel = new CgPanel();
+			JFrame frame = new JFrame();
+			frame.setSize(Settings.SCREEN_X, Settings.SCREEN_Y);
+			frame.getContentPane().add(panel);
+			frame.setVisible(true);
+
+			Renderer renderer = new Renderer(scene, panel);
+
+			try {
+				Thread.sleep(100);
+			} catch (Throwable e) {
+
+			}
+
+			renderer.render(8);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
 		}

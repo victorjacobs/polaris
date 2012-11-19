@@ -342,6 +342,20 @@ public class SceneBuilder implements ParserHandler
 
     public void startShape(String geometryName, String materialName, String textureName) throws Exception
     {
+		Surface shape = surfaces.get(geometryName);
+		Material mat = materials.get(materialName);
+		// TODO texture
+
+		if (shape != null && mat != null) {
+			// Transform shape
+			shape.applyTransformation(matrixStack.peek());
+			shape.setMaterial(mat);
+
+			scene.addSurface(shape);
+		} else {
+			System.err.println("Shape " + geometryName + " ignored");
+		}
+
     }
 
     public void endShape() throws Exception
@@ -352,26 +366,32 @@ public class SceneBuilder implements ParserHandler
     // Transforms
     public void startRotate(Vector3f axis, float angle) throws Exception
     {
+		matrixStack.push(AffineTransformation.rotation(axis, angle));
     }
 
     public void endRotate() throws Exception
     {
+		matrixStack.pop();
     }
 
     public void startTranslate(Vector3f vector) throws Exception
     {
+		matrixStack.push(AffineTransformation.translate(vector));
     }
 
     public void endTranslate() throws Exception
     {
+		matrixStack.pop();
     }
 
     public void startScale(Vector3f scale) throws Exception
     {
+		matrixStack.push(AffineTransformation.scale(scale));
     }
 
     public void endScale() throws Exception
     {
+		matrixStack.pop();
     }
 
 }
