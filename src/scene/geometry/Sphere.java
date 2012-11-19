@@ -74,10 +74,10 @@ public class Sphere implements Surface {
 
 	@Override
 	public void applyTransformation(Matrix4f transformation) {
-		Vector4f homogenous = new Vector4f(center);
+		Vector4f homogenous = new Vector4f(center.x, center.y, center.z, 1);
 		Vector4f transformedCenter = transformation.multiply(homogenous);
 
-		center = new Vector3f(transformedCenter.x, transformedCenter.z, transformedCenter.z);
+		center = new Vector3f(transformedCenter.x, transformedCenter.y, transformedCenter.z);
 	}
 
 }
