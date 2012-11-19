@@ -14,14 +14,13 @@ import java.awt.event.KeyEvent;
  * User: victor Date: 19/11/12
  * Time: 10:48
  */
+// TODO macify it https://github.com/nebulorum/macify
 public class PolarisMainWindow extends JFrame {
 
 	private CgPanel renderPanel;
 	private JMenuBar menuBar;
 
 	public PolarisMainWindow() {
-		Application.getApplication();
-
 		setSize(Settings.SCREEN_X, Settings.SCREEN_Y);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Polaris dev");
