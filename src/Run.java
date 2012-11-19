@@ -29,11 +29,11 @@ import javax.swing.*;
 
 public class Run {
 	public static void main(String[] args) {
-		CgPanel panel = new CgPanel();
-		JFrame frame = new JFrame();
-		frame.setSize(Settings.SCREEN_X, Settings.SCREEN_Y);
-		frame.getContentPane().add(panel);
-		frame.setVisible(true);
+		System.setProperty("apple.laf.useScreenMenuBar", "true");
+		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Polaris");
+
+		PolarisMainWindow mainWindow = new PolarisMainWindow();
+		mainWindow.display();
 
 		Camera camera = new Camera(new Vector3f(2, 2, 2), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 60);
 		PointLight light2 = new PointLight(new Vector3f(-20, 10, 0), 0.2f);
@@ -46,7 +46,7 @@ public class Run {
 		scene.addLightSource(aLight);
 		scene.addLightSource(light2);
 
-		Renderer renderer = new Renderer(scene, panel);
+		Renderer renderer = new Renderer(scene, mainWindow.getRenderPanel());
 
 		// Load object from file
 		Material mat = new DiffuseMaterial(new Color3f(1, 1, 1));
