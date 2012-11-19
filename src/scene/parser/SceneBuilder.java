@@ -106,7 +106,6 @@ public class SceneBuilder implements ParserHandler
     // Start file
     public void startSdl() throws Exception
     {
-		System.out.println("Start parsing SDL");
 		cameras = new HashMap<String, Camera>();
 		lights = new HashMap<String, Light>();
 		surfaces = new HashMap<String, Surface>();
@@ -115,14 +114,12 @@ public class SceneBuilder implements ParserHandler
 
     public void endSdl() throws Exception
     {
-		System.out.println("Finished parsing SDL");
     }
 
     
     // Start cameras
     public void startCameras() throws Exception
     {
-		System.out.println("Start parsing cameras");
     }
 
     public void startCamera(Point3f position, Vector3f direction, Vector3f up, float fovy, String name) throws Exception
@@ -137,14 +134,12 @@ public class SceneBuilder implements ParserHandler
 
 	public void endCameras() throws Exception
 	{
-		System.out.println("Finished parsing cameras");
 	}
     
     
     // Lighting
     public void startLights() throws Exception
     {
-		System.out.println("Start parsing lights");
     }
 
     public void startDirectionalLight(Vector3f direction, float intensity, Color3f color, String name) throws Exception
@@ -178,14 +173,11 @@ public class SceneBuilder implements ParserHandler
 
 	public void endLights() throws Exception
 	{
-		System.out.println("Finished parsing lights");
 	}
     
     // Geometry
-	// TODO add file loading
     public void startGeometry() throws Exception
     {
-		System.out.println("Started parsing geometry");
     }
 
     public void startSphere(float radius, String name) throws Exception
@@ -243,9 +235,18 @@ public class SceneBuilder implements ParserHandler
     {
     }
 
+	@Override
+	public void startFromFile(String name, String filePath) {
+		System.out.println("Loading " + name + " from external file");
+		surfaces.put(name, new Model(filePath));
+	}
+
+	@Override
+	public void endFromFile() {
+	}
+
 	public void endGeometry() throws Exception
 	{
-		System.out.println("Finished parsing geometry");
 	}
 
     
@@ -270,7 +271,6 @@ public class SceneBuilder implements ParserHandler
     // Materials
     public void startMaterials() throws Exception
     {
-		System.out.println("Started parsing materials");
     }
 
     public void startDiffuseMaterial(Color3f color, String name) throws Exception
@@ -302,7 +302,7 @@ public class SceneBuilder implements ParserHandler
 	public void endRefractiveMaterial() throws Exception {
 	}
 
-    public void startLinearCombinedMaterial(String material1Name, float weight1, String material2Name, float weight2, String name) throws Exception
+	public void startLinearCombinedMaterial(String material1Name, float weight1, String material2Name, float weight2, String name) throws Exception
     {
 		System.err.println("StartLinearCombinedMaterial not supported");
     }
@@ -313,14 +313,13 @@ public class SceneBuilder implements ParserHandler
 
 	public void endMaterials() throws Exception
 	{
-		System.out.println("Finished parsing materials");
 	}
 
     
     // Start scene
     public void startScene(String cameraName, String [] lightNames, Color3f background) throws Exception
     {
-		System.out.println("Starting scene");
+		System.out.println("Building scene");
 
 		// Set camera
 		Camera mainCamera = cameras.get(cameraName);

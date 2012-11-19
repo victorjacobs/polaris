@@ -493,4 +493,14 @@ public class EchoParserHandler implements ParserHandler
 		//To change body of implemented methods use File | Settings | File Templates.
 	}
 
+	@Override
+	public void startFromFile(String name, String filePath) {
+		//To change body of implemented methods use File | Settings | File Templates.
+	}
+
+	@Override
+	public void endFromFile() {
+		//To change body of implemented methods use File | Settings | File Templates.
+	}
+
 }

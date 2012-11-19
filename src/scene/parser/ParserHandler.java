@@ -89,4 +89,7 @@ public interface ParserHandler
 
 	public void startRefractiveMaterial(String name, Color3f color, float refractionIndex) throws Exception;
 	public void endRefractiveMaterial() throws Exception;
+
+	public void startFromFile(String name, String filePath);
+	public void endFromFile();
 }

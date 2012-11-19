@@ -18,7 +18,7 @@ public class RunSDLTest {
 	public static void main(String[] args) {
 		try {
 			SceneBuilder builder = new SceneBuilder();
-			Scene scene = builder.loadScene("data/scenes/teapot.sdl");
+			Scene scene = builder.loadScene("data/scenes/extern.sdl");
 
 			AmbientLight aLight = new AmbientLight(new Color3f(1, 1, 1), 0.1f);
 			scene.addLightSource(aLight);

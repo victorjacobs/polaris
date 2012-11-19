@@ -576,6 +576,16 @@ public final class Parser extends DefaultHandler
 				//if (echoHandler != null) echoHandler.startRefractiveMaterial(scale);
 				if (    handler != null) handler.startRefractiveMaterial(name, color, refractiveIndex);
 			}
+			else if (qName.equals("FromFile"))
+			{
+				String filePathString = attributes.getValue("path");
+				if (filePathString == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"path\".");
+				String filePath = ParserUtils.parseStringArray(filePathString)[0];
+
+				String name = attributes.getValue("name");
+				if (name == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"name\".");
+				if (    handler != null) handler.startFromFile(name, filePath);
+			}
             // Unknown element
             else
             {
@@ -779,6 +789,10 @@ public final class Parser extends DefaultHandler
 			else if (qName.equals("RefractiveMaterial"))
 			{
 				if (    handler != null) handler.endRefractiveMaterial();
+			}
+			else if (qName.equals("FromFile"))
+			{
+				if (    handler != null) handler.endFromFile();
 			}
             // Unknown element
             else

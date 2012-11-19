@@ -43,7 +43,7 @@
 	name						ID				#REQUIRED
 >
 
-<!ELEMENT Geometry ((Sphere|Cylinder|Cone|Torus|Teapot|IndexedTriangleSet)+)>
+<!ELEMENT Geometry ((Sphere|Cylinder|Cone|Torus|Teapot|FromFile|IndexedTriangleSet)+)>
 <!ATTLIST Geometry>
 
 <!ELEMENT Sphere EMPTY>
@@ -79,6 +79,12 @@
 <!ATTLIST Teapot
 	size						CDATA			#REQUIRED
 	name						ID				#REQUIRED
+>
+
+<!ELEMENT FromFile EMPTY>
+<!ATTLIST FromFile
+    path                        CDATA           #REQUIRED
+    name                        ID              #REQUIRED
 >
 
 <!ELEMENT IndexedTriangleSet EMPTY>
