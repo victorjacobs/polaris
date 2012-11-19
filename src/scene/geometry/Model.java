@@ -1,5 +1,6 @@
 package scene.geometry;
 
+import raytracer.BoundingBox;
 import raytracer.Hit;
 import raytracer.Ray;
 import scene.material.Material;
@@ -181,9 +182,9 @@ public class Model implements Surface {
 	}
 
 	@Override
-	public void boundingBox() {
+	public BoundingBox boundingBox() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
@@ -194,10 +195,6 @@ public class Model implements Surface {
 	@Override
 	public void setMaterial(Material mat) {
 		this.material = mat;
-	}
-	
-	public void move(float x, float y, float z) {
-		
 	}
 
 	@Override

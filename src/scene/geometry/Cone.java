@@ -1,5 +1,6 @@
 package scene.geometry;
 
+import raytracer.BoundingBox;
 import raytracer.Hit;
 import raytracer.Ray;
 import scene.material.Material;
@@ -16,8 +17,9 @@ public class Cone implements Surface {
 	}
 
 	@Override
-	public void boundingBox() {
+	public BoundingBox boundingBox() {
 		//To change body of implemented methods use File | Settings | File Templates.
+		return null;
 	}
 
 	@Override
