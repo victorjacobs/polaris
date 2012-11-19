@@ -1,6 +1,5 @@
 package gui;
 
-import com.apple.eawt.Application;
 import raytracer.Settings;
 
 import javax.swing.*;
