@@ -4,7 +4,7 @@ import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.Settings;
 import scene.geometry.Surface;
-import scene.geometry.Vector3f;
+import scene.data.Vector3f;
 import scene.lighting.Light;
 import scene.material.Color3f;
 

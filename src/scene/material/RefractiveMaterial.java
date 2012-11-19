@@ -4,7 +4,7 @@ import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.Settings;
 import scene.Scene;
-import scene.geometry.Vector3f;
+import scene.data.Vector3f;
 
 // TODO reflectie etc
 public class RefractiveMaterial extends PhongMaterial {

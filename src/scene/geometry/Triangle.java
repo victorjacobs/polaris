@@ -3,6 +3,9 @@ package scene.geometry;
 import raytracer.Hit;
 import raytracer.Ray;
 import scene.material.Material;
+import scene.data.Matrix4f;
+import scene.data.Vector3f;
+import scene.data.Vector4f;
 
 public class Triangle implements Surface {
 	

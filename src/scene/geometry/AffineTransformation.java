@@ -1,7 +1,7 @@
 package scene.geometry;
 
-import scene.geometry.Matrix4f;
-import scene.geometry.Vector3f;
+import scene.data.Matrix4f;
+import scene.data.Vector3f;
 
 /**
  * Class that constructs 4x4 matrices representing certain affine transformations in homogenous coordinates

@@ -1,6 +1,6 @@
 package scene.lighting;
 
-import scene.geometry.Vector3f;
+import scene.data.Vector3f;
 import scene.material.Color3f;
 
 public interface Light {

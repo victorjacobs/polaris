@@ -7,6 +7,8 @@ import scene.geometry.*;
 import scene.lighting.Light;
 import scene.lighting.PointLight;
 import scene.material.*;
+import scene.data.Point3f;
+import scene.data.Vector3f;
 
 import java.io.File;
 import java.io.FileInputStream;

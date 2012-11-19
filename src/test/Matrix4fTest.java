@@ -1,8 +1,8 @@
 package test;
 
 import org.junit.Test;
-import scene.geometry.Matrix4f;
-import scene.geometry.Vector4f;
+import scene.data.Matrix4f;
+import scene.data.Vector4f;
 
 import static org.junit.Assert.assertEquals;
 

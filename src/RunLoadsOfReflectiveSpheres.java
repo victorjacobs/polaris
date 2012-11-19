@@ -5,7 +5,7 @@ import scene.Scene;
 import scene.geometry.Model;
 import scene.geometry.Sphere;
 import scene.geometry.Surface;
-import scene.geometry.Vector3f;
+import scene.data.Vector3f;
 import scene.lighting.AmbientLight;
 import scene.lighting.PointLight;
 import scene.material.*;

@@ -1,7 +1,7 @@
 package scene.parser;
 
-import scene.geometry.Point3f;
-import scene.geometry.Vector3f;
+import scene.data.Point3f;
+import scene.data.Vector3f;
 import scene.material.Color3f;
 import scene.material.TexCoord2f;
 

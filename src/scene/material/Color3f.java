@@ -1,6 +1,6 @@
 package scene.material;
 
-import scene.geometry.Tuple3f;
+import scene.data.Tuple3f;
 
 import java.awt.Color;
 import java.io.Serializable;

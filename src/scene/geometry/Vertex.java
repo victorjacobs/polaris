@@ -1,5 +1,7 @@
 package scene.geometry;
 
+import scene.data.Vector3f;
+
 /**
  * Class representing a vertex, this means: a point + normal vector in point + texture vector in point
  * @author victor

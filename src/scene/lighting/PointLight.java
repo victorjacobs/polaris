@@ -1,6 +1,6 @@
 package scene.lighting;
 
-import scene.geometry.Vector3f;
+import scene.data.Vector3f;
 import scene.material.Color3f;
 
 public class PointLight implements Light {
@@ -24,7 +24,7 @@ public class PointLight implements Light {
 	}
 	
 	/* (non-Javadoc)
-	 * @see scene.lighting.Light#rayTo(scene.geometry.Vector3f)
+	 * @see scene.lighting.Light#rayTo(scene.data.Vector3f)
 	 */
 	@Override
 	public Vector3f rayTo(Vector3f point) {

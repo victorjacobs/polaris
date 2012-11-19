@@ -1,9 +1,8 @@
 package scene.material;
 
 import raytracer.Hit;
-import raytracer.Ray;
 import scene.Scene;
-import scene.geometry.Vector3f;
+import scene.data.Vector3f;
 import scene.lighting.AmbientLight;
 import scene.lighting.Light;
 

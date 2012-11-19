@@ -1,7 +1,7 @@
 package raytracer;
 
 import scene.geometry.Surface;
-import scene.geometry.Vector3f;
+import scene.data.Vector3f;
 
 // TODO getting too convoluted?
 public class Hit {

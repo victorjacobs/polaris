@@ -1,17 +1,14 @@
 import gui.*;
 import gui.Renderer;
-import raytracer.Settings;
 import scene.Camera;
 import scene.Scene;
 import scene.geometry.Model;
 import scene.geometry.Sphere;
 import scene.geometry.Surface;
-import scene.geometry.Vector3f;
+import scene.data.Vector3f;
 import scene.lighting.AmbientLight;
 import scene.lighting.PointLight;
 import scene.material.*;
-
-import javax.swing.*;
 
 /*
  * TODO optimalisatie schaduwstralen: check inwendig product normaal ding en straal

@@ -1,8 +1,8 @@
 package scene;
 import raytracer.Ray;
 import raytracer.Settings;
-import scene.geometry.Point3f;
-import scene.geometry.Vector3f;
+import scene.data.Point3f;
+import scene.data.Vector3f;
 
 
 public class Camera {

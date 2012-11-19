@@ -1,4 +1,4 @@
-package scene.geometry;
+package scene.data;
 
 
 import java.io.Serializable;

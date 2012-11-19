@@ -1,5 +1,5 @@
 package raytracer;
-import scene.geometry.Vector3f;
+import scene.data.Vector3f;
 
 /**
  * Class representing a ray

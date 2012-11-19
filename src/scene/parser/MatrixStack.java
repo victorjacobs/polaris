@@ -1,6 +1,6 @@
 package scene.parser;
 
-import scene.geometry.Matrix4f;
+import scene.data.Matrix4f;
 
 /**
  * Used for traversing the scenegraph, holds a stack of transformationmatrices, pushing one on top will multiply it with the current top

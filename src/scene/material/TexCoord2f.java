@@ -1,6 +1,6 @@
 package scene.material;
 
-import scene.geometry.Tuple2f;
+import scene.data.Tuple2f;
 
 import java.io.Serializable;
 
