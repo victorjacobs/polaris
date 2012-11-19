@@ -1,4 +1,4 @@
-package scene.parser;
+package scene.geometry;
 
 import scene.geometry.Matrix4f;
 import scene.geometry.Vector3f;

@@ -2,14 +2,11 @@ import gui.CgPanel;
 import gui.Renderer;
 import raytracer.Settings;
 import scene.Scene;
-import scene.geometry.Vector3f;
 import scene.lighting.AmbientLight;
 import scene.material.Color3f;
-import scene.parser.AffineTransformation;
 import scene.parser.SceneBuilder;
 
 import javax.swing.*;
-import java.awt.geom.AffineTransform;
 import java.io.FileNotFoundException;
 
 /**
