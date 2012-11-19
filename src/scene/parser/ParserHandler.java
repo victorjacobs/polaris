@@ -86,4 +86,7 @@ public interface ParserHandler
 
     public void startScale(Vector3f scale) throws Exception;
     public void endScale() throws Exception;
+
+	public void startRefractiveMaterial(String name, Color3f color, float refractionIndex) throws Exception;
+	public void endRefractiveMaterial() throws Exception;
 }

@@ -483,4 +483,14 @@ public class EchoParserHandler implements ParserHandler
         indent--;
     }
 
+	@Override
+	public void startRefractiveMaterial(String name, Color3f color, float refractionIndex) throws Exception {
+		//To change body of implemented methods use File | Settings | File Templates.
+	}
+
+	@Override
+	public void endRefractiveMaterial() throws Exception {
+		//To change body of implemented methods use File | Settings | File Templates.
+	}
+
 }

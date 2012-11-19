@@ -559,6 +559,23 @@ public final class Parser extends DefaultHandler
                 if (echoHandler != null) echoHandler.startScale(scale);
                 if (    handler != null) handler.startScale(scale);
             }
+			else if (qName.equals("RefractiveMaterial"))
+			{
+				String colorString = attributes.getValue("color");
+				if (colorString == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"color\".");
+				Color3f color = ParserUtils.parseColor3f(colorString);
+
+				String refractiveIndexString = attributes.getValue("refractiveIndex");
+				if (refractiveIndexString == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"refractiveIndex\".");
+				float refractiveIndex = ParserUtils.parseFloat(refractiveIndexString);
+
+				String name = attributes.getValue("name");
+				if (name == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"name\".");
+
+				// call handler
+				//if (echoHandler != null) echoHandler.startRefractiveMaterial(scale);
+				if (    handler != null) handler.startRefractiveMaterial(name, color, refractiveIndex);
+			}
             // Unknown element
             else
             {
@@ -759,6 +776,10 @@ public final class Parser extends DefaultHandler
                 if (echoHandler != null) echoHandler.endScale();
                 if (    handler != null) handler.endScale();
             }
+			else if (qName.equals("RefractiveMaterial"))
+			{
+				if (    handler != null) handler.endRefractiveMaterial();
+			}
             // Unknown element
             else
             {

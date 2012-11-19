@@ -294,6 +294,15 @@ public class SceneBuilder implements ParserHandler
     {
     }
 
+	@Override
+	public void startRefractiveMaterial(String name, Color3f color, float refractionIndex) throws Exception {
+		materials.put(name, new RefractiveMaterial(color, refractionIndex));
+	}
+
+	@Override
+	public void endRefractiveMaterial() throws Exception {
+	}
+
     public void startLinearCombinedMaterial(String material1Name, float weight1, String material2Name, float weight2, String name) throws Exception
     {
 		System.err.println("StartLinearCombinedMaterial not supported");

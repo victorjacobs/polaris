@@ -3,6 +3,8 @@ import gui.Renderer;
 import raytracer.Settings;
 import scene.Scene;
 import scene.geometry.Vector3f;
+import scene.lighting.AmbientLight;
+import scene.material.Color3f;
 import scene.parser.AffineTransformation;
 import scene.parser.SceneBuilder;
 
@@ -14,11 +16,15 @@ import java.io.FileNotFoundException;
  * Created with IntelliJ IDEA. User: victor Date: 18/11/12 Time: 23:19 To change this template use File | Settings |
  * File Templates.
  */
+// TODO still something wrong with axis system
 public class RunSDLTest {
 	public static void main(String[] args) {
 		try {
 			SceneBuilder builder = new SceneBuilder();
-			Scene scene = builder.loadScene("data/scenes/example.sdl");
+			Scene scene = builder.loadScene("data/scenes/default.sdl");
+
+			AmbientLight aLight = new AmbientLight(new Color3f(1, 1, 1), 0.1f);
+			scene.addLightSource(aLight);
 
 			CgPanel panel = new CgPanel();
 			JFrame frame = new JFrame();

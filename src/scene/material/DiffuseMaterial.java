@@ -23,7 +23,6 @@ public class DiffuseMaterial extends Material {
 		sumG = ambientLight.getGreen();
 		sumB = ambientLight.getBlue();
 
-		// TODO redenering hier is fout: moet bekijken per lamp "isInShade()" useless voor meerdere lampjes
 		for (Light light : scene.getLightSources()) {
 			if (!(light instanceof AmbientLight) && !scene.isInShade(hit.getPoint(), light)) {
 				dotProduct = Math.max(0, hit.getNormal().dotProduct(light.rayTo(hit.getPoint()).normalize()));
