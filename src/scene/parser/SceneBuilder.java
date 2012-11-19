@@ -227,7 +227,7 @@ public class SceneBuilder implements ParserHandler
 
     public void startTeapot(float size, String name) throws Exception
     {
-		System.err.println("StartTeapot not supported");
+		surfaces.put(name, new Model("data/objects/teapot.obj"));
     }
 
     public void endTeapot() throws Exception

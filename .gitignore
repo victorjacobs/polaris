@@ -3,7 +3,7 @@
 /.settings/
 bin/
 /data/objects/*.obj
-/data/scenes/*.sdl
+/data/scenes/
 .DS_Store
 /.idea/
 /Polaris.iml

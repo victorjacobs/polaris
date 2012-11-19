@@ -1,6 +1,8 @@
 package scene.geometry;
 
+import scene.data.Matrix4f;
 import scene.data.Vector3f;
+import scene.data.Vector4f;
 
 /**
  * Class representing a vertex, this means: a point + normal vector in point + texture vector in point
@@ -48,5 +50,19 @@ public class Vertex {
 
 	public void setTexture(Vector3f texture) {
 		this.texture = texture;
+	}
+
+	public Vertex applyTransformation(Matrix4f transformation) {
+		Vector4f pointHomogeneous = new Vector4f(point.x, point.y, point.z, 1);
+		Vector4f normalHomogeneous = new Vector4f(normal.x, normal.y, normal.z, 1);
+
+		pointHomogeneous = transformation.multiply(pointHomogeneous);
+		normalHomogeneous = transformation.multiply(normalHomogeneous);
+
+		Vector3f newPoint = new Vector3f(pointHomogeneous.x, pointHomogeneous.y, pointHomogeneous.z);
+		Vector3f newNormal = new Vector3f(normalHomogeneous.x, normalHomogeneous.y, normalHomogeneous.z);
+
+
+		return new Vertex(newPoint, newNormal);
 	}
 }

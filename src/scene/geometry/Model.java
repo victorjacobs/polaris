@@ -25,8 +25,11 @@ public class Model implements Surface {
 	private enum DataTags {
 		V, VT, VN, F
 	}
-	
-	// TODO eventueel parser uit halen en ergens anders zetten
+
+	public Model(String fileName) {
+		this(fileName, null);
+	}
+
 	public Model(String fileName, Material mat) {
 		System.out.println("Loading model from file " + fileName);
 		points = new ArrayList<Vector3f>();
