@@ -1,5 +1,7 @@
 package raytracer;
 
+import scene.data.Vector3f;
+
 /**
  * Created with IntelliJ IDEA.
  * User: victor
@@ -9,4 +11,19 @@ package raytracer;
  */
 public class BoundingBox {
 
+	private Vector3f min;
+	private Vector3f max;
+
+	public BoundingBox(Vector3f min, Vector3f max) {
+		this.min = min;
+		this.max = max;
+	}
+
+	public Vector3f getMin() {
+		return min;
+	}
+
+	public Vector3f getMax() {
+		return max;
+	}
 }
