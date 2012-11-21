@@ -65,6 +65,8 @@ public class Renderer implements MainWindowListener{
 	}
 	
 	public void render(int startDepth) {
+		panel.clear();
+
 		startTime = System.currentTimeMillis();
 		// Split up the canvas in blocks to dispatch to the threadpool
 		for (int i = 0; i < cores; i++) {

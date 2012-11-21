@@ -11,4 +11,6 @@ import scene.material.Color3f;
  */
 public interface MainWindowListener {
 	public Color3f renderPixel(int x, int y);
+	public void loadSDL(String file);
+	public void render(int startDepth);
 }

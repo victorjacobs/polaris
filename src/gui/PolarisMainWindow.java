@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,8 @@ public class PolarisMainWindow extends JFrame {
 		open.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				System.out.println("Should implement this");
+				listener.loadSDL(openDialog("sdl").getPath());
+				listener.render(16);
 			}
 		});
 		open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -50,14 +52,39 @@ public class PolarisMainWindow extends JFrame {
 		JMenuItem save = new JMenuItem("Save");
 		save.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				System.out.println("Should implement this");
+			public void actionPerformed(ActionEvent actionEvent) {	// TODO move to method
+				JFileChooser filePicker = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG", "png");
+				filePicker.addChoosableFileFilter(filter);
+				filePicker.showSaveDialog(renderPanel);
+
+				renderPanel.saveImage(filePicker.getSelectedFile().getPath() + ".png");
 			}
 		});
 		save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		fileMenu.add(save);
 
+		JMenuItem render = new JMenuItem("Render");
+		render.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				listener.render(16);
+			}
+		});
+		render.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		fileMenu.add(render);
+
 		menuBar.add(fileMenu);
+	}
+
+	private File openDialog(String extension) {
+		JFileChooser filePicker = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(extension.toUpperCase(), extension);
+		filePicker.addChoosableFileFilter(filter);
+		//filePicker.setCurrentDirectory(this.class.);
+		filePicker.showOpenDialog(renderPanel);
+
+		return filePicker.getSelectedFile();
 	}
 
 	private void layoutWindow() {
