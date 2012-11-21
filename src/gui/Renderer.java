@@ -11,8 +11,10 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Renderer implements MainWindowListener{
 	ExecutorService threadPool;
@@ -27,9 +29,13 @@ public class Renderer implements MainWindowListener{
 	}
 
 	public Renderer(Scene scene, CgPanel panel) {
-		threadPool = Executors.newFixedThreadPool(cores);
 		this.scene = scene;
 		this.panel = panel;
+
+	}
+
+	// TODO implement this
+	public void reloadFile() {
 
 	}
 
@@ -65,6 +71,18 @@ public class Renderer implements MainWindowListener{
 	}
 	
 	public void render(int startDepth) {
+		if (threadPool != null) {
+			System.out.println("Shutting down threadpool for new render");
+			List<Runnable> threads = threadPool.shutdownNow();
+			try {
+				threadPool.awaitTermination(500, TimeUnit.MILLISECONDS);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+		threadPool = Executors.newFixedThreadPool(cores);
+
 		panel.clear();
 
 		startTime = System.currentTimeMillis();

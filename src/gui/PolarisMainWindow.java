@@ -42,7 +42,11 @@ public class PolarisMainWindow extends JFrame {
 		open.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				listener.loadSDL(openDialog("sdl").getPath());
+				File file = openDialog("sdl");
+
+				if (file == null) return;
+
+				listener.loadSDL(file.getPath());
 				listener.render(16);
 			}
 		});
@@ -68,6 +72,7 @@ public class PolarisMainWindow extends JFrame {
 		render.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
+				listener.reloadFile();
 				listener.render(16);
 			}
 		});
