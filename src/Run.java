@@ -43,7 +43,7 @@ public class Run {
 		scene.addLightSource(aLight);
 		scene.addLightSource(light2);
 
-		Renderer renderer = new Renderer(scene, mainWindow.getRenderPanel());
+		Renderer renderer = new Renderer(scene, mainWindow.getRenderPanel(), 16);
 
 		// Load object from file
 		Material mat = new DiffuseMaterial(new Color3f(1, 1, 1));
@@ -66,7 +66,7 @@ public class Run {
 		} catch (InterruptedException e) {
 		}
 
-		renderer.render(16);
+		renderer.render();
 
 	}
 }

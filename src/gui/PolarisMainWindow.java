@@ -47,7 +47,7 @@ public class PolarisMainWindow extends JFrame {
 				if (file == null) return;
 
 				listener.loadSDL(file.getPath());
-				listener.render(16);
+				listener.render();
 			}
 		});
 		open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -73,7 +73,7 @@ public class PolarisMainWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				listener.reloadFile();
-				listener.render(16);
+				listener.render();
 			}
 		});
 		render.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));

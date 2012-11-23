@@ -39,7 +39,7 @@ public class RunLoadsOfReflectiveSpheres {
 		//scene.addLightSource(light2);
 		scene.addLightSource(aLight);
 
-		Renderer renderer = new gui.Renderer(scene, panel);
+		Renderer renderer = new gui.Renderer(scene, panel, 16);
 
 		// Add some stuff to the scene
 		Material notSoReflectiveMaterial = new ReflectiveMaterial(0.2f);
@@ -73,7 +73,7 @@ public class RunLoadsOfReflectiveSpheres {
 		} catch (InterruptedException e) {
 		}
 
-		renderer.render(16);
+		renderer.render();
 	}
 
 }

@@ -13,5 +13,5 @@ public interface MainWindowListener {
 	public Color3f renderPixel(int x, int y);
 	public void loadSDL(String file);
 	public void reloadFile();
-	public void render(int startDepth);
+	public void render();
 }

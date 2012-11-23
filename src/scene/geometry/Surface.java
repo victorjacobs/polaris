@@ -14,6 +14,4 @@ public interface Surface {
 	public void setMaterial(Material mat);
 	public void applyTransformation(Matrix4f transformation);
 	
-	// TODO translate, rotate etc
-	
 }

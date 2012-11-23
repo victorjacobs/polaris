@@ -7,31 +7,32 @@ import scene.lighting.AmbientLight;
 import scene.material.Color3f;
 import scene.parser.SceneBuilder;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 
-public class Renderer implements MainWindowListener{
+public class Renderer implements MainWindowListener {
 	ExecutorService threadPool;
 	
 	private Scene scene;
 	private final CgPanel panel;
+	private int passes;
 	private final int cores = Runtime.getRuntime().availableProcessors();
 	private long startTime;
 
-	public Renderer(CgPanel panel) {
-		this(null, panel);
+	public Renderer(CgPanel panel, int passes) {
+		this.panel = panel;
+		this.passes = passes;
 	}
 
-	public Renderer(Scene scene, CgPanel panel) {
+	@Deprecated
+	public Renderer(Scene scene, CgPanel panel, int passes) {
 		this.scene = scene;
 		this.panel = panel;
-
+		this.passes = passes;
 	}
 
 	// TODO implement this
@@ -70,7 +71,7 @@ public class Renderer implements MainWindowListener{
 		return pixelColor;
 	}
 	
-	public void render(int startDepth) {
+	public void render() {
 		if (threadPool != null) {
 			System.out.println("Shutting down threadpool for new render");
 			List<Runnable> threads = threadPool.shutdownNow();
@@ -88,33 +89,36 @@ public class Renderer implements MainWindowListener{
 		startTime = System.currentTimeMillis();
 		// Split up the canvas in blocks to dispatch to the threadpool
 		for (int i = 0; i < cores; i++) {
-			threadPool.execute(new renderJob(i, startDepth));
+			threadPool.execute(new renderJob(i, passes));
 		}
 	}
 	
 	private class renderJob implements Runnable {
 		private int sliceNo;
-		private int depth;
+		private int currentDepth;
 		
-		public renderJob(int sliceNo, int depth) {
+		public renderJob(int sliceNo, int currentDepth) {
 			this.sliceNo = sliceNo;
-			this.depth = depth;
+			this.currentDepth = currentDepth;
 		}
 
 		@Override
 		public void run() {
 			Color3f pixelColor;
 			
-			for (int x = sliceNo * (panel.getWidth() / cores) + 1; x <= (sliceNo + 1) * (panel.getWidth() / cores); x += depth) {
-				for (int y = 1; y < panel.getHeight(); y += depth) {
-					//if (x % (depth * 2) == 0 && y % (depth * 2) == 0) break;
+			for (int x = sliceNo * (panel.getWidth() / cores) + 1; x <= (sliceNo + 1) * (panel.getWidth() / cores); x += currentDepth) {
+				for (int y = 1; y < panel.getHeight(); y += currentDepth) {
+
+					if (currentDepth != passes) {
+						//if (x % (currentDepth * 2) == 0 && y % (currentDepth * 2) == 0) break;
+					}
 
 					pixelColor = renderPixel(x, y);
 
 					// Paint pixel
 
-					for (int i = x; i < x + depth; i++) {
-						for (int j = y; j < y + depth; j++) {
+					for (int i = x; i < x + currentDepth; i++) {
+						for (int j = y; j < y + currentDepth; j++) {
 							panel.drawPixel(i, j, pixelColor);
 						}
 					}
@@ -123,13 +127,17 @@ public class Renderer implements MainWindowListener{
 
 			panel.repaint();
 
-			if (depth == 1) {
+			if (currentDepth == 1) {
 				long endTime = System.currentTimeMillis();
 				System.out.println("Slice " + sliceNo + " took " + Math.round((endTime - startTime) / 1000) + "s");
 				return;
 			}
-			
-			threadPool.execute(new renderJob(sliceNo, depth / 2));
+
+			try {
+				threadPool.execute(new renderJob(sliceNo, currentDepth / 2));
+			} catch (RejectedExecutionException e) {
+				// Do nothing here, pool is shutting down
+			}
 		}
 	}
 }

@@ -20,7 +20,7 @@ public class RunSDLTest {
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Polaris");
 
 		PolarisMainWindow mainWindow = new PolarisMainWindow();
-		Renderer renderer = new Renderer(mainWindow.getRenderPanel());
+		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), 16);
 		renderer.loadSDL("data/scenes/default.sdl");
 
 		mainWindow.setListener(renderer);
@@ -33,6 +33,6 @@ public class RunSDLTest {
 
 		}
 
-		renderer.render(8);
+		renderer.render();
 	}
 }
