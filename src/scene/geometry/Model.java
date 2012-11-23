@@ -9,6 +9,8 @@ import scene.data.Vector3f;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Class that represents a model made up out of a number of triangles
@@ -16,7 +18,7 @@ import java.util.ArrayList;
  * @author victor
  *
  */
-public class Model implements Surface {
+public class Model extends Surface {
 	private ArrayList<Vector3f> points;
 	private ArrayList<Vector3f> normalVectors;
 	private ArrayList<Triangle> triangles;
@@ -205,5 +207,10 @@ public class Model implements Surface {
 		for (Triangle triag : triangles) {
 			triag.applyTransformation(transformation);
 		}
+	}
+
+	@Override
+	public List<Surface> getPrimitiveSurfaces() {
+		return new LinkedList<Surface>(triangles);
 	}
 }

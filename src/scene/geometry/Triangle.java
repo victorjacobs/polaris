@@ -8,7 +8,10 @@ import scene.data.Matrix4f;
 import scene.data.Vector3f;
 import scene.data.Vector4f;
 
-public class Triangle implements Surface {
+import java.util.LinkedList;
+import java.util.List;
+
+public class Triangle extends Surface {
 	
 	// Vertices
 	private Vertex v1;

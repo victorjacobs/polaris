@@ -10,7 +10,7 @@ import scene.data.Matrix4f;
  * Created with IntelliJ IDEA. User: victor Date: 18/11/12 Time: 23:32 To change this template use File | Settings |
  * File Templates.
  */
-public class Cone implements Surface {
+public class Cone extends Surface {
 	@Override
 	public Hit hit(Ray ray, float t0, float t1) {
 		return null;  //To change body of implemented methods use File | Settings | File Templates.

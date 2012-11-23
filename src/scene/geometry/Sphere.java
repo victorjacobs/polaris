@@ -8,7 +8,7 @@ import scene.data.Matrix4f;
 import scene.data.Vector3f;
 import scene.data.Vector4f;
 
-public class Sphere implements Surface {
+public class Sphere extends Surface {
 	
 	private Vector3f center;
 	private float radius;
