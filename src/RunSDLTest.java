@@ -1,14 +1,5 @@
-import gui.CgPanel;
 import gui.PolarisMainWindow;
 import gui.Renderer;
-import raytracer.Settings;
-import scene.Scene;
-import scene.lighting.AmbientLight;
-import scene.material.Color3f;
-import scene.parser.SceneBuilder;
-
-import javax.swing.*;
-import java.io.FileNotFoundException;
 
 /**
  * Created with IntelliJ IDEA. User: victor Date: 18/11/12 Time: 23:19 To change this template use File | Settings |

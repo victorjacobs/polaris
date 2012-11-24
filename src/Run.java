@@ -1,6 +1,7 @@
 import gui.*;
 import gui.Renderer;
 import scene.Camera;
+import scene.BasicScene;
 import scene.Scene;
 import scene.geometry.Model;
 import scene.geometry.Sphere;
@@ -37,7 +38,7 @@ public class Run {
 		PointLight light1 = new PointLight(new Vector3f(10, 10, 0));
 		AmbientLight aLight = new AmbientLight(new Color3f(1, 1, 1), 0.1f);
 
-		Scene scene = new Scene();
+		Scene scene = new BasicScene();
 		scene.setCamera(camera);
 		scene.addLightSource(light1);
 		scene.addLightSource(aLight);

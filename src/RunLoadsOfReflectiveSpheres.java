@@ -1,5 +1,6 @@
 import gui.*;
 import gui.Renderer;
+import scene.BasicScene;
 import scene.Camera;
 import scene.Scene;
 import scene.geometry.Model;
@@ -33,7 +34,7 @@ public class RunLoadsOfReflectiveSpheres {
 		PointLight light2 = new PointLight(new Vector3f(-10, 10, -10), 0.7f);
 		AmbientLight aLight = new AmbientLight(new Color3f(1, 1, 1), 0.1f);
 
-		Scene scene = new Scene();
+		Scene scene = new BasicScene();
 		scene.setCamera(camera);
 		scene.addLightSource(light1);
 		//scene.addLightSource(light2);

@@ -1,5 +1,9 @@
 package raytracer;
 
+import scene.geometry.Surface;
+
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: victor
@@ -8,5 +12,13 @@ package raytracer;
  * To change this template use File | Settings | File Templates.
  */
 public class Grid {
+	private List<Surface> surfaceBag;
 
+	private Surface[] grid;
+
+	public Grid(List<Surface> surfaceBag) {
+		this.surfaceBag = surfaceBag;
+
+		// Build grid
+	}
 }

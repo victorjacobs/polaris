@@ -1,6 +1,7 @@
 package scene.parser;
 
 import org.xml.sax.InputSource;
+import scene.BasicScene;
 import scene.Camera;
 import scene.Scene;
 import scene.geometry.*;
@@ -74,7 +75,7 @@ public class SceneBuilder implements ParserHandler
 
 
         // create the new scene
-        scene = new Scene();
+        scene = new BasicScene();
 
         // create the parser and parse the input file
         Parser parser = new Parser();
