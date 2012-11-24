@@ -18,7 +18,7 @@ import java.util.HashSet;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class SceneDecorator implements Scene {
-	private Scene scene;
+	protected Scene scene;
 
 	public SceneDecorator(Scene scene) {
 		this.scene = scene;

@@ -32,6 +32,10 @@ import java.util.Map;
 public class SceneBuilder implements ParserHandler
 {
 
+	public SceneBuilder(Scene scene) {
+		this.scene = scene;
+	}
+
     // the scene being built
     private Scene scene = null;
 
@@ -71,11 +75,6 @@ public class SceneBuilder implements ParserHandler
         String parentPath = file.getParentFile().getAbsolutePath() + "/";
         path = file.getParentFile().getAbsolutePath() + "/";
         inputSource.setSystemId("file:///" + file.getParentFile().getAbsolutePath() + "/");
-
-
-
-        // create the new scene
-        scene = new BasicScene();
 
         // create the parser and parse the input file
         Parser parser = new Parser();

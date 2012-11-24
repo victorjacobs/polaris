@@ -20,19 +20,28 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class GridAcceleratedScene extends SceneDecorator {
-	private BasicScene scene;
 	private List<Surface> primitiveBag;
 	private Grid grid;
 
 	public GridAcceleratedScene(BasicScene scene) {
 		super(scene);
-		this.scene = scene;
 		primitiveBag = new LinkedList<Surface>();
 		System.out.println("Loaded grid accelerated renderereererer");
 	}
 
 	@Override
+	public void addSurface(Surface surf) {
+		scene.addSurface(surf);
+
+		// Dump primitives in surf in the bag
+		primitiveBag.addAll(surf.getPrimitiveSurfaces());
+	}
+
+	@Override
 	public Hit trace(Ray ray, float eps) {
+		if (grid == null)
+			grid = new Grid(primitiveBag);
+
 		// TODO grid acceleration magic here
 		return scene.trace(ray, eps);
 	}
@@ -40,15 +49,5 @@ public class GridAcceleratedScene extends SceneDecorator {
 	@Override
 	public Hit traceAny(Ray ray, float eps) {
 		return scene.traceAny(ray, eps);
-	}
-
-	private void dumpPrimitivesInBag() {
-		for (Surface surf : scene.getSurfaces()) {
-			primitiveBag.addAll(surf.getPrimitiveSurfaces());
-		}
-	}
-
-	private void setUpGrid() {
-		grid = new Grid(primitiveBag);
 	}
 }

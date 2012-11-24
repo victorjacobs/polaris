@@ -1,5 +1,6 @@
 package raytracer;
 
+import com.sun.org.apache.xerces.internal.impl.dv.xs.YearDV;
 import scene.data.Vector3f;
 
 /**
@@ -69,5 +70,21 @@ public class BoundingBox {
 		if (oMax.z > nMax.z) nMax.z = oMax.z;
 
 		return new BoundingBox(nMin, nMax);
+	}
+
+	public float[] size() {
+		float x = Math.abs(getMax().x - getMin().x);
+		float y = Math.abs(getMax().y - getMin().y);
+		float z = Math.abs(getMax().z - getMin().z);
+
+		float[] out = {x, y, z};
+
+		return out;
+	}
+
+	public float getVolume() {
+		float[] dimensions = size();
+
+		return dimensions[0] * dimensions[1] * dimensions[2];
 	}
 }

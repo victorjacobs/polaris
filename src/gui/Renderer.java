@@ -2,6 +2,8 @@ package gui;
 
 import raytracer.Hit;
 import raytracer.Ray;
+import scene.BasicScene;
+import scene.GridAcceleratedScene;
 import scene.Scene;
 import scene.lighting.AmbientLight;
 import scene.material.Color3f;
@@ -42,7 +44,7 @@ public class Renderer implements MainWindowListener {
 
 	// TODO add ambient light to SDL
 	public void loadSDL(String file) {
-		SceneBuilder sceneBuilder = new SceneBuilder();
+		SceneBuilder sceneBuilder = new SceneBuilder(new GridAcceleratedScene(new BasicScene()));
 
 		try {
 			scene = sceneBuilder.loadScene(file);
