@@ -13,7 +13,7 @@ import scene.material.*;
 
 /*
  * TODO optimalisatie schaduwstralen: check inwendig product normaal ding en straal
- * TODO parse squares
+ * TODO parse squares !! (make general)
  * TODO Fix reflections
  * 		+ recursive with reflection coefficient
  * TODO texture mapping

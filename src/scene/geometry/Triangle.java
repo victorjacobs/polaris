@@ -101,7 +101,7 @@ public class Triangle extends Surface {
 		
 		Vector3f interpolatedNormal = v1.getNormal().multiply(alpha).sum(v2.getNormal().multiply(beta).sum(v3.getNormal().multiply(gamma)));
 		
-		// Calculate in what point the hit occured
+		// Calculate in what point the hit occurred
 		Vector3f where = ray.getOrigin().sum(ray.getDirection().multiply(t));
 		
 		return new Hit(ray, this, where, interpolatedNormal.normalize(), t);
@@ -110,7 +110,14 @@ public class Triangle extends Surface {
 	@Override
 	public BoundingBox boundingBox() {
 		// TODO Auto-generated method stub
-		return null;
+		// TODO this method might be useful globally
+		// For make benefit storing of vertices in array TODO maybe move this to class level
+		Vector3f[] vertices = new Vector3f[3];
+		vertices[0] = v1.getPoint();
+		vertices[1] = v2.getPoint();
+		vertices[2] = v3.getPoint();
+
+		return new BoundingBox(vertices);
 	}
 
 	@Override
@@ -120,8 +127,7 @@ public class Triangle extends Surface {
 
 	@Override
 	public void setMaterial(Material mat) {
-		// TODO Auto-generated method stub
-		
+		this.material = mat;
 	}
 
 	@Override

@@ -14,6 +14,27 @@ public class BoundingBox {
 	private Vector3f min;
 	private Vector3f max;
 
+	public BoundingBox() {
+		this.min = new Vector3f(0, 0, 0);
+		this.max = new Vector3f(0, 0, 0);
+	}
+
+	public BoundingBox(Vector3f[] points) {
+		Vector3f min = points[0], max = points[0];
+
+		for (int i = 1; i < points.length; i++) {
+			if (points[i].x < min.x) min.x = points[i].x;
+			if (points[i].y < min.y) min.y = points[i].y;
+			if (points[i].z < min.z) min.z = points[i].z;
+			if (points[i].x > max.x) max.x = points[i].x;
+			if (points[i].y > max.y) max.y = points[i].y;
+			if (points[i].z > max.z) max.z = points[i].z;
+		}
+
+		this.min = min;
+		this.max = max;
+	}
+
 	public BoundingBox(Vector3f min, Vector3f max) {
 		this.min = min;
 		this.max = max;
@@ -25,5 +46,21 @@ public class BoundingBox {
 
 	public Vector3f getMax() {
 		return max;
+	}
+
+	public BoundingBox add(BoundingBox otherBB) {
+		Vector3f oMin = otherBB.getMin();
+		Vector3f oMax = otherBB.getMax();
+
+		Vector3f nMin = min, nMax = max;
+
+		if (oMin.x < nMin.x) nMin.x = oMin.x;
+		if (oMin.y < nMin.y) nMin.y = oMin.y;
+		if (oMin.z < nMin.z) nMin.z = oMin.z;
+		if (oMax.x > nMax.x) nMax.x = oMax.x;
+		if (oMax.y > nMax.y) nMax.y = oMax.y;
+		if (oMax.z > nMax.z) nMax.z = oMax.z;
+
+		return new BoundingBox(nMin, nMax);
 	}
 }

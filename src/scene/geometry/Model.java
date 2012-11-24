@@ -188,8 +188,13 @@ public class Model extends Surface {
 
 	@Override
 	public BoundingBox boundingBox() {
-		// TODO Auto-generated method stub
-		return null;
+		BoundingBox bb = new BoundingBox();
+
+		for (Surface triag : triangles) {
+			bb = bb.add(triag.boundingBox());
+		}
+
+		return bb;
 	}
 
 	@Override
