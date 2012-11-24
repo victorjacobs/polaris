@@ -14,4 +14,5 @@ public interface MainWindowListener {
 	public void loadSDL(String file);
 	public void reloadFile();
 	public void render();
+	void abortRender(boolean willFlush);
 }

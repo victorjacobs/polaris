@@ -79,6 +79,16 @@ public class PolarisMainWindow extends JFrame {
 		render.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		fileMenu.add(render);
 
+		JMenuItem abort = new JMenuItem("Abort");
+		abort.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				listener.abortRender(true);
+			}
+		});
+		abort.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		fileMenu.add(abort);
+
 		menuBar.add(fileMenu);
 	}
 

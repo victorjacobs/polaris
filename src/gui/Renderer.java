@@ -73,18 +73,10 @@ public class Renderer implements MainWindowListener {
 	
 	public void render() {
 		if (threadPool != null) {
-			System.out.println("Shutting down threadpool for new render");
-			List<Runnable> threads = threadPool.shutdownNow();
-			try {
-				threadPool.awaitTermination(500, TimeUnit.MILLISECONDS);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			abortRender(false);
+		} else {
+			this.threadPool = Executors.newFixedThreadPool(cores);
 		}
-
-		threadPool = Executors.newFixedThreadPool(cores);
-
-		panel.clear();
 
 		startTime = System.currentTimeMillis();
 		// Split up the canvas in blocks to dispatch to the threadpool
@@ -92,7 +84,29 @@ public class Renderer implements MainWindowListener {
 			threadPool.execute(new renderJob(i, passes));
 		}
 	}
-	
+
+	@Override
+	public void abortRender(boolean shouldFlush) {
+		System.out.println("Shutting down threadpool");
+
+		try {
+			threadPool.shutdownNow();
+			threadPool.awaitTermination(1000, TimeUnit.MILLISECONDS);
+
+			threadPool = Executors.newFixedThreadPool(cores);
+
+			if (shouldFlush) {
+				panel.repaint();
+			} else {
+				panel.clear();
+			}
+		} catch (RejectedExecutionException e) {
+			e.printStackTrace();
+		} catch (InterruptedException f) {
+			f.printStackTrace();
+		}
+	}
+
 	private class renderJob implements Runnable {
 		private int sliceNo;
 		private int currentDepth;
