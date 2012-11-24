@@ -53,16 +53,18 @@ public class Vertex {
 	}
 
 	public Vertex applyTransformation(Matrix4f transformation) {
+		// Note: normal vectors shouldn't be translated!! Therefore reset the last row and column of the transformation matrix
 		Vector4f pointHomogeneous = new Vector4f(point.x, point.y, point.z, 1);
 		Vector4f normalHomogeneous = new Vector4f(normal.x, normal.y, normal.z, 1);
 
 		pointHomogeneous = transformation.multiply(pointHomogeneous);
+		transformation.setColumn(3, 0, 0, 0, 1);
+		transformation.setRow(3, 0, 0, 0, 1);
 		normalHomogeneous = transformation.multiply(normalHomogeneous);
 
 		Vector3f newPoint = new Vector3f(pointHomogeneous.x, pointHomogeneous.y, pointHomogeneous.z);
 		Vector3f newNormal = new Vector3f(normalHomogeneous.x, normalHomogeneous.y, normalHomogeneous.z);
 
-
-		return new Vertex(newPoint, newNormal);
+		return new Vertex(newPoint, newNormal.normalize());
 	}
 }

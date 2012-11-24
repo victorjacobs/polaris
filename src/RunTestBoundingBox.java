@@ -14,13 +14,13 @@ import scene.lighting.PointLight;
 import scene.material.Color3f;
 import scene.material.DiffuseMaterial;
 import scene.material.Material;
+import scene.material.RefractiveMaterial;
 
 /**
  * Created with IntelliJ IDEA.
  * User: victor
  * Date: 24/11/12
  * Time: 02:06
- * To change this template use File | Settings | File Templates.
  */
 public class RunTestBoundingBox {
 	public static void main(String[] args) {
@@ -37,17 +37,17 @@ public class RunTestBoundingBox {
 		scene.setCamera(camera);
 
 		Material mat = new DiffuseMaterial(new Color3f(0, 1, 0));
-		Surface elf = new Model("data/objects/elephav.obj", mat);
+		Surface elf = new Model("data/objects/elf.obj", mat);
 
 		// Move elf to origin
 		BoundingBox bb = elf.boundingBox();
-		Vector3f translate = bb.getMin().sum(bb.getMax()).divideBy(2);
+		Vector3f translate = bb.getMin().sum(bb.getMax()).divideBy(2).negate();
 
-		Matrix4f trans = AffineTransformation.translate(translate.negate());
+		Matrix4f trans = AffineTransformation.translate(translate);
 
 		elf.applyTransformation(trans);
 
-		trans = AffineTransformation.scale(new Vector3f(0.01f, 0.01f, 0.01f));
+		trans = AffineTransformation.scale(new Vector3f(0.07f, 0.07f, 0.07f));
 
 		elf.applyTransformation(trans);
 
@@ -61,6 +61,13 @@ public class RunTestBoundingBox {
 
 		window.display();
 
+		try {
+			Thread.sleep(100);
+		} catch (Throwable e) {
+
+		}
+
+		// Disable actual rendering for make greater power saving
 		renderer.render();
 	}
 }
