@@ -188,9 +188,12 @@ public class Model extends Surface {
 
 	@Override
 	public BoundingBox boundingBox() {
-		BoundingBox bb = new BoundingBox();
+		BoundingBox bb = null;
 
 		for (Surface triag : triangles) {
+			if (bb == null)
+				bb = new BoundingBox(triag.boundingBox());
+
 			bb = bb.add(triag.boundingBox());
 		}
 

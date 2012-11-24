@@ -20,7 +20,9 @@ public class BoundingBox {
 	}
 
 	public BoundingBox(Vector3f[] points) {
-		Vector3f min = points[0], max = points[0];
+		// Clone vectors into new variables, otherwise the for loop will change the original vertex
+		Vector3f min = (Vector3f)points[0].clone();
+		Vector3f max = (Vector3f)points[0].clone();
 
 		for (int i = 1; i < points.length; i++) {
 			if (points[i].x < min.x) min.x = points[i].x;
@@ -38,6 +40,11 @@ public class BoundingBox {
 	public BoundingBox(Vector3f min, Vector3f max) {
 		this.min = min;
 		this.max = max;
+	}
+
+	public BoundingBox(BoundingBox boundingBox) {
+		this.min = boundingBox.getMin();
+		this.max = boundingBox.getMax();
 	}
 
 	public Vector3f getMin() {

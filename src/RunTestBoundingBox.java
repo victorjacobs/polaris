@@ -31,34 +31,33 @@ public class RunTestBoundingBox {
 		Renderer renderer = new Renderer(window.getRenderPanel(), 32);
 
 		Scene scene = new BasicScene();
+		renderer.loadScene(scene);
 
-		Camera camera = new Camera(new Vector3f(2, 2, 2), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 60);
+		Camera camera = new Camera(new Vector3f(10, 10, 10), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 60);
 		scene.setCamera(camera);
 
 		Material mat = new DiffuseMaterial(new Color3f(0, 1, 0));
-		Surface elf = new Model("data/objects/elf.obj", mat);
+		Surface elf = new Model("data/objects/elephav.obj", mat);
 
 		// Move elf to origin
 		BoundingBox bb = elf.boundingBox();
 		Vector3f translate = bb.getMin().sum(bb.getMax()).divideBy(2);
 
-		Matrix4f trans = AffineTransformation.translate(translate);
+		Matrix4f trans = AffineTransformation.translate(translate.negate());
 
 		elf.applyTransformation(trans);
 
-		trans = AffineTransformation.scale(new Vector3f(0.1f, 0.1f, 0.1f));
+		trans = AffineTransformation.scale(new Vector3f(0.01f, 0.01f, 0.01f));
 
 		elf.applyTransformation(trans);
 
 
 
-		Light light = new PointLight(new Vector3f(10, 10, 10));
+		Light light = new PointLight(new Vector3f(20, 20, 20));
 
 		scene.addLightSource(light);
 		scene.setBackground(new Color3f(0.3f, 0.3f, 0.3f));
 		scene.addSurface(elf);
-
-		//renderer.loadScene(scene);
 
 		window.display();
 
