@@ -54,6 +54,10 @@ public class Renderer implements MainWindowListener {
 		scene.addLightSource(aLight);
 	}
 
+	public void loadScene(Scene scene) {
+		this.scene = scene;
+	}
+
 	@Override
 	public Color3f renderPixel(int x, int y) {
 		Ray ray = scene.getCamera().rayToPixel(x, y);
