@@ -150,5 +150,13 @@ public class Vector3f extends Tuple3f implements Serializable
     public String toString() {
     	return "(" + x + ", " + y + ", " + z + ")";
     }
+
+	public float get(int i) {
+		if (i == 0) return x;
+		if (i == 1) return y;
+		if (i == 2) return z;
+
+		return 0;
+	}
     
 }

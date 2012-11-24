@@ -37,7 +37,7 @@ public class RunTestBoundingBox {
 		scene.setCamera(camera);
 
 		Material mat = new DiffuseMaterial(new Color3f(0, 1, 0));
-		Surface elf = new Model("data/objects/elf.obj", mat);
+		Surface elf = new Model("data/objects/elephav.obj", mat);
 
 		// Move elf to origin
 		BoundingBox bb = elf.boundingBox();
@@ -47,7 +47,7 @@ public class RunTestBoundingBox {
 
 		elf.applyTransformation(trans);
 
-		trans = AffineTransformation.scale(new Vector3f(0.07f, 0.07f, 0.07f));
+		trans = AffineTransformation.scale(new Vector3f(0.5f, 0.5f, 0.5f));
 
 		elf.applyTransformation(trans);
 

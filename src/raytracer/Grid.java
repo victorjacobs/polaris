@@ -19,7 +19,8 @@ public class Grid {
 	// Bounding box of the entire scene
 	private BoundingBox bb;
 
-	private List<Surface> surfaceBag;
+	// Bag filled with all primitives that are included in the grid
+	private List<Surface> primitiveBag;
 
 	// Number of cells in grid
 	private int[] M;
@@ -29,8 +30,8 @@ public class Grid {
 	// Offsets
 	private int[] C;
 
-	public Grid(List<Surface> surfaceBag) {
-		this.surfaceBag = surfaceBag;
+	public Grid(List<Surface> primitiveBag) {
+		this.primitiveBag = primitiveBag;
 		this.M = new int[3];
 
 		calculateGridDimensions();
@@ -39,7 +40,7 @@ public class Grid {
 	}
 
 	private void calculateGridDimensions() {
-		for (Surface surf : surfaceBag) {
+		for (Surface surf : primitiveBag) {
 			if (bb == null)
 				bb = new BoundingBox(surf.boundingBox());
 
@@ -50,9 +51,25 @@ public class Grid {
 		float volume = bb.getVolume();
 
 		for (int i = 0; i < 3; i++) {
-			M[i] = Math.round(dimensions[i] * (float)Math.sqrt((gridDensity * surfaceBag.size()) / volume));
+			M[i] = Math.round(dimensions[i] * (float)Math.sqrt((gridDensity * primitiveBag.size()) / volume));
+		}
+	}
+
+	public float[] getCellSize() {
+		float[] out = new float[3];
+
+		for (int i = 0; i < 3; i++) {
+			out[i] = (bb.getMax().minus(bb.getMin())).get(i) / M[i];
 		}
 
+		return out;
+	}
 
+	public List<Surface> getSurfacesForCell(int[] cell) {
+		return null;
+	}
+
+	public int[] getNumberOfCells() {
+		return M.clone();
 	}
 }
