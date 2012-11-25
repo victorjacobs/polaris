@@ -1,7 +1,9 @@
 package raytracer;
 
+import scene.data.Vector3f;
 import scene.geometry.Surface;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,6 +26,10 @@ public class Grid {
 
 	// Number of cells in grid
 	private int[] M;
+	private int totalNumberOfCells;
+
+	// Size of the cells
+	private float[] cellSize;
 
 	// Elements
 	private Surface[] L;
@@ -36,10 +42,65 @@ public class Grid {
 
 		calculateGridDimensions();
 
+		// Allocate memory to C
+		// Note: +1 for last element C[N] that contains total length
+		C = new int[totalNumberOfCells + 1];
+
+		// Iteration variables
+		Vector3f max;
+		Vector3f min;
+
 		// Build grid
+		// First loop: build C
+		for (Surface surf : primitiveBag) {
+			// Find out in which cell this primitive is
+			// Transform to grid coordinates
+			min = surf.boundingBox().getMin().minus(bb.getMin()).divideBy(cellSize);
+			max = surf.boundingBox().getMax().minus(bb.getMin()).divideBy(cellSize);
+
+			// Add this surface to all cells that overlap
+			for (int x = (int)Math.floor(min.x); x < (int)Math.floor(max.x); x++) {
+				for (int y = (int)Math.floor(min.y); x < (int)Math.floor(max.y); y++) {
+					for (int z = (int)Math.floor(min.z); x < (int)Math.floor(max.z); z++) {
+						C[linearizeCellCoords(x, y, z)] += 1;
+					}
+				}
+			}
+		}
+
+		// Modify C so that every element points to absolute index, and not just to number of elements in the cell
+		// Note: this makes the structure so that C[i] actually points to next cell!
+		for (int i = 1; i <= totalNumberOfCells; i++) {
+			C[i] += C[i - 1];
+		}
+
+		// C[M - 1] now contains total length of list, allocate L
+		L = new Surface[C[totalNumberOfCells - 1]];
+
+		// Start filling up L
+		for (Surface surf : primitiveBag) {
+			min = surf.boundingBox().getMin().minus(bb.getMin()).divideBy(cellSize);
+			max = surf.boundingBox().getMax().minus(bb.getMin()).divideBy(cellSize);
+
+			// Add this surface to all cells that overlap
+			for (int x = (int)Math.floor(min.x); x < (int)Math.floor(max.x); x++) {
+				for (int y = (int)Math.floor(min.y); x < (int)Math.floor(max.y); y++) {
+					for (int z = (int)Math.floor(min.z); x < (int)Math.floor(max.z); z++) {
+						L[--C[linearizeCellCoords(x, y, z)]] = surf;
+					}
+				}
+			}
+		}
+
+		// After this operation, C is properly built, this means that C[O] actually points to the start index of cell 0
+	}
+
+	private int linearizeCellCoords(int x, int y, int z) {
+		return ((M[1] * z) + y) * M[0] + x;
 	}
 
 	private void calculateGridDimensions() {
+		// Number of cells
 		for (Surface surf : primitiveBag) {
 			if (bb == null)
 				bb = new BoundingBox(surf.boundingBox());
@@ -51,25 +112,39 @@ public class Grid {
 		float volume = bb.getVolume();
 
 		for (int i = 0; i < 3; i++) {
-			M[i] = Math.round(dimensions[i] * (float)Math.sqrt((gridDensity * primitiveBag.size()) / volume));
+			M[i] = Math.round(dimensions[i] * (float)Math.cbrt((gridDensity * primitiveBag.size()) / volume));
+		}
+
+		totalNumberOfCells = M[0] * M[1] * M[2];
+
+		// Size of cells
+		cellSize = new float[3];
+
+		for (int i = 0; i < 3; i++) {
+			cellSize[i] = (bb.getMax().minus(bb.getMin())).get(i) / M[i];
 		}
 	}
 
 	public float[] getCellSize() {
-		float[] out = new float[3];
+		return cellSize.clone();
+	}
 
-		for (int i = 0; i < 3; i++) {
-			out[i] = (bb.getMax().minus(bb.getMin())).get(i) / M[i];
+	public List<Surface> getSurfacesForCell(int[] cell) {
+		List<Surface> out = new LinkedList<Surface>();
+		int linearizedCoords = linearizeCellCoords(cell[0], cell[1], cell[2]);
+
+		for (int i = C[linearizedCoords]; i <= C[linearizedCoords + 1]; i++) {
+			out.add(L[i]);
 		}
 
 		return out;
 	}
 
-	public List<Surface> getSurfacesForCell(int[] cell) {
-		return null;
-	}
-
 	public int[] getNumberOfCells() {
 		return M.clone();
+	}
+
+	public Vector3f getOrigin() {
+		return bb.getMin();
 	}
 }

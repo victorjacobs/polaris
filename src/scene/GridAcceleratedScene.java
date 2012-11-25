@@ -53,6 +53,11 @@ public class GridAcceleratedScene extends SceneDecorator {
 		// Cell size
 		float[] cellSize = grid.getCellSize();
 
+		// Eye point ray expressed in coordinate system of the grid
+		Vector3f oGrid = e.minus(grid.getOrigin());
+		// Cell coordinate where eye point is found
+		float[] oCell = {oGrid.x / cellSize[0], oGrid.y/ cellSize[1], oGrid.z / cellSize[2]};
+
 		// Calculate deltas
 		// Absolute value is needed because if R is negative, the delta still needs to be positive (since t should
 		// always be positive, it's direction along ray)
@@ -62,14 +67,21 @@ public class GridAcceleratedScene extends SceneDecorator {
 		delta[2] = Math.abs(cellSize[2] / (d.z));
 
 		// Iteration variables, start values
-		float tX = (cellSize[0] - e.x) / (d.x);
-		float tY = (cellSize[1] - e.y) / (d.y);
-		float tZ = (cellSize[2] - e.z) / (d.z);
+		// This takes into account that the ray doesn't have to start in (0, 0, 0)
+		// TODO this doesn't yet take into account negative rays
+		float tX = (((float)Math.floor(oCell[0]) + 1) * cellSize[0] - oGrid.x) / (d.x);
+		float tY = (((float)Math.floor(oCell[1]) + 1) * cellSize[1] - oGrid.y) / (d.y);
+		float tZ = (((float)Math.floor(oCell[2]) + 1) * cellSize[2] - oGrid.z) / (d.z);
+
+		// Optimise loops by splitting declaration from actual use
 		float t = 0;
 		List<Surface> surfaces = null;
+		float lowestT = 0;
+		Hit hit, closestHit;
 
-		// Result variable (starts at origin)
-		int[] cell = {0, 0, 0};
+		// Result variable
+		// Also take into account that ray doesn't start at origin
+		int[] cell = {(int)Math.floor(oCell[0]), (int)Math.floor(oCell[1]), (int)Math.floor(oCell[2])};
 
 		// Traverse cells
 		// TODO change the condition here to make sure it ends
@@ -100,8 +112,22 @@ public class GridAcceleratedScene extends SceneDecorator {
 			// Check for intersection
 			surfaces = grid.getSurfacesForCell(cell);
 
+			if (surfaces.isEmpty()) continue;
+
 			for (Surface surface : surfaces) {
-				// Find closest hit here
+				lowestT = Float.POSITIVE_INFINITY;
+				closestHit = null;
+
+				for (Surface surf : getSurfaces()) {
+					hit = surf.hit(ray, eps, lowestT);
+
+					if (hit != null) {
+						lowestT = hit.getT();
+						closestHit = hit;
+					}
+				}
+
+				return closestHit;
 			}
 		}
 

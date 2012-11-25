@@ -3,7 +3,7 @@ package scene.data;
 import java.io.Serializable;
 
 
-public class Vector3f extends Tuple3f implements Serializable
+public class Vector3f extends Tuple3f implements Serializable, Comparable<Vector3f>
 {
     /**
 	 * 
@@ -80,6 +80,10 @@ public class Vector3f extends Tuple3f implements Serializable
     public Vector3f divideBy(float divider) {
     	return new Vector3f(x / divider, y / divider, z / divider);
     }
+
+	public Vector3f divideBy(float[] divider) {
+		return new Vector3f(x / divider[0], y / divider[1], z / divider[2]);
+	}
     
     public Vector3f minus(Vector3f min) {
     	return new Vector3f(x - min.x, y - min.y, z - min.z);
@@ -158,5 +162,11 @@ public class Vector3f extends Tuple3f implements Serializable
 
 		return 0;
 	}
-    
+
+	@Override
+	public int compareTo(Vector3f o) {
+		if (x < o.x && y < o.y && z < o.z) return -1;
+		if (x > o.x && y > o.y && z > o.z) return 1;
+		return 0;
+	}
 }

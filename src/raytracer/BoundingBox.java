@@ -87,4 +87,10 @@ public class BoundingBox {
 
 		return dimensions[0] * dimensions[1] * dimensions[2];
 	}
+
+	public boolean contains(Vector3f point) {
+		if (point.compareTo(getMin()) >= 0 && point.compareTo(getMax()) <= 0) return true;
+
+		return false;
+	}
 }
