@@ -92,6 +92,16 @@ public class Grid {
 			}
 		}
 
+		System.out.println("Grid built");
+		System.out.print("  Number of cells: { ");
+		for (int m : M) System.out.print(m + " ");
+		System.out.println("}");
+		System.out.print("  Cell size: { ");
+		for (float size : cellSize) System.out.print(size + " ");
+		System.out.println("}");
+		System.out.println("  C has size: " + C.length);
+		System.out.println("  L has size: " + L.length);
+
 		// After this operation, C is properly built, this means that C[O] actually points to the start index of cell 0
 	}
 

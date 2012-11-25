@@ -69,10 +69,25 @@ public class GridAcceleratedScene extends SceneDecorator {
 
 		// Iteration variables, start values
 		// This takes into account that the ray doesn't have to start in (0, 0, 0)
-		// TODO this doesn't yet take into account negative rays
-		float tX = (((float)Math.floor(oCell[0]) + 1) * cellSize[0] - oGrid.x) / (d.x);
-		float tY = (((float)Math.floor(oCell[1]) + 1) * cellSize[1] - oGrid.y) / (d.y);
-		float tZ = (((float)Math.floor(oCell[2]) + 1) * cellSize[2] - oGrid.z) / (d.z);
+		float tX, tY, tZ;
+
+		if (d.x < 0) {
+			tX = ((float)Math.floor(oCell[0]) * cellSize[0] - oGrid.x) / (d.x);
+		} else {
+			tX = (((float)Math.floor(oCell[0]) + 1) * cellSize[0] - oGrid.x) / (d.x);
+		}
+
+		if (d.y < 0) {
+			tY = ((float)Math.floor(oCell[1]) * cellSize[1] - oGrid.y) / (d.y);
+		} else {
+			tY = (((float)Math.floor(oCell[1]) + 1) * cellSize[1] - oGrid.y) / (d.y);
+		}
+
+		if (d.z < 0) {
+			tZ = ((float)Math.floor(oCell[2]) * cellSize[2] - oGrid.z) / (d.z);
+		} else {
+			tZ = (((float)Math.floor(oCell[2]) + 1) * cellSize[2] - oGrid.z) / (d.z);
+		}
 
 		// Optimise loops by splitting declaration from actual use
 		float t = 0;
@@ -97,17 +112,15 @@ public class GridAcceleratedScene extends SceneDecorator {
 				t = tY;
 				tY += delta[1];
 				cell[1] += Math.signum(d.y);
-			} else if (tZ < tX && tZ < tY) {
+			} else {
 				t = tZ;
 				tZ += delta[2];
 				cell[2] += Math.signum(d.z);
-			} else {
-				throw new IllegalStateException("wut");
 			}
 
 			// Check if outside bounding box
 			for (int i = 0; i < 3; i++) {
-				if (cell[i] > numOfCells[i] || cell[i] < 0) return null;
+				if (cell[i] >= numOfCells[i] || cell[i] < 0) return null;
 			}
 
 			// Check for intersection
