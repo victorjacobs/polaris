@@ -62,8 +62,10 @@ public class Sphere extends Surface {
 
 	@Override
 	public BoundingBox boundingBox() {
-		// TODO Auto-generated method stub
-		return null;
+		Vector3f min = new Vector3f(center.x - radius, center.y - radius, center.z - radius);
+		Vector3f max = new Vector3f(center.x + radius, center.y + radius, center.z + radius);
+
+		return new BoundingBox(min, max);
 	}
 
 	@Override
