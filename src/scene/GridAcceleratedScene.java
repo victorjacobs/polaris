@@ -44,6 +44,7 @@ public class GridAcceleratedScene extends SceneDecorator {
 		Vector3f e = ray.getOrigin();
 
 		// If this is first ray that's traced, build grid
+		// TODO this is a bad thing for multithreading
 		if (grid == null)
 			grid = new Grid(primitiveBag);
 
@@ -114,21 +115,19 @@ public class GridAcceleratedScene extends SceneDecorator {
 
 			if (surfaces.isEmpty()) continue;
 
+			lowestT = Float.POSITIVE_INFINITY;
+			closestHit = null;
+
 			for (Surface surface : surfaces) {
-				lowestT = Float.POSITIVE_INFINITY;
-				closestHit = null;
+				hit = surface.hit(ray, eps, lowestT);
 
-				for (Surface surf : getSurfaces()) {
-					hit = surf.hit(ray, eps, lowestT);
-
-					if (hit != null) {
-						lowestT = hit.getT();
-						closestHit = hit;
-					}
+				if (hit != null) {
+					lowestT = hit.getT();
+					closestHit = hit;
 				}
-
-				return closestHit;
 			}
+
+			return closestHit;
 		}
 
 		//return scene.trace(ray, eps);

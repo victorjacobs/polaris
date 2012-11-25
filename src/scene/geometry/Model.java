@@ -208,6 +208,10 @@ public class Model extends Surface {
 	@Override
 	public void setMaterial(Material mat) {
 		this.material = mat;
+
+		for (Triangle triag : triangles) {
+			triag.setMaterial(mat);
+		}
 	}
 
 	@Override
