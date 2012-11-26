@@ -59,9 +59,9 @@ public class Grid {
 			max = surf.boundingBox().getMax().minus(bb.getMin()).divideBy(cellSize);
 
 			// Add this surface to all cells that overlap
-			for (int x = (int)Math.floor(min.x); x < (int)Math.floor(max.x); x++) {
-				for (int y = (int)Math.floor(min.y); y < (int)Math.floor(max.y); y++) {
-					for (int z = (int)Math.floor(min.z); z < (int)Math.floor(max.z); z++) {
+			for (int x = (int)Math.floor(min.x); x <= (int)Math.floor(max.x); x++) {
+				for (int y = (int)Math.floor(min.y); y <= (int)Math.floor(max.y); y++) {
+					for (int z = (int)Math.floor(min.z); z <= (int)Math.floor(max.z); z++) {
 						C[linearizeCellCoords(x, y, z)] += 1;
 					}
 				}
@@ -83,9 +83,9 @@ public class Grid {
 			max = surf.boundingBox().getMax().minus(bb.getMin()).divideBy(cellSize);
 
 			// Add this surface to all cells that overlap
-			for (int x = (int)Math.floor(min.x); x < (int)Math.floor(max.x); x++) {
-				for (int y = (int)Math.floor(min.y); y < (int)Math.floor(max.y); y++) {
-					for (int z = (int)Math.floor(min.z); z < (int)Math.floor(max.z); z++) {
+			for (int x = (int)Math.floor(min.x); x <= (int)Math.floor(max.x); x++) {
+				for (int y = (int)Math.floor(min.y); y <= (int)Math.floor(max.y); y++) {
+					for (int z = (int)Math.floor(min.z); z <= (int)Math.floor(max.z); z++) {
 						L[--C[linearizeCellCoords(x, y, z)]] = surf;
 					}
 				}
@@ -101,12 +101,14 @@ public class Grid {
 		System.out.println("}");
 		System.out.println("  C has size: " + C.length);
 		System.out.println("  L has size: " + L.length);
+		System.out.println("  Min: " + bb.getMin() + " max: " + bb.getMax());
 
 		// After this operation, C is properly built, this means that C[O] actually points to the start index of cell 0
 	}
 
-	private int linearizeCellCoords(int x, int y, int z) {
-		return ((M[1] * z) + y) * M[0] + x;
+	// TODO this is not right
+	private int linearizeCellCoords(int y, int z, int x) {
+		return (((M[1] * z) + y) * M[0]) + x;
 	}
 
 	private void calculateGridDimensions() {

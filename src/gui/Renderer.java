@@ -10,7 +10,6 @@ import scene.material.Color3f;
 import scene.parser.SceneBuilder;
 
 import java.io.FileNotFoundException;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;

@@ -1,17 +1,15 @@
-import gui.*;
+import gui.PolarisMainWindow;
 import gui.Renderer;
 import scene.BasicScene;
 import scene.Camera;
 import scene.Scene;
+import scene.data.Vector3f;
 import scene.geometry.Model;
 import scene.geometry.Sphere;
 import scene.geometry.Surface;
-import scene.data.Vector3f;
 import scene.lighting.AmbientLight;
 import scene.lighting.PointLight;
 import scene.material.*;
-
-import javax.swing.*;
 
 /**
  * User: victor
@@ -22,25 +20,24 @@ import javax.swing.*;
 public class RunLoadsOfReflectiveSpheres {
 
 	public static void main(String[] args) {
-		CgPanel panel = new CgPanel();
-		JFrame frame = new JFrame();
-		frame.setSize(640, 480);
-		frame.getContentPane().add(panel);
-		frame.setVisible(true);
+		System.setProperty("apple.laf.useScreenMenuBar", "true");
+		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Polaris");
 
-		Camera camera = new Camera(new Vector3f(2, 2, 2), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
-		//PointLight light1 = new PointLight(new Vector3f(-20, 10, 0));
-		PointLight light1 = new PointLight(new Vector3f(-10, 10, -10), 0.9f);
-		PointLight light2 = new PointLight(new Vector3f(-10, 10, -10), 0.7f);
-		AmbientLight aLight = new AmbientLight(new Color3f(1, 1, 1), 0.1f);
+		PolarisMainWindow window = new PolarisMainWindow();
+		Renderer renderer = new Renderer(window.getRenderPanel(), 32);
 
 		Scene scene = new BasicScene();
-		scene.setCamera(camera);
+		renderer.loadScene(scene);
+
+		PointLight light1 = new PointLight(new Vector3f(-20, 10, 0));
+		AmbientLight aLight = new AmbientLight(new Color3f(1, 1, 1), 0.1f);
 		scene.addLightSource(light1);
-		//scene.addLightSource(light2);
 		scene.addLightSource(aLight);
 
-		Renderer renderer = new gui.Renderer(scene, panel, 16);
+
+		Camera camera = new Camera(new Vector3f(6, 6, 6), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
+		scene.setCamera(camera);
+
 
 		// Add some stuff to the scene
 		Material notSoReflectiveMaterial = new ReflectiveMaterial(0.2f);
@@ -68,6 +65,8 @@ public class RunLoadsOfReflectiveSpheres {
 				}
 			}
 		}
+
+		window.display();
 
 		try {
 			Thread.sleep(100);
