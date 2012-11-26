@@ -5,10 +5,7 @@ import raytracer.Hit;
 import raytracer.Ray;
 import scene.data.Vector3f;
 import scene.geometry.Surface;
-import scene.lighting.Light;
-import scene.material.Color3f;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,7 +23,7 @@ public class GridAcceleratedScene extends SceneDecorator {
 	public GridAcceleratedScene(BasicScene scene) {
 		super(scene);
 		primitiveBag = new LinkedList<Surface>();
-		System.out.println("Loaded grid accelerated renderereererer");
+		System.out.println("Loaded grid accelerated renderer");
 	}
 
 	@Override
@@ -61,9 +58,9 @@ public class GridAcceleratedScene extends SceneDecorator {
 		float[] cellSize = grid.getCellSize();
 
 		// Eye point ray expressed in coordinate system of the grid
-		Vector3f oGrid = e.minus(grid.getOrigin());
+		Vector3f oGrid = gridEntryPoint.minus(grid.getOrigin());
 		// Cell coordinate where eye point is found
-		float[] oCell = {oGrid.x / cellSize[0], oGrid.y/ cellSize[1], oGrid.z / cellSize[2]};
+		float[] oCell = {oGrid.x / cellSize[0], oGrid.y / cellSize[1], oGrid.z / cellSize[2]};
 
 		// Calculate deltas
 		// Absolute value is needed because if R is negative, the delta still needs to be positive (since t should
@@ -100,6 +97,7 @@ public class GridAcceleratedScene extends SceneDecorator {
 		List<Surface> surfaces = null;
 		float lowestT = 0;
 		Hit hit, closestHit;
+		float nextTX = tX, nextTY = tY, nextTZ = tZ;
 
 		// Result variable
 		// Also take into account that ray doesn't start at origin
@@ -111,18 +109,26 @@ public class GridAcceleratedScene extends SceneDecorator {
 			if (tX < tY && tX < tZ) {
 				t = tX;
 				// Next intersection
-				tX += delta[0];
+				nextTX += delta[0];
 				// Increment/decrement next cell coordinate
 				cell[0] += Math.signum(d.x);
-			} else if (tY < tX && tY < tZ) {
+			}
+
+			if (tY < tX && tY < tZ) {
 				t = tY;
-				tY += delta[1];
+				nextTY += delta[1];
 				cell[1] += Math.signum(d.y);
-			} else {
+			}
+
+			if (tZ < tX && tZ < tY) {
 				t = tZ;
-				tZ += delta[2];
+				nextTZ += delta[2];
 				cell[2] += Math.signum(d.z);
 			}
+
+			tX = nextTX;
+			tY = nextTY;
+			tZ = nextTZ;
 
 			// Check if outside bounding box
 			for (int i = 0; i < 3; i++) {

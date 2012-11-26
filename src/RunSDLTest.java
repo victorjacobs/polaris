@@ -12,7 +12,7 @@ public class RunSDLTest {
 
 		PolarisMainWindow mainWindow = new PolarisMainWindow();
 		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), 16);
-		renderer.loadSDL("data/scenes/grid.sdl");
+		renderer.loadSDL("data/scenes/teapot.sdl");
 
 		mainWindow.setListener(renderer);
 

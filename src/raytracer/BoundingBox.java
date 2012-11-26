@@ -1,6 +1,5 @@
 package raytracer;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.YearDV;
 import scene.data.Vector3f;
 
 /**
@@ -97,14 +96,14 @@ public class BoundingBox {
 	// TODO evt ook t0 en t1?
 	public Vector3f hit(Ray ray) {
 		Vector3f d = ray.getDirection();
-		Vector3f e = ray.getDirection();
+		Vector3f e = ray.getOrigin();
 
 		float[] tMin = new float[3];
 		float[] tMax = new float[3];
 		float a = 0;
 		// Store min of max and max of min
-		float min = Float.MAX_VALUE;
-		float max = Float.MIN_VALUE;
+		float min = Float.MIN_VALUE;
+		float max = Float.MAX_VALUE;
 
 		Vector3f hitPoint = null;
 
@@ -120,11 +119,12 @@ public class BoundingBox {
 				tMax[i] = a * (getMin().get(i) - e.get(i));
 			}
 
-			if (tMin[i] > max) max = tMin[i];
-			if (tMax[i] < min) min = tMax[i];
+			if (tMin[i] >= 0 && tMin[i] > min) min = tMin[i];
+			if (tMax[i] >= 0 && tMax[i] < max) max = tMax[i];
 		}
 
-		if (max < min) {
+		// looks suspicious, but if the max of the mins is larger than the min of the maxes, no hit
+		if (max < min || max < 0) {
 			return null;
 		} else {
 			hitPoint = ray.getOrigin().sum(ray.getDirection().multiply(min));
