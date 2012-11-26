@@ -139,6 +139,10 @@ public class Grid {
 		return cellSize.clone();
 	}
 
+	public Vector3f hit(Ray ray) {
+		return bb.hit(ray);
+	}
+
 	public List<Surface> getSurfacesForCell(int[] cell) {
 		List<Surface> out = new LinkedList<Surface>();
 		int linearizedCoords = linearizeCellCoords(cell[0], cell[1], cell[2]);

@@ -48,6 +48,12 @@ public class GridAcceleratedScene extends SceneDecorator {
 		if (grid == null)
 			grid = new Grid(primitiveBag);
 
+		// Ray misses grid
+		Vector3f gridEntryPoint = grid.hit(ray);
+		if (gridEntryPoint == null) return null;
+
+		//System.out.println(gridEntryPoint);
+
 		// Number of cells
 		int[] numOfCells = grid.getNumberOfCells();
 

@@ -93,4 +93,52 @@ public class BoundingBox {
 
 		return false;
 	}
+
+	// TODO evt ook t0 en t1?
+	public Vector3f hit(Ray ray) {
+		Vector3f d = ray.getDirection();
+		Vector3f e = ray.getDirection();
+
+		float[] tMin = new float[3];
+		float[] tMax = new float[3];
+		float a = 0;
+		// Store min of max and max of min
+		float min = Float.MAX_VALUE;
+		float max = Float.MIN_VALUE;
+
+		Vector3f hitPoint = null;
+
+		// Calculate t values for hit in every dimension
+		for (int i = 0; i < 3; i++) {
+			a = 1 / d.get(i);
+
+			if (a >= 0) {
+				tMin[i] = a * (getMin().get(i) - e.get(i));
+				tMax[i] = a * (getMax().get(i) - e.get(i));
+			} else {
+				tMin[i] = a * (getMax().get(i) - e.get(i));
+				tMax[i] = a * (getMin().get(i) - e.get(i));
+			}
+
+			if (tMin[i] > max) max = tMin[i];
+			if (tMax[i] < min) min = tMax[i];
+		}
+
+		if (max < min) {
+			return null;
+		} else {
+			hitPoint = ray.getOrigin().sum(ray.getDirection().multiply(min));
+			return hitPoint;
+		}
+
+//		if (tMin[0] > tMax[1] || tMin[1] > tMax[0]) {
+//			return false;
+//		} else if (tMin[1] > tMax[2] || tMin[2] > tMax[1]) {
+//			return false;
+//		} else if (tMin[2] > tMax[0] || tMin[0] > tMax[2]) {
+//			return false;
+//		} else {
+//			return true;
+//		}
+	}
 }
