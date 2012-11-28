@@ -2,6 +2,7 @@ package gui;
 
 import raytracer.Hit;
 import raytracer.Ray;
+import raytracer.Settings;
 import scene.BasicScene;
 import scene.GridAcceleratedScene;
 import scene.Scene;
@@ -26,8 +27,14 @@ public class Renderer implements MainWindowListener {
 
 	public Renderer(CgPanel panel, int passes) {
 		// TODO hardcode this for the time being
-		cores = 1;
-		System.err.println("WARNING: hardcoded to run on one core");
+		if (Settings.FIX_SINGLE_THREAD) {
+			cores = 1;
+			System.err.println("WARNING: hardcoded to run on one core");
+		}
+
+		if (Settings.SHOULD_REPAINT_AFTER_EVERY_PIXEL)
+			System.err.println("WARNING: flushing after every pixel draw is not good for performance!");
+
 		this.panel = panel;
 		this.passes = passes;
 	}
@@ -142,8 +149,7 @@ public class Renderer implements MainWindowListener {
 					for (int i = x; i < x + currentDepth; i++) {
 						for (int j = y; j < y + currentDepth; j++) {
 							panel.drawPixel(i, j, pixelColor);
-							//System.err.println("WARNING: flushing after every pixel draw is not good for performance!");
-							//panel.flush();
+							if (Settings.SHOULD_REPAINT_AFTER_EVERY_PIXEL) panel.repaint();
 						}
 					}
 				}

@@ -1,14 +1,13 @@
 package gui;
 
 import raytracer.Settings;
+import scene.material.Color3f;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -114,6 +113,9 @@ public class PolarisMainWindow extends JFrame {
 				if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
 					// Just render one pixel
 					System.out.println("Rendering pixel (" + x + ", " + y + ")");
+
+					renderPanel.drawPixel(x, y, new Color3f(1, 0, 0));
+					renderPanel.flush();
 
 					listener.renderPixel(x, y);
 				} else {

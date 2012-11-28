@@ -13,7 +13,7 @@ import java.util.List;
  * Time: 12:06
  * To change this template use File | Settings | File Templates.
  */
-// TODO complixity of addressing something in array <> linked list?
+// TODO refactor to class Cell
 public class Grid {
 	// Grid density
 	private static final int gridDensity = 7;
@@ -50,6 +50,8 @@ public class Grid {
 		Vector3f max;
 		Vector3f min;
 
+		int xMin, xMax, yMin, yMax, zMin, zMax;
+
 		// Build grid
 		// First loop: build C
 		for (Surface surf : primitiveBag) {
@@ -58,10 +60,20 @@ public class Grid {
 			min = surf.boundingBox().getMin().minus(bb.getMin()).divideBy(cellSize);
 			max = surf.boundingBox().getMax().minus(bb.getMin()).divideBy(cellSize);
 
+			// FIXED: loop broken: should clamp min and max in loop, not only in linearizeCellCoords(),
+			// this made that elements were added twice
+
+			xMin = clamp((int)Math.floor(min.x), 0, M[0] - 1);
+			xMax = clamp((int)Math.floor(max.x), 0, M[0] - 1);
+			yMin = clamp((int)Math.floor(min.y), 0, M[1] - 1);
+			yMax = clamp((int)Math.floor(max.y), 0, M[1] - 1);
+			zMin = clamp((int)Math.floor(min.z), 0, M[2] - 1);
+			zMax = clamp((int)Math.floor(max.z), 0, M[2] - 1);
+
 			// Add this surface to all cells that overlap
-			for (int x = (int)Math.floor(min.x); x <= (int)Math.floor(max.x); x++) {
-				for (int y = (int)Math.floor(min.y); y <= (int)Math.floor(max.y); y++) {
-					for (int z = (int)Math.floor(min.z); z <= (int)Math.floor(max.z); z++) {
+			for (int x = xMin; x <= xMax; x++) {
+				for (int y = yMin; y <= yMax; y++) {
+					for (int z = zMin; z <= zMax; z++) {
 						C[linearizeCellCoords(x, y, z)] += 1;
 					}
 				}
@@ -82,10 +94,17 @@ public class Grid {
 			min = surf.boundingBox().getMin().minus(bb.getMin()).divideBy(cellSize);
 			max = surf.boundingBox().getMax().minus(bb.getMin()).divideBy(cellSize);
 
+			xMin = clamp((int)Math.floor(min.x), 0, M[0] - 1);
+			xMax = clamp((int)Math.floor(max.x), 0, M[0] - 1);
+			yMin = clamp((int)Math.floor(min.y), 0, M[1] - 1);
+			yMax = clamp((int)Math.floor(max.y), 0, M[1] - 1);
+			zMin = clamp((int)Math.floor(min.z), 0, M[2] - 1);
+			zMax = clamp((int)Math.floor(max.z), 0, M[2] - 1);
+
 			// Add this surface to all cells that overlap
-			for (int x = (int)Math.floor(min.x); x <= (int)Math.floor(max.x); x++) {
-				for (int y = (int)Math.floor(min.y); y <= (int)Math.floor(max.y); y++) {
-					for (int z = (int)Math.floor(min.z); z <= (int)Math.floor(max.z); z++) {
+			for (int x = xMin; x <= xMax; x++) {
+				for (int y = yMin; y <= yMax; y++) {
+					for (int z = zMin; z <= zMax; z++) {
 						L[--C[linearizeCellCoords(x, y, z)]] = surf;
 					}
 				}
@@ -106,8 +125,13 @@ public class Grid {
 		// After this operation, C is properly built, this means that C[O] actually points to the start index of cell 0
 	}
 
-	// TODO this is not right
-	private int linearizeCellCoords(int y, int z, int x) {
+	private int linearizeCellCoords(int x, int y, int z) {
+		// This construction is needed because if an object is part of the overall bounding box, the calculation for
+		// cell coordinates breaks down.
+		// Clamp variables
+		x = (x == M[0]) ? M[0] - 1 : x;
+		y = (y == M[1]) ? M[1] - 1 : y;
+		z = (z == M[2]) ? M[2] - 1 : z;
 		return (((M[1] * z) + y) * M[0]) + x;
 	}
 
@@ -124,7 +148,8 @@ public class Grid {
 		float volume = bb.getVolume();
 
 		for (int i = 0; i < 3; i++) {
-			M[i] = Math.round(dimensions[i] * (float)Math.cbrt((gridDensity * primitiveBag.size()) / volume));
+			// Enforce that at there is at least one cell in either dimension
+			M[i] = Math.max(1, Math.round(dimensions[i] * (float)Math.cbrt((gridDensity * primitiveBag.size()) / volume)));
 		}
 
 		totalNumberOfCells = M[0] * M[1] * M[2];
@@ -162,5 +187,15 @@ public class Grid {
 
 	public Vector3f getOrigin() {
 		return bb.getMin();
+	}
+
+	public int clamp(int val, int min, int max) {
+		return (int) clamp((float) val, (float) min, (float) max);
+	}
+
+	public float clamp(float val, float min, float max) {
+		if (val < min) return min;
+		if (val > max) return max;
+		return val;
 	}
 }

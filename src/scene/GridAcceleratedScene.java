@@ -60,7 +60,9 @@ public class GridAcceleratedScene extends SceneDecorator {
 		// Eye point ray expressed in coordinate system of the grid
 		Vector3f oGrid = gridEntryPoint.minus(grid.getOrigin());
 		// Cell coordinate where eye point is found
-		float[] oCell = {oGrid.x / cellSize[0], oGrid.y / cellSize[1], oGrid.z / cellSize[2]};
+		float[] oCell = {grid.clamp(oGrid.x / cellSize[0], 0, numOfCells[0] - 1),
+				grid.clamp(oGrid.y / cellSize[1], 0, numOfCells[1] - 1),
+				grid.clamp(oGrid.z / cellSize[2], 0, numOfCells[2] - 1)};
 
 		// Calculate deltas
 		// Absolute value is needed because if R is negative, the delta still needs to be positive (since t should
@@ -105,8 +107,32 @@ public class GridAcceleratedScene extends SceneDecorator {
 
 		// Traverse cells
 		// TODO change the condition here to make sure it ends
+		int cellsTraversed = 0;
 		while (true) {
-			if (tX < tY && tX < tZ) {
+			// FIXED should check cell where ray starts before traversing!!
+			// Check for intersection
+			surfaces = grid.getSurfacesForCell(cell);
+
+			if (!surfaces.isEmpty()) {
+				lowestT = Float.POSITIVE_INFINITY;
+				closestHit = null;
+
+				for (Surface surface : surfaces) {
+					hit = surface.hit(ray, eps, lowestT);
+
+					if (hit != null) {
+						// FIXME: check whether hit point is actually in cell
+
+						lowestT = hit.getT();
+						closestHit = hit;
+					}
+				}
+
+				return closestHit;
+			}
+
+			// FIXED: always using "<" could cause deadlocks
+			if (tX <= tY && tX <= tZ) {
 				t = tX;
 				// Next intersection
 				nextTX += delta[0];
@@ -132,30 +158,14 @@ public class GridAcceleratedScene extends SceneDecorator {
 
 			// Check if outside bounding box
 			for (int i = 0; i < 3; i++) {
+				// TODO hier aangepast: cell[i] > numOfCells[i]
 				if (cell[i] >= numOfCells[i] || cell[i] < 0) return null;
 			}
 
-			// Check for intersection
-			surfaces = grid.getSurfacesForCell(cell);
+			cellsTraversed++;
 
-			if (surfaces.isEmpty()) continue;
-
-			lowestT = Float.POSITIVE_INFINITY;
-			closestHit = null;
-
-			for (Surface surface : surfaces) {
-				hit = surface.hit(ray, eps, lowestT);
-
-				if (hit != null) {
-					lowestT = hit.getT();
-					closestHit = hit;
-				}
-			}
-
-			return closestHit;
+			if (cellsTraversed > 100000) throw new RuntimeException("Traversing too many cells. Current: " + cell[0] + " " + cell[1] + " " + cell[2]);
 		}
-
-		//return scene.trace(ray, eps);
 	}
 
 	@Override
