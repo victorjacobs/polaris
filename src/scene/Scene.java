@@ -40,4 +40,11 @@ public interface Scene {
 	Hit trace(Ray ray, float eps);
 
 	Hit traceAny(Ray ray, float eps);
+
+	/**
+	 * This is called right before the renderer starts dispatching renderWorkers. Usually used for preprocessing the
+	 * scene into an acceleration structure. More general: it contains the last piece of code in scene that'll be
+	 * executed on a single thread.
+	 */
+	void preProcess();
 }

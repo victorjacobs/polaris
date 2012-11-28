@@ -40,11 +40,6 @@ public class GridAcceleratedScene extends SceneDecorator {
 		Vector3f d = ray.getDirection();
 		Vector3f e = ray.getOrigin();
 
-		// If this is first ray that's traced, build grid
-		// TODO this is a bad thing for multithreading
-		if (grid == null)
-			grid = new Grid(primitiveBag);
-
 		// Ray misses grid
 		Vector3f gridEntryPoint = grid.hit(ray);
 		if (gridEntryPoint == null) return null;
@@ -95,11 +90,12 @@ public class GridAcceleratedScene extends SceneDecorator {
 		}
 
 		// Optimise loops by splitting declaration from actual use
-		float t = 0;
 		List<Surface> surfaces = null;
 		float lowestT = 0;
 		Hit hit, closestHit;
 		float nextTX = tX, nextTY = tY, nextTZ = tZ;
+
+		float hitX, hitY, hitZ;
 
 		// Result variable
 		// Also take into account that ray doesn't start at origin
@@ -128,26 +124,24 @@ public class GridAcceleratedScene extends SceneDecorator {
 					}
 				}
 
-				return closestHit;
+				// FIXED: only return when a closest hit was found
+				if (closestHit != null) return closestHit;
 			}
 
 			// FIXED: always using "<" could cause deadlocks
 			if (tX <= tY && tX <= tZ) {
-				t = tX;
 				// Next intersection
 				nextTX += delta[0];
 				// Increment/decrement next cell coordinate
 				cell[0] += Math.signum(d.x);
 			}
 
-			if (tY < tX && tY < tZ) {
-				t = tY;
+			if (tY <= tX && tY <= tZ) {
 				nextTY += delta[1];
 				cell[1] += Math.signum(d.y);
 			}
 
-			if (tZ < tX && tZ < tY) {
-				t = tZ;
+			if (tZ <= tX && tZ <= tY) {
 				nextTZ += delta[2];
 				cell[2] += Math.signum(d.z);
 			}
@@ -171,5 +165,13 @@ public class GridAcceleratedScene extends SceneDecorator {
 	@Override
 	public Hit traceAny(Ray ray, float eps) {
 		return scene.traceAny(ray, eps);
+	}
+
+	@Override
+	public void preProcess() {
+		// If this is first ray that's traced, build grid
+		System.out.println("Preprocessing scene");
+		if (grid == null)
+			grid = new Grid(primitiveBag);
 	}
 }

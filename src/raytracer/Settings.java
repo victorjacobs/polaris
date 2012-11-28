@@ -15,5 +15,6 @@ public class Settings {
 
 	// Some debug settings
 	public static final boolean SHOULD_REPAINT_AFTER_EVERY_PIXEL = true;
-	public static final boolean FIX_SINGLE_THREAD = true;
+	public static final boolean FIX_SINGLE_THREAD = false;
+	public static final boolean RANDOM_COLOR_TRIANGLES = false;
 }

@@ -23,6 +23,7 @@ import scene.material.*;
  * TODO Anti aliasing
  * TODO DOF
  * TODO color changing in reflections
+ * TODO count intersection tests
  */
 
 public class Run {

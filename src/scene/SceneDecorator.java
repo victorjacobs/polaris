@@ -1,6 +1,5 @@
 package scene;
 
-import raytracer.Grid;
 import raytracer.Hit;
 import raytracer.Ray;
 import scene.data.Vector3f;
@@ -82,5 +81,10 @@ public abstract class SceneDecorator implements Scene {
 	@Override
 	public boolean isInShade(Vector3f point, Light light) {
 		return scene.isInShade(point, light);
+	}
+
+	@Override
+	public void preProcess() {
+		scene.preProcess();
 	}
 }

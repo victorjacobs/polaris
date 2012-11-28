@@ -39,7 +39,7 @@ public class Model extends Surface {
 		triangles = new ArrayList<Triangle>();
 		
 		parseFile(fileName);
-		this.material = mat;
+		setMaterial(mat);
 	}
 	
 	private void parseFile(String fileName) {
@@ -63,8 +63,8 @@ public class Model extends Surface {
 		
 		System.out.println("File loaded");
 		System.out.println("Some stats:");
-		System.out.println(" " + points.size() + " points");
-		System.out.println(" " + triangles.size() + " triangles");
+		System.out.println("  " + points.size() + " points");
+		System.out.println("  " + triangles.size() + " triangles");
 	}
 	
 	// TODO: now we assume that all planes are triangles

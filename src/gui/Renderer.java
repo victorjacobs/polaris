@@ -48,7 +48,7 @@ public class Renderer implements MainWindowListener {
 
 	// TODO implement this
 	public void reloadFile() {
-
+		System.err.println("Reloadfile not yet implemented");
 	}
 
 	// TODO add ambient light to SDL
@@ -87,6 +87,8 @@ public class Renderer implements MainWindowListener {
 	}
 	
 	public void render() {
+		scene.preProcess();
+
 		if (threadPool != null) {
 			abortRender(false);
 		} else {
@@ -106,19 +108,19 @@ public class Renderer implements MainWindowListener {
 
 		try {
 			threadPool.shutdownNow();
-			threadPool.awaitTermination(1000, TimeUnit.MILLISECONDS);
+			threadPool.awaitTermination(100, TimeUnit.MILLISECONDS);
 
 			threadPool = Executors.newFixedThreadPool(cores);
-
+		} catch (RejectedExecutionException e) {
+			e.printStackTrace();
+		} catch (InterruptedException f) {
+			f.printStackTrace();
+		} finally {
 			if (shouldFlush) {
 				panel.repaint();
 			} else {
 				panel.clear();
 			}
-		} catch (RejectedExecutionException e) {
-			e.printStackTrace();
-		} catch (InterruptedException f) {
-			f.printStackTrace();
 		}
 	}
 
@@ -136,6 +138,9 @@ public class Renderer implements MainWindowListener {
 			Color3f pixelColor;
 			
 			for (int x = sliceNo * (panel.getWidth() / cores) + 1; x <= (sliceNo + 1) * (panel.getWidth() / cores); x += currentDepth) {
+				// FIXED: shutdownNow on threadpool will call interrupt() on all threads, we should be so kind to do something with it
+				if (Thread.currentThread().isInterrupted()) return;
+
 				for (int y = 1; y < panel.getHeight(); y += currentDepth) {
 
 					if (currentDepth != passes) {

@@ -104,4 +104,9 @@ public class BasicScene implements Scene {
 
 		return null;
 	}
+
+	@Override
+	public void preProcess() {
+		// Basic scene doesn't need any preprocessing
+	}
 }

@@ -3,13 +3,14 @@ package scene.geometry;
 import raytracer.BoundingBox;
 import raytracer.Hit;
 import raytracer.Ray;
-import scene.material.Material;
+import raytracer.Settings;
 import scene.data.Matrix4f;
 import scene.data.Vector3f;
-import scene.data.Vector4f;
+import scene.material.Color3f;
+import scene.material.DiffuseMaterial;
+import scene.material.Material;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Random;
 
 public class Triangle extends Surface {
 	
@@ -109,7 +110,6 @@ public class Triangle extends Surface {
 
 	@Override
 	public BoundingBox boundingBox() {
-		// TODO Auto-generated method stub
 		// TODO this method might be useful globally
 		// For make benefit storing of vertices in array TODO maybe move this to class level
 		Vector3f[] vertices = new Vector3f[3];
@@ -127,7 +127,12 @@ public class Triangle extends Surface {
 
 	@Override
 	public void setMaterial(Material mat) {
-		this.material = mat;
+		if (Settings.RANDOM_COLOR_TRIANGLES) {
+			Random rand = new Random();
+			this.material = new DiffuseMaterial(new Color3f(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
+		} else {
+			this.material = mat;
+		}
 	}
 
 	@Override

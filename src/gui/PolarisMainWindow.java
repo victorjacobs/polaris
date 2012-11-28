@@ -41,6 +41,8 @@ public class PolarisMainWindow extends JFrame {
 		open.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
+				listener.abortRender(true);
+
 				File file = openDialog("sdl");
 
 				if (file == null) return;

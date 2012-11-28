@@ -48,7 +48,7 @@ public class RunLoadsOfReflectiveSpheres {
 
 		Surface plane = new Model("data/objects/plane.obj", notSoReflectiveMaterial);
 
-		//scene.addSurface(plane);
+		scene.addSurface(plane);
 
 		Surface surf;
 
