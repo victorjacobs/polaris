@@ -1,8 +1,6 @@
 package scene;
 
-import raytracer.Grid;
-import raytracer.Hit;
-import raytracer.Ray;
+import raytracer.*;
 import scene.data.Vector3f;
 import scene.geometry.Surface;
 
@@ -43,8 +41,6 @@ public class GridAcceleratedScene extends SceneDecorator {
 		// Ray misses grid
 		Vector3f gridEntryPoint = grid.hit(ray);
 		if (gridEntryPoint == null) return null;
-
-		//System.out.println(gridEntryPoint);
 
 		// Number of cells
 		int[] numOfCells = grid.getNumberOfCells();
@@ -116,6 +112,9 @@ public class GridAcceleratedScene extends SceneDecorator {
 				for (Surface surface : surfaces) {
 					hit = surface.hit(ray, eps, lowestT);
 
+					if (Settings.COLLECT_STATS)
+						Stats.incIntersections();
+
 					if (hit != null) {
 						// FIXME: check whether hit point is actually in cell
 
@@ -152,13 +151,12 @@ public class GridAcceleratedScene extends SceneDecorator {
 
 			// Check if outside bounding box
 			for (int i = 0; i < 3; i++) {
-				// TODO hier aangepast: cell[i] > numOfCells[i]
 				if (cell[i] >= numOfCells[i] || cell[i] < 0) return null;
 			}
 
 			cellsTraversed++;
 
-			if (cellsTraversed > 100000) throw new RuntimeException("Traversing too many cells. Current: " + cell[0] + " " + cell[1] + " " + cell[2]);
+			if (cellsTraversed > 100000) throw new RuntimeException("Traversing stalled, current cell: " + cell[0] + " " + cell[1] + " " + cell[2]);
 		}
 	}
 

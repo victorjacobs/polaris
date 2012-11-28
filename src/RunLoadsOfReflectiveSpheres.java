@@ -2,7 +2,6 @@ import gui.PolarisMainWindow;
 import gui.Renderer;
 import scene.BasicScene;
 import scene.Camera;
-import scene.GridAcceleratedScene;
 import scene.Scene;
 import scene.data.Vector3f;
 import scene.geometry.Model;
@@ -27,7 +26,7 @@ public class RunLoadsOfReflectiveSpheres {
 		PolarisMainWindow window = new PolarisMainWindow();
 		Renderer renderer = new Renderer(window.getRenderPanel(), 32);
 
-		Scene scene = new GridAcceleratedScene(new BasicScene());
+		Scene scene = new BasicScene();
 		renderer.loadScene(scene);
 
 		PointLight light1 = new PointLight(new Vector3f(-20, 10, 0));
@@ -36,7 +35,7 @@ public class RunLoadsOfReflectiveSpheres {
 		scene.addLightSource(aLight);
 
 
-		Camera camera = new Camera(new Vector3f(6, 6, 6), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
+		Camera camera = new Camera(new Vector3f(4, 4, 4), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
 		scene.setCamera(camera);
 
 

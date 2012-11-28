@@ -26,7 +26,7 @@ public class Renderer implements MainWindowListener {
 	private long startTime;
 
 	public Renderer(CgPanel panel, int passes) {
-		// TODO hardcode this for the time being
+		// Display some warnings about debug settings
 		if (Settings.FIX_SINGLE_THREAD) {
 			cores = 1;
 			System.err.println("WARNING: hardcoded to run on one core");
@@ -34,6 +34,9 @@ public class Renderer implements MainWindowListener {
 
 		if (Settings.SHOULD_REPAINT_AFTER_EVERY_PIXEL)
 			System.err.println("WARNING: flushing after every pixel draw is not good for performance!");
+
+		if (Settings.COLLECT_STATS)
+			System.err.println("WARNING: collecting stats, performance might be affected");
 
 		this.panel = panel;
 		this.passes = passes;
