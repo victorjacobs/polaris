@@ -503,4 +503,14 @@ public class EchoParserHandler implements ParserHandler
 		//To change body of implemented methods use File | Settings | File Templates.
 	}
 
+	@Override
+	public void startReflectiveMaterial(String name, Color3f color, float reflectivity) {
+		//To change body of implemented methods use File | Settings | File Templates.
+	}
+
+	@Override
+	public void endReflectiveMaterial() {
+		//To change body of implemented methods use File | Settings | File Templates.
+	}
+
 }

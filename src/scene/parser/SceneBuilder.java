@@ -1,15 +1,17 @@
 package scene.parser;
 
 import org.xml.sax.InputSource;
-import scene.BasicScene;
 import scene.Camera;
 import scene.Scene;
-import scene.geometry.*;
+import scene.data.Point3f;
+import scene.data.Vector3f;
+import scene.geometry.AffineTransformation;
+import scene.geometry.Model;
+import scene.geometry.Sphere;
+import scene.geometry.Surface;
 import scene.lighting.Light;
 import scene.lighting.PointLight;
 import scene.material.*;
-import scene.data.Point3f;
-import scene.data.Vector3f;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -271,7 +273,18 @@ public class SceneBuilder implements ParserHandler
     // Materials
     public void startMaterials() throws Exception
     {
+
     }
+
+	@Override
+	public void startReflectiveMaterial(String name, Color3f color, float reflectivity) {
+		System.out.println("Adding reflective material " + name);
+		materials.put(name, new ReflectiveMaterial(color, reflectivity));
+	}
+
+	@Override
+	public void endReflectiveMaterial() {
+	}
 
     public void startDiffuseMaterial(Color3f color, String name) throws Exception
     {

@@ -9,9 +9,13 @@ import scene.data.Vector3f;
 public class ReflectiveMaterial extends PhongMaterial {
 
 	private float reflectionCoefficient;
-	
+
 	public ReflectiveMaterial(float reflectionCoefficient) {
-		super(new Color3f(1, 1, 1), 10);		// TODO this value should be higher, but for pointlight this isn't very pretty
+		this(new Color3f(1, 1, 1), reflectionCoefficient);
+	}
+
+	public ReflectiveMaterial(Color3f color, float reflectionCoefficient) {
+		super(color, 10);		// TODO this value should be higher, but for pointlight this isn't very pretty
 		this.reflectionCoefficient = reflectionCoefficient;
 	}
 

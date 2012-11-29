@@ -19,9 +19,10 @@ import java.util.List;
  *
  */
 public class Model extends Surface {
-	private ArrayList<Vector3f> points;
-	private ArrayList<Vector3f> normalVectors;
-	private ArrayList<Triangle> triangles;
+	private List<Vector3f> points;
+	private List<Vector3f> normalVectors;
+	private List<Vector3f> textures;
+	private List<Triangle> triangles;
 	private Material material;
 	
 	private enum DataTags {
@@ -37,6 +38,7 @@ public class Model extends Surface {
 		System.out.println("Loading model from file " + fileName);
 		points = new ArrayList<Vector3f>();
 		normalVectors = new ArrayList<Vector3f>();
+		textures = new ArrayList<Vector3f>();
 		triangles = new ArrayList<Triangle>();
 		
 		parseFile(fileName);
@@ -88,7 +90,8 @@ public class Model extends Surface {
 				break;
 				
 			case VT:
-				//System.out.println("Not yet implemented");
+				Vector3f texture = new Vector3f(Float.parseFloat(lineTokenized[1]), Float.parseFloat(lineTokenized[2]), Float.parseFloat(lineTokenized[3]));
+				textures.add(texture);
 				break;
 				
 			case VN:

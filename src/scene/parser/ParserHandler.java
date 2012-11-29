@@ -92,4 +92,7 @@ public interface ParserHandler
 
 	public void startFromFile(String name, String filePath);
 	public void endFromFile();
+
+	public void startReflectiveMaterial(String name, Color3f color, float reflectivity);
+	public void endReflectiveMaterial();
 }

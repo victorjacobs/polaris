@@ -586,6 +586,23 @@ public final class Parser extends DefaultHandler
 				if (name == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"name\".");
 				if (    handler != null) handler.startFromFile(name, filePath);
 			}
+			else if (qName.equals("ReflectiveMaterial"))
+			{
+				String colorString = attributes.getValue("color");
+				if (colorString == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"color\".");
+				Color3f color = ParserUtils.parseColor3f(colorString);
+
+				String reflectivityString = attributes.getValue("reflectivity");
+				if (reflectivityString == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"reflectivity\".");
+				float reflectivity = ParserUtils.parseFloat(reflectivityString);
+
+				String name = attributes.getValue("name");
+				if (name == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"name\".");
+
+				// call handler
+				//if (echoHandler != null) echoHandler.startRefractiveMaterial(scale);
+				if (    handler != null) handler.startReflectiveMaterial(name, color, reflectivity);
+			}
             // Unknown element
             else
             {
@@ -793,6 +810,10 @@ public final class Parser extends DefaultHandler
 			else if (qName.equals("FromFile"))
 			{
 				if (    handler != null) handler.endFromFile();
+			}
+			else if (qName.equals("ReflectiveMaterial"))
+			{
+				if (    handler != null) handler.endReflectiveMaterial();
 			}
             // Unknown element
             else

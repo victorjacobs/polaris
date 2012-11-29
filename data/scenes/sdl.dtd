@@ -108,7 +108,7 @@
 >
 
 
-<!ELEMENT Materials ((DiffuseMaterial|PhongMaterial|LinearCombinedMaterial|RefractiveMaterial)*)>
+<!ELEMENT Materials ((DiffuseMaterial|PhongMaterial|LinearCombinedMaterial|RefractiveMaterial|ReflectiveMaterial)*)>
 <!ATTLIST Materials>
 
 <!ELEMENT DiffuseMaterial EMPTY>
@@ -138,6 +138,13 @@
 	color						CDATA 			#REQUIRED
 	refractiveIndex				CDATA 			#REQUIRED
 	name						ID 				#REQUIRED
+>
+
+<!ELEMENT ReflectiveMaterial EMPTY>
+<!ATTLIST ReflectiveMaterial
+    name                        ID              #REQUIRED
+    color                       CDATA           "1 1 1"
+    reflectivity                CDATA           #REQUIRED
 >
 
 <!ELEMENT Scene ((Shape|Rotate|Translate|Scale)+)>
