@@ -33,6 +33,7 @@ public class Model extends Surface {
 	}
 
 	public Model(String fileName, Material mat) {
+		long startTime = System.currentTimeMillis();
 		System.out.println("Loading model from file " + fileName);
 		points = new ArrayList<Vector3f>();
 		normalVectors = new ArrayList<Vector3f>();
@@ -40,6 +41,8 @@ public class Model extends Surface {
 		
 		parseFile(fileName);
 		setMaterial(mat);
+
+		System.out.println("Loaded in " + (System.currentTimeMillis() - startTime) + "ms");
 	}
 	
 	private void parseFile(String fileName) {

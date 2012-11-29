@@ -116,10 +116,17 @@ public class GridAcceleratedScene extends SceneDecorator {
 						Stats.incIntersections();
 
 					if (hit != null) {
-						// FIXME: check whether hit point is actually in cell
-
-						lowestT = hit.getT();
-						closestHit = hit;
+						// FIXED: check whether hit point is actually in cell
+						// Check whether hit was actually in cell and not outside of cell
+						if (hit.getPoint().x >= cell[0] * cellSize[0] + grid.getOrigin().x
+								&& hit.getPoint().x <= (cell[0] + 1) * cellSize[0] + grid.getOrigin().x
+								&& hit.getPoint().y >= cell[1] * cellSize[1] + grid.getOrigin().y
+								&& hit.getPoint().y <= (cell[1] + 1) * cellSize[1] + grid.getOrigin().y
+								&& hit.getPoint().z >= cell[2] * cellSize[2] + grid.getOrigin().z
+								&& hit.getPoint().z <= (cell[2] + 1) * cellSize[2] + grid.getOrigin().z) {
+							lowestT = hit.getT();
+							closestHit = hit;
+						}
 					}
 				}
 

@@ -11,7 +11,7 @@ public class RunSDLTest {
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Polaris");
 
 		PolarisMainWindow mainWindow = new PolarisMainWindow();
-		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), 2);
+		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), 1);
 		renderer.loadSDL("data/scenes/teapot.sdl");
 
 		mainWindow.setListener(renderer);

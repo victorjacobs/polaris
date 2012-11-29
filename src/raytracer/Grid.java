@@ -37,6 +37,8 @@ public class Grid {
 	private int[] C;
 
 	public Grid(List<Surface> primitiveBag) {
+		long startTime = System.currentTimeMillis();
+
 		this.primitiveBag = primitiveBag;
 		this.M = new int[3];
 
@@ -111,7 +113,7 @@ public class Grid {
 			}
 		}
 
-		System.out.println("Grid built");
+		System.out.println("Grid built in " + (System.currentTimeMillis() - startTime) + "ms");
 		System.out.print("  Number of cells: { ");
 		for (int m : M) System.out.print(m + " ");
 		System.out.println("}");
@@ -143,6 +145,10 @@ public class Grid {
 
 			bb = bb.add(surf.boundingBox());
 		}
+
+		// Add some eps to the boundingbox
+		// TODO is this okay value?
+		bb = bb.increaseBy(0.00000000001f * bb.getVolume());
 
 		float[] dimensions = bb.size();
 		float volume = bb.getVolume();

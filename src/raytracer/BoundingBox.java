@@ -141,4 +141,10 @@ public class BoundingBox {
 //			return true;
 //		}
 	}
+
+	public BoundingBox increaseBy(float inc) {
+		BoundingBox newBox = new BoundingBox(getMin().minus(new Vector3f(inc, inc, inc)), getMax().sum(new Vector3f(inc, inc, inc)));
+
+		return newBox;
+	}
 }

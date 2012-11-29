@@ -167,7 +167,7 @@ public class Renderer implements MainWindowListener {
 
 			if (currentDepth == 1) {
 				long endTime = System.currentTimeMillis();
-				System.out.println("Slice " + sliceNo + " took " + Math.round((endTime - startTime) / 1000) + "s");
+				System.out.println("Slice " + sliceNo + " took " + (endTime - startTime) + "ms");
 				return;
 			}
 
