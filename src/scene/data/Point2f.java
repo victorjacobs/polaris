@@ -28,4 +28,12 @@ public class Point2f extends Tuple2f implements Serializable
         super(t);
     }
 
+	public Point2f multiply(float mult) {
+		return new Point2f(mult * x, mult * y);
+	}
+
+	public Point2f sum(Point2f other) {
+		return new Point2f(x + other.x, y + other.y);
+	}
+
 }

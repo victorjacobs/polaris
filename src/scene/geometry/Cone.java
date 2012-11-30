@@ -38,9 +38,4 @@ public class Cone extends Surface {
 	public void applyTransformation(Matrix4f transformation) {
 		//To change body of implemented methods use File | Settings | File Templates.
 	}
-
-	@Override
-	public Point2f getLocalCoordinateFor(Point3f point) {
-		return null;  //To change body of implemented methods use File | Settings | File Templates.
-	}
 }

@@ -1,6 +1,7 @@
 package scene.geometry;
 
 import scene.data.Matrix4f;
+import scene.data.Point2f;
 import scene.data.Vector3f;
 import scene.data.Vector4f;
 
@@ -13,13 +14,13 @@ public class Vertex {
 
 	private Vector3f point;
 	private Vector3f normal;
-	private Vector3f texture;
+	private Point2f texture;
 
 	public Vertex(Vector3f point, Vector3f normal) {
 		this(point, normal, null);
 	}
 
-	public Vertex(Vector3f point, Vector3f normal, Vector3f texture) {
+	public Vertex(Vector3f point, Vector3f normal, Point2f texture) {
 		this.point = point;
 		this.normal = normal;
 		this.texture = texture;
@@ -33,11 +34,12 @@ public class Vertex {
 		return normal;
 	}
 
-	public Vector3f getTexture() {
+	public Point2f getTexture() {
 		return texture;
 	}
 
 	public Vertex applyTransformation(Matrix4f transformation) {
+		// TODO textures?
 		// Note: normal vectors shouldn't be translated!! Therefore reset the last row and column of the transformation matrix
 		Vector4f pointHomogeneous = new Vector4f(point.x, point.y, point.z, 1);
 		Vector4f normalHomogeneous = new Vector4f(normal.x, normal.y, normal.z, 1);
@@ -51,5 +53,9 @@ public class Vertex {
 		Vector3f newNormal = new Vector3f(normalHomogeneous.x, normalHomogeneous.y, normalHomogeneous.z);
 
 		return new Vertex(newPoint, newNormal.normalize());
+	}
+
+	public boolean hasTextureCoordinate() {
+		return this.texture != null;
 	}
 }

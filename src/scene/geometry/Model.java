@@ -3,11 +3,9 @@ package scene.geometry;
 import raytracer.BoundingBox;
 import raytracer.Hit;
 import raytracer.Ray;
-import scene.data.Point2f;
-import scene.data.Point3f;
-import scene.material.Material;
 import scene.data.Matrix4f;
 import scene.data.Vector3f;
+import scene.material.Material;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -190,7 +188,7 @@ public class Model extends Surface {
 		if (hit == null) {
 			return null;
 		} else {
-			return new Hit(ray, this, hit.getPoint(), hit.getNormal(), hit.getT());
+			return new Hit(ray, this, hit.getPoint(), hit.getNormal(), hit.getTextureCoordinates(), hit.getT());
 		}
 	}
 
@@ -227,11 +225,6 @@ public class Model extends Surface {
 		for (Triangle triag : triangles) {
 			triag.applyTransformation(transformation);
 		}
-	}
-
-	@Override
-	public Point2f getLocalCoordinateFor(Point3f point) {
-		return null;  //To change body of implemented methods use File | Settings | File Templates.
 	}
 
 	@Override

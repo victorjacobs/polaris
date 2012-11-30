@@ -6,7 +6,6 @@ import raytracer.Ray;
 import raytracer.Settings;
 import scene.data.Matrix4f;
 import scene.data.Point2f;
-import scene.data.Point3f;
 import scene.data.Vector3f;
 import scene.material.Color3f;
 import scene.material.DiffuseMaterial;
@@ -63,7 +62,6 @@ public class Triangle extends Surface {
 	
 	@Override
 	public Hit hit(Ray ray, float t0, float t1) {
-		
 		float a = v1.getPoint().x - v2.getPoint().x;
 		float b = v1.getPoint().y - v2.getPoint().y;
 		float c = v1.getPoint().z - v2.getPoint().z;
@@ -103,11 +101,16 @@ public class Triangle extends Surface {
 		float alpha = 1 - beta - gamma;
 		
 		Vector3f interpolatedNormal = v1.getNormal().multiply(alpha).sum(v2.getNormal().multiply(beta).sum(v3.getNormal().multiply(gamma)));
+
+		Point2f interpolatedTexture = null;
+		if (v1.hasTextureCoordinate()) {
+			interpolatedTexture = v1.getTexture().multiply(alpha).sum(v2.getTexture().multiply(beta).sum(v3.getTexture().multiply(gamma)));
+		}
 		
 		// Calculate in what point the hit occurred
 		Vector3f where = ray.getOrigin().sum(ray.getDirection().multiply(t));
 		
-		return new Hit(ray, this, where, interpolatedNormal.normalize(), t);
+		return new Hit(ray, this, where, interpolatedNormal.normalize(), interpolatedTexture, t);
 	}
 
 	@Override
@@ -142,11 +145,6 @@ public class Triangle extends Surface {
 		v1 = v1.applyTransformation(transformation);
 		v2 = v2.applyTransformation(transformation);
 		v3 = v3.applyTransformation(transformation);
-	}
-
-	@Override
-	public Point2f getLocalCoordinateFor(Point3f point) {
-		return null;  //To change body of implemented methods use File | Settings | File Templates.
 	}
 
 }

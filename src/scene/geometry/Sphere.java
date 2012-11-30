@@ -55,7 +55,7 @@ public class Sphere extends Surface {
 		// Normal vector
 		Vector3f normal = where.minus(center).normalize();
 		
-		return new Hit(ray, this, where, normal, t);
+		return new Hit(ray, this, where, normal, getLocalCoordinateFor(new Point3f(where)), t);
 	}
 
 	@Override
@@ -84,8 +84,7 @@ public class Sphere extends Surface {
 		center = new Vector3f(transformedCenter.x, transformedCenter.y, transformedCenter.z);
 	}
 
-	@Override
-	public Point2f getLocalCoordinateFor(Point3f point) {
+	private Point2f getLocalCoordinateFor(Point3f point) {
 		float theta = (float)Math.acos((point.z - center.z) / radius);
 		float phi = (float)Math.atan2((point.y - center.y), (point.x - center.x));
 

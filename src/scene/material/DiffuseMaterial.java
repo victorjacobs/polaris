@@ -2,23 +2,17 @@ package scene.material;
 
 import raytracer.Hit;
 import scene.Scene;
-import scene.data.Point2f;
-import scene.data.Point3f;
 import scene.lighting.AmbientLight;
 import scene.lighting.Light;
 
 public class DiffuseMaterial extends Material {
 
-	private Texture text;
+	public DiffuseMaterial(Texture texture) {
+		super(texture);
+	}
 
 	public DiffuseMaterial(Color3f baseColor) {
 		super(baseColor);
-	}
-
-	// TODO: move this to Material
-	public DiffuseMaterial(Texture text) {
-		super(new Color3f(0, 0, 0));
-		this.text = text;
 	}
 	
 	@Override
@@ -39,18 +33,10 @@ public class DiffuseMaterial extends Material {
 				sumB += (light.intensity() * light.color().getBlue()) * dotProduct;
 			}
 		}
-		
-		if (text == null) {
-			sumR *= baseColor.getRed();
-			sumG *= baseColor.getGreen();
-			sumB *= baseColor.getBlue();
-		} else {
-			Point2f coordinate = hit.getSurface().getLocalCoordinateFor(new Point3f(hit.getPoint()));
 
-			sumR *= text.getColor(coordinate).getRed();
-			sumG *= text.getColor(coordinate).getGreen();
-			sumB *= text.getColor(coordinate).getBlue();
-		}
+		sumR *= getUnshadedColorAt(hit.getTextureCoordinates()).getRed();
+		sumG *= getUnshadedColorAt(hit.getTextureCoordinates()).getGreen();
+		sumB *= getUnshadedColorAt(hit.getTextureCoordinates()).getBlue();
 		
 		return new Color3f(ambientLight.getRed() + Math.min(1, sumR), ambientLight.getGreen() + Math.min(1, sumG), ambientLight.getRed() + Math.min(1, sumB));
 	}

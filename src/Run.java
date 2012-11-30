@@ -11,10 +11,7 @@ import scene.geometry.Sphere;
 import scene.geometry.Surface;
 import scene.lighting.AmbientLight;
 import scene.lighting.PointLight;
-import scene.material.Color3f;
-import scene.material.DiffuseMaterial;
-import scene.material.Material;
-import scene.material.Texture;
+import scene.material.*;
 
 /*
  * TODO parse squares !! (make general)
@@ -50,6 +47,8 @@ public class Run {
 		Surface plane = new Model("data/objects/plane.obj");
 		plane.setMaterial(new DiffuseMaterial(new Color3f(1, 1, 1)));
 		scene.addSurface(plane);
+
+		Material glass = new RefractiveMaterial(new Color3f(1, 1, 1), 1.33f);
 
 		Surface sphere = new Sphere(new Vector3f(3, 1, 0), 0.6f, diffuseMaterial);
 		scene.addSurface(sphere);
