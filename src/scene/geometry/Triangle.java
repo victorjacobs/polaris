@@ -5,6 +5,8 @@ import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.Settings;
 import scene.data.Matrix4f;
+import scene.data.Point2f;
+import scene.data.Point3f;
 import scene.data.Vector3f;
 import scene.material.Color3f;
 import scene.material.DiffuseMaterial;
@@ -140,6 +142,11 @@ public class Triangle extends Surface {
 		v1 = v1.applyTransformation(transformation);
 		v2 = v2.applyTransformation(transformation);
 		v3 = v3.applyTransformation(transformation);
+	}
+
+	@Override
+	public Point2f getLocalCoordinateFor(Point3f point) {
+		return null;  //To change body of implemented methods use File | Settings | File Templates.
 	}
 
 }

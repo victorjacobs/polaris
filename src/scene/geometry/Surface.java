@@ -3,8 +3,10 @@ package scene.geometry;
 import raytracer.BoundingBox;
 import raytracer.Hit;
 import raytracer.Ray;
-import scene.material.Material;
 import scene.data.Matrix4f;
+import scene.data.Point2f;
+import scene.data.Point3f;
+import scene.material.Material;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,6 +18,8 @@ public abstract class Surface {
 	public abstract Material getMaterial();
 	public abstract void setMaterial(Material mat);
 	public abstract void applyTransformation(Matrix4f transformation);
+
+	public abstract Point2f getLocalCoordinateFor(Point3f point);
 
 	public List<Surface> getPrimitiveSurfaces() {
 		LinkedList<Surface> out = new LinkedList<Surface>();

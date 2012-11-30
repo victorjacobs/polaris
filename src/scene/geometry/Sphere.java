@@ -3,10 +3,8 @@ package scene.geometry;
 import raytracer.BoundingBox;
 import raytracer.Hit;
 import raytracer.Ray;
+import scene.data.*;
 import scene.material.Material;
-import scene.data.Matrix4f;
-import scene.data.Vector3f;
-import scene.data.Vector4f;
 
 public class Sphere extends Surface {
 	
@@ -84,6 +82,19 @@ public class Sphere extends Surface {
 		Vector4f transformedCenter = transformation.multiply(homogenous);
 
 		center = new Vector3f(transformedCenter.x, transformedCenter.y, transformedCenter.z);
+	}
+
+	@Override
+	public Point2f getLocalCoordinateFor(Point3f point) {
+		float theta = (float)Math.acos((point.z - center.z) / radius);
+		float phi = (float)Math.atan2((point.y - center.y), (point.x - center.x));
+
+		phi = (phi < 0) ? (float)(phi + 2 * Math.PI) : phi;
+
+		float u = (float)(phi / (2 * Math.PI));
+		float v = (float)((Math.PI - theta) / Math.PI);
+
+		return new Point2f(u, v);
 	}
 
 }

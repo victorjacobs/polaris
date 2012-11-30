@@ -3,6 +3,8 @@ package scene.geometry;
 import raytracer.BoundingBox;
 import raytracer.Hit;
 import raytracer.Ray;
+import scene.data.Point2f;
+import scene.data.Point3f;
 import scene.material.Material;
 import scene.data.Matrix4f;
 import scene.data.Vector3f;
@@ -90,8 +92,8 @@ public class Model extends Surface {
 				break;
 				
 			case VT:
-				Vector3f texture = new Vector3f(Float.parseFloat(lineTokenized[1]), Float.parseFloat(lineTokenized[2]), Float.parseFloat(lineTokenized[3]));
-				textures.add(texture);
+				//Vector3f texture = new Vector3f(Float.parseFloat(lineTokenized[1]), Float.parseFloat(lineTokenized[2]), Float.parseFloat(lineTokenized[3]));
+				//textures.add(texture);
 				break;
 				
 			case VN:
@@ -225,6 +227,11 @@ public class Model extends Surface {
 		for (Triangle triag : triangles) {
 			triag.applyTransformation(transformation);
 		}
+	}
+
+	@Override
+	public Point2f getLocalCoordinateFor(Point3f point) {
+		return null;  //To change body of implemented methods use File | Settings | File Templates.
 	}
 
 	@Override

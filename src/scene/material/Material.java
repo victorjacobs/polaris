@@ -11,11 +11,27 @@ import scene.lighting.Light;
  */
 public abstract class Material {
 	
-	protected Color3f baseColor;
-	
+	public Color3f baseColor;
+	private Texture texture;
+
+	public Material(Texture texture) {
+		this.texture = texture;
+	}
+
 	public Material(Color3f baseColor) {
 		this.baseColor = baseColor;
 	}
+
+
+//	public Color3f getUnshadedColorAt(Point3f point) {
+//		if (texture == null) {
+//			return baseColor;
+//		} else {
+//
+//
+//			return texture.getColor(point);
+//		}
+//	}
 
 	public Color3f getColor(Scene scene, Hit hit) {
 		return getColor(scene, hit, 1);

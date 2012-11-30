@@ -3,6 +3,8 @@ package scene.geometry;
 import raytracer.BoundingBox;
 import raytracer.Hit;
 import raytracer.Ray;
+import scene.data.Point2f;
+import scene.data.Point3f;
 import scene.material.Material;
 import scene.data.Matrix4f;
 
@@ -35,5 +37,10 @@ public class Cone extends Surface {
 	@Override
 	public void applyTransformation(Matrix4f transformation) {
 		//To change body of implemented methods use File | Settings | File Templates.
+	}
+
+	@Override
+	public Point2f getLocalCoordinateFor(Point3f point) {
+		return null;  //To change body of implemented methods use File | Settings | File Templates.
 	}
 }
