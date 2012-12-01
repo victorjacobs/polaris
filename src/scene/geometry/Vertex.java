@@ -16,16 +16,20 @@ public class Vertex {
 	private Vector3f normal;
 	private Point2f texture;
 
-	public Vertex(Vector3f point, Vector3f normal) {
-		this(point, normal, null);
-	}
-
 	public Vertex(Vector3f point, Vector3f normal, Point2f texture) {
 		this.point = point;
 		this.normal = normal;
 		this.texture = texture;
 	}
-	
+
+	public Vertex(Vector3f point, Vector3f normal) {
+		this(point, normal, null);
+	}
+
+	public Vertex(Vector3f point) {
+		this.point = point;
+	}
+
 	public Vector3f getPoint() {
 		return point;
 	}

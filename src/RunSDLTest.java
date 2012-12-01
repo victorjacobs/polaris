@@ -12,7 +12,7 @@ public class RunSDLTest {
 
 		PolarisMainWindow mainWindow = new PolarisMainWindow();
 		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), 1);
-		renderer.loadSDL("data/scenes/default.sdl");
+		renderer.loadSDL("data/scenes/787.sdl");
 
 		mainWindow.setListener(renderer);
 

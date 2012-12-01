@@ -14,6 +14,7 @@ import scene.lighting.PointLight;
 import scene.material.*;
 
 /*
+ * FIXME shadows for textures broken
  * TODO parse squares !! (make general)
  * TODO texture mapping
  * TODO Soft shadows

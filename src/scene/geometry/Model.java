@@ -4,11 +4,13 @@ import raytracer.BoundingBox;
 import raytracer.Hit;
 import raytracer.Ray;
 import scene.data.Matrix4f;
+import scene.data.Point2f;
 import scene.data.Vector3f;
 import scene.material.Material;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,7 +23,7 @@ import java.util.List;
 public class Model extends Surface {
 	private List<Vector3f> points;
 	private List<Vector3f> normalVectors;
-	private List<Vector3f> textures;
+	private List<Point2f> textures;
 	private List<Triangle> triangles;
 	private Material material;
 	
@@ -38,7 +40,7 @@ public class Model extends Surface {
 		System.out.println("Loading model from file " + fileName);
 		points = new ArrayList<Vector3f>();
 		normalVectors = new ArrayList<Vector3f>();
-		textures = new ArrayList<Vector3f>();
+		textures = new ArrayList<Point2f>();
 		triangles = new ArrayList<Triangle>();
 		
 		parseFile(fileName);
@@ -72,8 +74,6 @@ public class Model extends Surface {
 		System.out.println("  " + triangles.size() + " triangles");
 	}
 	
-	// TODO: now we assume that all planes are triangles
-	// NOTE: when creating triangles, set material to null, keep the material stored here
 	private void parseLine(String line) {
 		line = line.replaceAll("  ", " ");
 		
@@ -90,8 +90,8 @@ public class Model extends Surface {
 				break;
 				
 			case VT:
-				//Vector3f texture = new Vector3f(Float.parseFloat(lineTokenized[1]), Float.parseFloat(lineTokenized[2]), Float.parseFloat(lineTokenized[3]));
-				//textures.add(texture);
+				Point2f texture = new Point2f(Float.parseFloat(lineTokenized[1]), Float.parseFloat(lineTokenized[2]));
+				textures.add(texture);
 				break;
 				
 			case VN:
@@ -102,62 +102,9 @@ public class Model extends Surface {
 				
 			case F:
 				// Generate vertices
-				// TODO make more general?
-				// TODO als geen textuur/normaal
-				// TODO CLEAN THIS CODE DUPLICATION
-				String[] indices = lineTokenized[1].split("/");
-				Triangle triag;
-				
-				if (lineTokenized.length == 4) {
-					if (indices.length == 1) {
-						triag = new Triangle(points.get(Integer.parseInt(lineTokenized[1]) - 1), points.get(Integer.parseInt(lineTokenized[2]) - 1), points.get(Integer.parseInt(lineTokenized[3]) - 1), material);
-					} else {
-						Vertex v1 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
-						
-						indices = lineTokenized[2].split("/");
-						Vertex v2 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
-						
-						indices = lineTokenized[3].split("/");
-						Vertex v3 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
-						
-						// Triangle
-						triag = new Triangle(v1, v2, v3, material);
-					}
-					
-					
-					triangles.add(triag);
-				} else if (lineTokenized.length == 5) {
-					// Squares
-					if (indices.length == 1) {
-						triag = new Triangle(points.get(Integer.parseInt(lineTokenized[1]) - 1), points.get(Integer.parseInt(lineTokenized[2]) - 1), points.get(Integer.parseInt(lineTokenized[3]) - 1), material);
-						triangles.add(triag);
-						
-						triag = new Triangle(points.get(Integer.parseInt(lineTokenized[2]) - 1), points.get(Integer.parseInt(lineTokenized[3]) - 1), points.get(Integer.parseInt(lineTokenized[4]) - 1), material);
-						triangles.add(triag);
-					} else {
-						Vertex v1 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
-						
-						indices = lineTokenized[2].split("/");
-						Vertex v2 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
-						
-						indices = lineTokenized[3].split("/");
-						Vertex v3 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
-						
-						indices = lineTokenized[4].split("/");
-						Vertex v4 = new Vertex(points.get(Integer.parseInt(indices[0]) - 1), normalVectors.get(Integer.parseInt(indices[2]) - 1));
-						
-						// Triangles
-						triag = new Triangle(v1, v2, v3, material);
-						triangles.add(triag);
-						triag = new Triangle(v2, v3, v4, material);
-						triangles.add(triag);
-						triag = new Triangle(v1, v2, v4, material);
-						triangles.add(triag);
-						triag = new Triangle(v1, v4, v3, material);
-						triangles.add(triag);
-					}
-				}
-				
+				// Parsevertices only needs the strings with vertices in them, data tag not needed
+				parseVertices(Arrays.copyOfRange(lineTokenized, 1, lineTokenized.length));
+
 				break;
 			}
 		} catch (Exception e) {
@@ -165,6 +112,45 @@ public class Model extends Surface {
 			//e.printStackTrace();
 		}
 		
+	}
+
+	private Vertex generateVertex(String[] params) {
+		int pointIndex = Integer.parseInt(params[0]) - 1;
+		if (params.length == 1) {
+			return new Vertex(points.get(pointIndex));
+		} else {
+			int normalIndex = Integer.parseInt(params[2]) - 1;
+
+			if (params[1].isEmpty()) {
+				return new Vertex(points.get(pointIndex), normalVectors.get(normalIndex));
+			} else {
+				int textureIndex = Integer.parseInt(params[1]) - 1;
+
+				return new Vertex(points.get(pointIndex), normalVectors.get(normalIndex), textures.get(textureIndex));
+			}
+		}
+	}
+
+	private void parseVertices(String[] vertices) {
+		String[] indices = vertices[0].split("/");
+		Triangle triag;
+
+		int numOfPoints = vertices.length;
+
+		Vertex v1, v2, v3;
+
+		// Fix one point, then rotate around rest:
+		v1 = generateVertex(indices);
+
+		// To make sure normals are ok: build triangles counterclockwise
+		for (int i = 2; i < numOfPoints; i++) {
+			indices = vertices[i - 1].split("/");
+			v2 = generateVertex(indices);
+			indices = vertices[i].split("/");
+			v3 = generateVertex(indices);
+
+			triangles.add(new Triangle(v1, v2, v3, material));
+		}
 	}
 
 	// NOTE: since this is a bag full of triangles, find all hits, then return closest
