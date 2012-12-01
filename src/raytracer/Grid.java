@@ -169,7 +169,7 @@ public class Grid {
 		return cellSize.clone();
 	}
 
-	public Vector3f hit(Ray ray) {
+	public Hit hit(Ray ray) {
 		return bb.hit(ray);
 	}
 

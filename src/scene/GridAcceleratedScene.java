@@ -40,7 +40,7 @@ public class GridAcceleratedScene extends SceneDecorator {
 		Vector3f e = ray.getOrigin();
 
 		// Ray misses grid
-		Vector3f gridEntryPoint = grid.hit(ray);
+		Vector3f gridEntryPoint = grid.hit(ray).getPoint();
 		if (gridEntryPoint == null) return null;
 
 		// Number of cells
@@ -175,9 +175,9 @@ public class GridAcceleratedScene extends SceneDecorator {
 
 	@Override
 	public void preProcess() {
-		// If this is first ray that's traced, build grid
-		System.out.println("Preprocessing scene");
-		if (grid == null)
+		if (grid == null) {
+			System.out.println("Preprocessing scene");
 			grid = new Grid(primitiveBag);
+		}
 	}
 }

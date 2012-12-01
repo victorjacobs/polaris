@@ -15,8 +15,9 @@ public class BoundingBox {
 	private Vector3f max;
 
 	public BoundingBox() {
-		this.min = new Vector3f(0, 0, 0);
-		this.max = new Vector3f(0, 0, 0);
+		// FIXED: shouldn't be set to 000! Add() will do weird stuff!
+		this.min = null;
+		this.max = null;
 	}
 
 	public BoundingBox(Vector3f[] points) {
@@ -59,6 +60,11 @@ public class BoundingBox {
 		Vector3f oMin = otherBB.getMin();
 		Vector3f oMax = otherBB.getMax();
 
+		// Don't be too strict in this check for great benefit
+		if (this.min == null || this.max == null) {
+			return new BoundingBox(oMin, oMax);
+		}
+
 		Vector3f nMin = min, nMax = max;
 
 		if (oMin.x < nMin.x) nMin.x = oMin.x;
@@ -94,7 +100,7 @@ public class BoundingBox {
 	}
 
 	// TODO evt ook t0 en t1?
-	public Vector3f hit(Ray ray) {
+	public Hit hit(Ray ray) {
 		Vector3f d = ray.getDirection();
 		Vector3f e = ray.getOrigin();
 
@@ -128,7 +134,7 @@ public class BoundingBox {
 			return null;
 		} else {
 			hitPoint = ray.getOrigin().sum(ray.getDirection().multiply(min));
-			return hitPoint;
+			return new Hit(ray, null, hitPoint, null, null, min);
 		}
 
 //		if (tMin[0] > tMax[1] || tMin[1] > tMax[0]) {

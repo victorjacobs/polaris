@@ -1,9 +1,14 @@
 package scene;
 
 import raytracer.Hit;
+import raytracer.KDTree;
 import raytracer.Ray;
 import scene.data.Vector3f;
+import scene.geometry.Surface;
 import scene.lighting.Light;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,9 +17,22 @@ import scene.lighting.Light;
  * Time: 17:51
  */
 public class BoundingBoxAcceleratedScene extends SceneDecorator {
+	private KDTree tree;
+	private List<Surface> primitiveList;
 
 	public BoundingBoxAcceleratedScene(Scene scene) {
 		super(scene);
+
+		System.out.println("BVH KDTree acceleration structure loaded");
+
+		primitiveList = new LinkedList<Surface>();
+	}
+
+	@Override
+	public void addSurface(Surface surface) {
+		super.addSurface(surface);
+
+		primitiveList.addAll(surface.getPrimitiveSurfaces());
 	}
 
 	@Override
@@ -25,11 +43,19 @@ public class BoundingBoxAcceleratedScene extends SceneDecorator {
 
 	@Override
 	public Hit trace(Ray ray, float eps) {
-		return super.trace(ray, eps);    //To change body of overridden methods use File | Settings | File Templates.
+		return tree.hit(ray, eps);
 	}
 
 	@Override
 	public void preProcess() {
-		super.preProcess();    //To change body of overridden methods use File | Settings | File Templates.
+		if (tree == null) {
+			System.out.println("Preprocessing scene");
+
+			long startTime = System.currentTimeMillis();
+
+			tree = new KDTree(primitiveList);
+
+			System.out.println("Building KDTree took " + (System.currentTimeMillis() - startTime) + "ms");
+		}
 	}
 }
