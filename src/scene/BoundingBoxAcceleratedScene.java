@@ -3,6 +3,7 @@ package scene;
 import raytracer.Hit;
 import raytracer.KDTree;
 import raytracer.Ray;
+import raytracer.Settings;
 import scene.data.Vector3f;
 import scene.geometry.Surface;
 import scene.lighting.Light;
@@ -37,8 +38,7 @@ public class BoundingBoxAcceleratedScene extends SceneDecorator {
 
 	@Override
 	public boolean isInShade(Vector3f point, Light light) {
-		// TODO OVERRIDE
-		return scene.isInShade(point, light);
+		return trace(new Ray(point, light.rayTo(point)), Settings.EPS) != null;
 	}
 
 	@Override

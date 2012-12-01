@@ -14,10 +14,10 @@ public class Settings {
 	public static final float EPS = 0.01f;
 
 	public static final int GRID_DENSITY = 7;
-	public static final int KDTREE_ELEMENTS_IN_LEAF = 20;
+	public static final int KDTREE_ELEMENTS_IN_LEAF = 10;
 
 	// Some debug settings
-	public static final boolean SHOULD_REPAINT_AFTER_EVERY_PIXEL = false;
+	public static final boolean SHOULD_REPAINT_AFTER_EVERY_PIXEL = true;
 	public static final boolean FIX_SINGLE_THREAD = false;
 	public static final boolean RANDOM_COLOR_TRIANGLES = false;
 	public static final boolean COLLECT_STATS = false;

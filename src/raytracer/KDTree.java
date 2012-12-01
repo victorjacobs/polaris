@@ -44,7 +44,7 @@ public class KDTree {
 			List<Surface> rightData = new LinkedList<Surface>();
 
 			// Calculate split
-			Vector3f split = boundingBox.getMax().minus(boundingBox.getMin()).divideBy(2);
+			Vector3f split = boundingBox.getMax().minus(boundingBox.getMin()).divideBy(2).sum(boundingBox.getMin());
 
 			for (Surface surf : data) {
 				if (surf.boundingBox().getMin().get(nextAxis) < split.get(nextAxis)) {
@@ -110,6 +110,6 @@ public class KDTree {
 	}
 
 	public boolean isLeaf() {
-		return leafData == null;
+		return leafData != null;
 	}
 }
