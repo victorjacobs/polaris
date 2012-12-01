@@ -23,9 +23,7 @@ public class PhongMaterial extends Material {
 		Vector3f halfVector;
 		float dotProduct;
 		
-		float sumR = ambientLight.getRed();
-		float sumG = ambientLight.getGreen();
-		float sumB = ambientLight.getBlue();
+		float sumR = 0, sumG = 0, sumB = 0;
 		
 		for (Light light : scene.getLightSources()) {
 			if (!(light instanceof AmbientLight) && !scene.isInShade(hit.getPoint(), light)) {

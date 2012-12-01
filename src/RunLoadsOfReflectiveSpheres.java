@@ -31,7 +31,7 @@ public class RunLoadsOfReflectiveSpheres {
 		renderer.loadScene(scene);
 
 		PointLight light1 = new PointLight(new Vector3f(-20, 10, 0));
-		AmbientLight aLight = new AmbientLight(new Color3f(1, 1, 1), 0.1f);
+		AmbientLight aLight = new AmbientLight(new Color3f(1, 1, 1), 0.3f);
 		scene.addLightSource(light1);
 		scene.addLightSource(aLight);
 

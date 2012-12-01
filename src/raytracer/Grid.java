@@ -147,8 +147,8 @@ public class Grid {
 		}
 
 		// Add some eps to the boundingbox
-		// TODO is this okay value?
-		bb = bb.increaseBy(0.00000000001f * bb.getVolume());
+		// TODO is this okay value? NOPE
+		bb = bb.increaseBy(0.000001f * bb.getVolume());
 
 		float[] dimensions = bb.size();
 		float volume = bb.getVolume();

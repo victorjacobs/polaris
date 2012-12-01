@@ -16,13 +16,16 @@ public class RefractiveMaterial extends PhongMaterial {
 		super(baseColor, 100);
 		this.refractionCoefficient = refractionCoefficient;
 
-		ar = ag = ab = 0.95f;		// TODO werkt nog niet helemaal blijkbaar
+		ar = ag = ab = 0.5f;
 	}
 	
 	@Override
 	public Color3f getColor(Scene scene, Hit hit, int recursionDepth) {
 		if (recursionDepth > Settings.MAX_RECURSION_DEPTH) return new Color3f(0, 0, 0); // TODO solve
 		Color3f phong = super.getColor(scene, hit, recursionDepth);
+
+		// TODO something wrong with phong here and ambient lighting
+		//Color3f phong = new Color3f(0, 0, 0);
 
 		Ray nextRay;
 		Hit nextHit;

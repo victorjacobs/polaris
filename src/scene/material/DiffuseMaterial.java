@@ -19,11 +19,7 @@ public class DiffuseMaterial extends Material {
 	public Color3f getColor(Scene scene, Hit hit, int recursionDepth) {
 		Color3f ambientLight = super.getColor(scene, hit, recursionDepth);
 		
-		float sumR, sumG, sumB, dotProduct;
-
-		sumR = ambientLight.getRed();
-		sumG = ambientLight.getGreen();
-		sumB = ambientLight.getBlue();
+		float sumR = 0, sumG = 0, sumB = 0, dotProduct;
 
 		for (Light light : scene.getLightSources()) {
 			if (!(light instanceof AmbientLight) && !scene.isInShade(hit.getPoint(), light)) {
@@ -38,7 +34,7 @@ public class DiffuseMaterial extends Material {
 		sumG *= getUnshadedColorAt(hit.getTextureCoordinates()).getGreen();
 		sumB *= getUnshadedColorAt(hit.getTextureCoordinates()).getBlue();
 		
-		return new Color3f(ambientLight.getRed() + Math.min(1, sumR), ambientLight.getGreen() + Math.min(1, sumG), ambientLight.getRed() + Math.min(1, sumB));
+		return new Color3f(ambientLight.getRed() + sumR, ambientLight.getGreen() + sumG, ambientLight.getRed() + sumB);
 	}
 	
 }
