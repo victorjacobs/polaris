@@ -38,6 +38,10 @@ public class AffineTransformation {
 							0, 0, 0, 1);
 	}
 
+	public static Matrix4f scale(float scale) {
+		return scale(new Vector3f(scale, scale, scale));
+	}
+
 	public static Matrix4f scale(Vector3f scale) {
 		return new Matrix4f(scale.x, 0, 0, 0,
 							0, scale.y, 0, 0,

@@ -16,6 +16,7 @@ import scene.lighting.AmbientLight;
 import scene.lighting.PointLight;
 import scene.material.Color3f;
 import scene.material.DiffuseMaterial;
+import scene.material.ReflectiveMaterial;
 
 import java.util.Random;
 
@@ -28,26 +29,29 @@ import java.util.Random;
 public class RunALotOfSpheres {
 
 	public static void main(String[] args) {
+
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Polaris");
 
 		PolarisMainWindow mainWindow = new PolarisMainWindow();
 
 		Scene scene = new GridAcceleratedScene(new BasicScene());
-		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), 8);
+		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), 1);
 		mainWindow.setListener(renderer);
 
 		renderer.loadScene(scene);
 
-		scene.setCamera(new Camera(new Point3f(-5, 9f, 9f), new Vector3f(10, -9f, -9f), new Vector3f(0, 1, 0), 60));
+		scene.setCamera(new Camera(new Point3f(-5, 10f, 10f), new Vector3f(10, -10f, -10f), new Vector3f(0, 1, 0), 60));
 		scene.setBackground(new Color3f(0.3f, 0.3f, 0.3f));
-		scene.addLightSource(new PointLight(new Vector3f(-3, 3, 3), 0.9f));
-		scene.addLightSource(new AmbientLight(new Color3f(1f, 1f, 1), 0.4f));
+		scene.addLightSource(new PointLight(new Vector3f(-10, 3, 3), 0.9f));
+		scene.addLightSource(new AmbientLight(new Color3f(1f, 1f, 1), 0.3f));
 		scene.addLightSource(new PointLight(new Vector3f(2.5f, 10, 3f), 0.3f));
+		scene.addLightSource(new PointLight(new Vector3f(3, 1, -10), 0.3f));
+		scene.addLightSource(new PointLight(new Vector3f(3, 1, 10), 0.3f));
 
 		Surface plane = new Model("data/objects/plane.obj");
-		plane.applyTransformation(AffineTransformation.scale(new Vector3f(10, 10, 10)));
-		plane.setMaterial(new DiffuseMaterial(new Color3f(1, 1, 1)));
+		plane.applyTransformation(AffineTransformation.scale(20));
+		plane.setMaterial(new ReflectiveMaterial(0.3f));
 		scene.addSurface(plane);
 
 		DiffuseMaterial randomColor;
@@ -56,7 +60,7 @@ public class RunALotOfSpheres {
 		Surface sphere;
 		float x, y, z;
 
-		for (int i = 0; i < 10000; i++) {
+		for (int i = 0; i < 1000000; i++) {
 			randomColor = new DiffuseMaterial(new Color3f(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
 
 			// Calculate next position (between 0 and 5
@@ -64,7 +68,7 @@ public class RunALotOfSpheres {
 			y = 5 * rand.nextFloat();
 			z = 5 * rand.nextFloat();
 
-			sphere = new Sphere(new Vector3f(x, y, z), 0.1f, randomColor);
+			sphere = new Sphere(new Vector3f(x, y, z), 0.01f, randomColor);
 			scene.addSurface(sphere);
 		}
 

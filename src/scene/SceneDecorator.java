@@ -2,7 +2,6 @@ package scene;
 
 import raytracer.Hit;
 import raytracer.Ray;
-import scene.data.Vector3f;
 import scene.geometry.Surface;
 import scene.lighting.Light;
 import scene.material.Color3f;
@@ -10,6 +9,8 @@ import scene.material.Color3f;
 import java.util.HashSet;
 
 /**
+ * NOTE to self: don't implement inShade here because at compile time function lookup etc...
+ *
  * Created with IntelliJ IDEA.
  * User: victor
  * Date: 24/11/12
@@ -76,11 +77,6 @@ public abstract class SceneDecorator implements Scene {
 	@Override
 	public HashSet<Surface> getSurfaces() {
 		return scene.getSurfaces();
-	}
-
-	@Override
-	public boolean isInShade(Vector3f point, Light light) {
-		return scene.isInShade(point, light);
 	}
 
 	@Override

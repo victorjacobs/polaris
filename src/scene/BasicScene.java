@@ -78,6 +78,7 @@ public class BasicScene implements Scene {
 
 	@Override
 	public Hit trace(Ray ray, float eps) {
+		System.out.println("no good");
 		float lowestT = Float.POSITIVE_INFINITY;
 		Hit hit, closestHit = null;
 

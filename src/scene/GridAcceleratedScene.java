@@ -3,6 +3,7 @@ package scene;
 import raytracer.*;
 import scene.data.Vector3f;
 import scene.geometry.Surface;
+import scene.lighting.Light;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -168,8 +169,8 @@ public class GridAcceleratedScene extends SceneDecorator {
 	}
 
 	@Override
-	public Hit traceAny(Ray ray, float eps) {
-		return scene.traceAny(ray, eps);
+	public boolean isInShade(Vector3f point, Light light) {
+		return trace(new Ray(point, light.rayTo(point)), Settings.EPS) != null;
 	}
 
 	@Override

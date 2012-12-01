@@ -2,6 +2,8 @@ package scene;
 
 import raytracer.Hit;
 import raytracer.Ray;
+import scene.data.Vector3f;
+import scene.lighting.Light;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,6 +15,12 @@ public class BoundingBoxAcceleratedScene extends SceneDecorator {
 
 	public BoundingBoxAcceleratedScene(Scene scene) {
 		super(scene);
+	}
+
+	@Override
+	public boolean isInShade(Vector3f point, Light light) {
+		// TODO OVERRIDE
+		return scene.isInShade(point, light);
 	}
 
 	@Override
