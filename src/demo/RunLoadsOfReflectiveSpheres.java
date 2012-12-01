@@ -1,3 +1,5 @@
+package demo;
+
 import gui.PolarisMainWindow;
 import gui.Renderer;
 import scene.BasicScene;
@@ -5,6 +7,7 @@ import scene.Camera;
 import scene.GridAcceleratedScene;
 import scene.Scene;
 import scene.data.Vector3f;
+import scene.geometry.AffineTransformation;
 import scene.geometry.Model;
 import scene.geometry.Sphere;
 import scene.geometry.Surface;
@@ -47,6 +50,7 @@ public class RunLoadsOfReflectiveSpheres {
 		Material glass = new RefractiveMaterial(new Color3f(1, 1, 1), 1.33f);
 
 		Surface plane = new Model("data/objects/plane.obj", notSoReflectiveMaterial);
+		plane.applyTransformation(AffineTransformation.scale(new Vector3f(20, 20, 20)));
 
 		scene.addSurface(plane);
 

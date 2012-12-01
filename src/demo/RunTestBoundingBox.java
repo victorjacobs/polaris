@@ -1,3 +1,5 @@
+package demo;
+
 import gui.PolarisMainWindow;
 import gui.Renderer;
 import raytracer.BoundingBox;

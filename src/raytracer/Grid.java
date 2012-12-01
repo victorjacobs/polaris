@@ -15,9 +15,6 @@ import java.util.List;
  */
 // TODO refactor to class Cell
 public class Grid {
-	// Grid density
-	private static final int gridDensity = 7;
-
 	// Bounding box of the entire scene
 	private BoundingBox bb;
 
@@ -155,7 +152,7 @@ public class Grid {
 
 		for (int i = 0; i < 3; i++) {
 			// Enforce that at there is at least one cell in either dimension
-			M[i] = Math.max(1, Math.round(dimensions[i] * (float)Math.cbrt((gridDensity * primitiveBag.size()) / volume)));
+			M[i] = Math.max(1, Math.round(dimensions[i] * (float)Math.cbrt((Settings.GRID_DENSITY * primitiveBag.size()) / volume)));
 		}
 
 		totalNumberOfCells = M[0] * M[1] * M[2];
