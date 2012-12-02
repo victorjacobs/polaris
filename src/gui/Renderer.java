@@ -6,7 +6,6 @@ import raytracer.Settings;
 import scene.BasicScene;
 import scene.GridAcceleratedScene;
 import scene.Scene;
-import scene.lighting.AmbientLight;
 import scene.material.Color3f;
 import scene.parser.SceneBuilder;
 
@@ -42,13 +41,6 @@ public class Renderer implements MainWindowListener {
 		this.passes = passes;
 	}
 
-	@Deprecated
-	public Renderer(Scene scene, CgPanel panel, int passes) {
-		this.scene = scene;
-		this.panel = panel;
-		this.passes = passes;
-	}
-
 	// TODO implement this
 	public void reloadFile() {
 		System.err.println("Reloadfile not yet implemented");
@@ -64,8 +56,6 @@ public class Renderer implements MainWindowListener {
 			e.printStackTrace();
 		}
 
-		AmbientLight aLight = new AmbientLight(new Color3f(1, 1, 1), 0.1f);
-		scene.addLightSource(aLight);
 	}
 
 	public void loadScene(Scene scene) {

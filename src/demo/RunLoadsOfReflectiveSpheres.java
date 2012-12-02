@@ -11,7 +11,6 @@ import scene.geometry.AffineTransformation;
 import scene.geometry.Model;
 import scene.geometry.Sphere;
 import scene.geometry.Surface;
-import scene.lighting.AmbientLight;
 import scene.lighting.PointLight;
 import scene.material.*;
 
@@ -34,10 +33,8 @@ public class RunLoadsOfReflectiveSpheres {
 		renderer.loadScene(scene);
 
 		PointLight light1 = new PointLight(new Vector3f(-20, 10, 0));
-		AmbientLight aLight = new AmbientLight(new Color3f(1, 1, 1), 0.3f);
 		scene.addLightSource(light1);
-		scene.addLightSource(aLight);
-
+		scene.setBackground(new Color3f(0.3f, 0.3f, 0.3f));
 
 		Camera camera = new Camera(new Vector3f(4, 4, 4), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 45);
 		scene.setCamera(camera);

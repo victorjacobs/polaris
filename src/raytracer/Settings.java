@@ -8,13 +8,13 @@ package raytracer;
  * To change this template use File | Settings | File Templates.
  */
 public class Settings {
-	public static final int SCREEN_X = 1280;
-	public static final int SCREEN_Y = 720;
+	public static final int SCREEN_X = 640;
+	public static final int SCREEN_Y = 480;
 	public static final int MAX_RECURSION_DEPTH = 10;
 	public static final float EPS = 0.01f;
 
 	public static final int GRID_DENSITY = 7;
-	public static final int KDTREE_ELEMENTS_IN_LEAF = 100;
+	public static final int KDTREE_ELEMENTS_IN_LEAF = 1;
 
 	// Some debug settings
 	public static final boolean SHOULD_REPAINT_AFTER_EVERY_PIXEL = true;

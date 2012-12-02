@@ -3,8 +3,6 @@ package scene.material;
 import raytracer.Hit;
 import scene.Scene;
 import scene.data.Point2f;
-import scene.lighting.AmbientLight;
-import scene.lighting.Light;
 
 /**
  * Class representing a material, the color that is contained herein is the so called "ambient color".
@@ -37,14 +35,12 @@ public abstract class Material {
 
 	// Implements ambient light
 	public Color3f getColor(Scene scene, Hit hit, int recursionDepth) {
-		for (Light light : scene.getLightSources()) {
-			if (light instanceof AmbientLight) {
-				return new Color3f(getUnshadedColorAt(hit.getTextureCoordinates()).getRed() * light.intensity() * light.color().getRed(),
-						getUnshadedColorAt(hit.getTextureCoordinates()).getGreen() * light.intensity() * light.color().getGreen(),
-						getUnshadedColorAt(hit.getTextureCoordinates()).getBlue() * light.intensity() * light.color().getBlue());
-			}
+		if (scene.getBackground() != null) {
+			return new Color3f(getUnshadedColorAt(hit.getTextureCoordinates()).getRed() * scene.getBackground().getRed(),
+					getUnshadedColorAt(hit.getTextureCoordinates()).getGreen() * scene.getBackground().getGreen(),
+					getUnshadedColorAt(hit.getTextureCoordinates()).getBlue() * scene.getBackground().getBlue());
+		} else {
+			return new Color3f(0, 0, 0);
 		}
-		
-		return new Color3f(0, 0, 0);
 	}
 }

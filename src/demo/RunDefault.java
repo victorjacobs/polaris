@@ -3,8 +3,8 @@ package demo;
 import gui.PolarisMainWindow;
 import gui.Renderer;
 import scene.BasicScene;
+import scene.BoundingBoxAcceleratedScene;
 import scene.Camera;
-import scene.GridAcceleratedScene;
 import scene.Scene;
 import scene.data.Point3f;
 import scene.data.Vector3f;
@@ -12,7 +12,6 @@ import scene.geometry.AffineTransformation;
 import scene.geometry.Model;
 import scene.geometry.Sphere;
 import scene.geometry.Surface;
-import scene.lighting.AmbientLight;
 import scene.material.*;
 
 /*
@@ -23,6 +22,7 @@ import scene.material.*;
  * TODO Anti aliasing
  * TODO color changing in reflections
  * TODO count intersection tests
+ * TODO scene background ===== ambient light
  */
 
 public class RunDefault {
@@ -32,7 +32,7 @@ public class RunDefault {
 
 		PolarisMainWindow mainWindow = new PolarisMainWindow();
 
-		Scene scene = new GridAcceleratedScene(new BasicScene());
+		Scene scene = new BoundingBoxAcceleratedScene(new BasicScene());
 		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), 1);
 		mainWindow.setListener(renderer);
 
@@ -41,7 +41,6 @@ public class RunDefault {
 		scene.setCamera(new Camera(new Point3f(0, 7, 0), new Vector3f(0, -1, 0), new Vector3f(1, 0, 0), 60));
 		scene.setBackground(new Color3f(0.3f, 0.3f, 0.3f));
 		//scene.addLightSource(new PointLight(new Vector3f(-3, 3, 3), 0.9f));
-		scene.addLightSource(new AmbientLight(new Color3f(1f, 1f, 1), 0.4f));
 
 		Texture worldTexture = new Texture("data/textures/world.jpg");
 		Material world = new DiffuseMaterial(worldTexture);

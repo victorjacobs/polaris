@@ -12,7 +12,6 @@ import scene.geometry.AffineTransformation;
 import scene.geometry.Model;
 import scene.geometry.Sphere;
 import scene.geometry.Surface;
-import scene.lighting.AmbientLight;
 import scene.lighting.PointLight;
 import scene.material.Color3f;
 import scene.material.DiffuseMaterial;
@@ -44,7 +43,6 @@ public class RunALotOfSpheres {
 		scene.setCamera(new Camera(new Point3f(-5, 10f, 10f), new Vector3f(10, -10f, -10f), new Vector3f(0, 1, 0), 60));
 		scene.setBackground(new Color3f(0.3f, 0.3f, 0.3f));
 		scene.addLightSource(new PointLight(new Vector3f(-10, 3, 3), 0.9f));
-		scene.addLightSource(new AmbientLight(new Color3f(1f, 1f, 1), 0.3f));
 		scene.addLightSource(new PointLight(new Vector3f(2.5f, 10, 3f), 0.3f));
 		scene.addLightSource(new PointLight(new Vector3f(3, 1, -10), 0.3f));
 		scene.addLightSource(new PointLight(new Vector3f(3, 1, 10), 0.3f));

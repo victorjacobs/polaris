@@ -3,7 +3,6 @@ package scene;
 import raytracer.*;
 import scene.data.Vector3f;
 import scene.geometry.Surface;
-import scene.lighting.Light;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -166,11 +165,6 @@ public class GridAcceleratedScene extends SceneDecorator {
 
 			if (cellsTraversed > 100000) throw new RuntimeException("Traversing stalled, current cell: " + cell[0] + " " + cell[1] + " " + cell[2]);
 		}
-	}
-
-	@Override
-	public boolean isInShade(Vector3f point, Light light) {
-		return trace(new Ray(point, light.rayTo(point)), Settings.EPS) != null;
 	}
 
 	@Override

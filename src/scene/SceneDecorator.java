@@ -35,11 +35,6 @@ public abstract class SceneDecorator implements Scene {
 	}
 
 	@Override
-	public Hit traceAny(Ray ray, float eps) {
-		return scene.traceAny(ray, eps);
-	}
-
-	@Override
 	public void setBackground(Color3f background) {
 		scene.setBackground(background);
 	}

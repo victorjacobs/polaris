@@ -2,7 +2,6 @@ package scene;
 
 import raytracer.Hit;
 import raytracer.Ray;
-import scene.data.Vector3f;
 import scene.geometry.Surface;
 import scene.lighting.Light;
 import scene.material.Color3f;
@@ -33,13 +32,9 @@ public interface Scene {
 
 	HashSet<Surface> getSurfaces();
 
-	boolean isInShade(Vector3f point, Light light);
-
 	Hit trace(Ray ray);
 
 	Hit trace(Ray ray, float eps);
-
-	Hit traceAny(Ray ray, float eps);
 
 	/**
 	 * This is called right before the renderer starts dispatching renderWorkers. Usually used for preprocessing the

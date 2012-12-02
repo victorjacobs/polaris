@@ -67,11 +67,6 @@ public class BasicScene implements Scene {
 	}
 
 	@Override
-	public boolean isInShade(Vector3f point, Light light) {
-		return traceAny(new Ray(point, light.rayTo(point)), Settings.EPS) != null;
-	}
-
-	@Override
 	public Hit trace(Ray ray) {
 		return trace(ray, 0);
 	}
@@ -94,19 +89,6 @@ public class BasicScene implements Scene {
 		}
 
 		return closestHit;
-	}
-
-	@Override
-	public Hit traceAny(Ray ray, float eps) {
-		Hit hit;
-
-		for (Surface surf : getSurfaces()) {
-			hit = surf.hit(ray, eps, Float.POSITIVE_INFINITY);
-
-			if (hit != null) return hit;
-		}
-
-		return null;
 	}
 
 	@Override
