@@ -21,7 +21,7 @@ public abstract class Material {
 		this.baseColor = baseColor;
 	}
 
-	public Color3f getUnshadedColorAt(Point2f point) {
+	public final Color3f getUnshadedColorAt(Point2f point) {
 		if (texture == null) {
 			return baseColor;
 		} else {
@@ -43,4 +43,10 @@ public abstract class Material {
 			return new Color3f(0, 0, 0);
 		}
 	}
+
+	/**
+	 * This method defines how other materials should calculate shadows if a shadow ray went through this material
+	 * @return Percentage of decrease of light intensity through the object
+	 */
+	public abstract float getShadowPercentage();
 }

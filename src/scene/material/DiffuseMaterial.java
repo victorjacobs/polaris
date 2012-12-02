@@ -19,23 +19,31 @@ public class DiffuseMaterial extends Material {
 	@Override
 	public Color3f getColor(Scene scene, Hit hit, int recursionDepth) {
 		Color3f ambientLight = super.getColor(scene, hit, recursionDepth);
-		
+
+		// TODO this isn't right: when no lights, 2 * ambientLight will be returned!
 		float sumR = ambientLight.getRed();
 		float sumG = ambientLight.getGreen();
 		float sumB = ambientLight.getBlue();
 		float dotProduct;
+
+		float curR, curG, curB;
+		float shadowPercentage;
 
 		Hit lightHit;
 
 		for (Light light : scene.getLightSources()) {
 			lightHit = scene.trace(new Ray(hit.getPoint(), light.rayTo(hit.getPoint())), Settings.EPS);
 
-			if (lightHit == null) {
-				dotProduct = Math.max(0, hit.getNormal().dotProduct(light.rayTo(hit.getPoint()).normalize()));
-				sumR += (light.intensity() * light.color().getRed()) * dotProduct;
-				sumG += (light.intensity() * light.color().getGreen()) * dotProduct;
-				sumB += (light.intensity() * light.color().getBlue()) * dotProduct;
-			}
+			shadowPercentage = (lightHit == null) ? 0 : lightHit.getSurface().getMaterial().getShadowPercentage();
+
+			dotProduct = Math.max(0, hit.getNormal().dotProduct(light.rayTo(hit.getPoint()).normalize()));
+			curR = (light.intensity() * light.color().getRed()) * dotProduct;
+			curG = (light.intensity() * light.color().getGreen()) * dotProduct;
+			curB = (light.intensity() * light.color().getBlue()) * dotProduct;
+
+			sumR += (1 - shadowPercentage) * curR;
+			sumG += (1 - shadowPercentage) * curG;
+			sumB += (1 - shadowPercentage) * curB;
 		}
 
 		sumR *= getUnshadedColorAt(hit.getTextureCoordinates()).getRed();
@@ -44,5 +52,10 @@ public class DiffuseMaterial extends Material {
 		
 		return new Color3f(ambientLight.getRed() + sumR, ambientLight.getGreen() + sumG, ambientLight.getRed() + sumB);
 	}
-	
+
+	@Override
+	public float getShadowPercentage() {
+		return 1;
+	}
+
 }

@@ -45,4 +45,9 @@ public class PhongMaterial extends Material {
 		return new Color3f(ambientLight.getRed() + sumR, ambientLight.getGreen() + sumG, ambientLight.getBlue() + sumB);
 	}
 
+	@Override
+	public float getShadowPercentage() {
+		return 1;
+	}
+
 }

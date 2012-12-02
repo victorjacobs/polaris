@@ -75,4 +75,10 @@ public class RefractiveMaterial extends PhongMaterial {
 
 		return new Ray(hit.getPoint(), t1.minus(t2).normalize());
 	}
+
+	@Override
+	// TODO make this dependant of actual light loss in material!
+	public float getShadowPercentage() {
+		return 0.5f;
+	}
 }
