@@ -53,9 +53,7 @@ public class Vertex {
 		Vector3f newNormal = null;
 
 		if (normal != null) {
-			normalHomogeneous = new Vector4f(normal.x, normal.y, normal.z, 1);
-			transformation.setColumn(3, 0, 0, 0, 1);
-			transformation.setRow(3, 0, 0, 0, 1);
+			normalHomogeneous = new Vector4f(normal.x, normal.y, normal.z, 0);
 			normalHomogeneous = transformation.multiply(normalHomogeneous);
 
 			newNormal = new Vector3f(normalHomogeneous.x, normalHomogeneous.y, normalHomogeneous.z);

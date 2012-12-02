@@ -16,7 +16,7 @@ public class RefractiveMaterial extends PhongMaterial {
 		super(baseColor, 100);
 		this.refractionCoefficient = refractionCoefficient;
 
-		ar = ag = ab = 0.5f;
+		ar = ag = ab = 0.3f;
 	}
 	
 	@Override
@@ -53,13 +53,22 @@ public class RefractiveMaterial extends PhongMaterial {
 			nextHit = scene.trace(nextRay, Settings.EPS);
 		}
 
-		if (nextHit != null) {
-			Color3f colorUnattenuated = nextHit.getSurface().getMaterial().getColor(scene, nextHit, recursionDepth + 1).sum(phong);
+		Color3f nextColor;
 
-			return new Color3f(kr * colorUnattenuated.getRed(), kg * colorUnattenuated.getGreen(), kb * colorUnattenuated.getBlue());
+		if (nextHit != null) {
+			Color3f colorUnattenuated = nextHit.getSurface().getMaterial().getColor(scene, nextHit, recursionDepth + 1);
+
+			nextColor = new Color3f(kr * colorUnattenuated.getRed(), kg * colorUnattenuated.getGreen(), kb * colorUnattenuated.getBlue());
 		} else {
-			return phong;
+			nextColor = scene.getBackground();
 		}
+
+		if (recursionDepth == 1) {
+			// Only add phong on the end of the recursion chain
+			nextColor = nextColor.sum(phong);
+		}
+
+		return nextColor;
 
 	}
 	

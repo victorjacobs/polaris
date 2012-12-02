@@ -21,6 +21,7 @@ public class DiffuseMaterial extends Material {
 		Color3f ambientLight = super.getColor(scene, hit, recursionDepth);
 
 		// TODO this isn't right: when no lights, 2 * ambientLight will be returned!
+		// TODO refactor this to higher up?
 		float sumR = ambientLight.getRed();
 		float sumG = ambientLight.getGreen();
 		float sumB = ambientLight.getBlue();

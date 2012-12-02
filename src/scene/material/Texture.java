@@ -35,9 +35,10 @@ public class Texture {
 	 * @param point
 	 * @return
 	 */
+	// TODO: Something weird here, x and y are switched around to make it work
 	public Color3f getColor(Point2f point) {
-		int x = (int)Math.floor(point.x * img.getWidth());
-		int y = (int)Math.floor(point.y * img.getHeight());
+		int x = (int)Math.floor(point.y * img.getWidth());
+		int y = (int)Math.floor(point.x * img.getHeight());
 
 		return new Color3f(new Color(img.getRGB(x, y)));
 	}

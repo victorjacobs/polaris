@@ -35,9 +35,9 @@ public class RunAllEffects {
 		renderer.loadScene(scene);
 
 		scene.setCamera(new Camera(new Point3f(7, 5, 7), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 60));
-		scene.setBackground(new Color3f(0.3f, 0.3f, 0.3f));
+		scene.setBackground(new Color3f(0.2f, 0.2f, 0.2f));
 
-		scene.addLightSource(new PointLight(new Vector3f(20, 20, 0), 0.9f));
+		scene.addLightSource(new PointLight(new Vector3f(20, 20, 0), 0.7f));
 
 		Surface plane = new Model("data/objects/plane.obj");
 		Material planeMaterial = new DiffuseMaterial(new Texture("data/textures/essos.jpg"));
@@ -47,12 +47,20 @@ public class RunAllEffects {
 
 		Material veryReflective = new ReflectiveMaterial(0.9f);
 		Material glass = new RefractiveMaterial(new Color3f(1, 1, 1), 1.33f);
+		Material green = new DiffuseMaterial(new Color3f(0, 0.7f, 0));
 
-		Surface sphere1 = new Sphere(new Vector3f(2, 1, 1), 1, glass);
+		Surface sphere1 = new Sphere(new Vector3f(2, 1, 1), 1, green);
 		scene.addSurface(sphere1);
 
 		Surface sphere2 = new Sphere(new Vector3f(-1, 1, -1), 1, veryReflective);
 		scene.addSurface(sphere2);
+
+		Surface bunny = new Model("data/objects/bunny.obj");
+		bunny.setMaterial(glass);
+		bunny.applyTransformation(AffineTransformation.translate(new Vector3f(0, 1, 5)));
+		bunny.applyTransformation(AffineTransformation.scale(0.5f));
+		scene.addSurface(bunny);
+
 
 		mainWindow.display();
 
