@@ -92,6 +92,10 @@ public class Renderer implements MainWindowListener {
 	public void render() {
 		scene.preProcess();
 
+		Runtime rt = Runtime.getRuntime();
+
+		System.out.println("Memory usage before render start: " + (rt.totalMemory() - rt.freeMemory()) / (1024 * 1024) + "mb");
+
 		if (threadPool != null) {
 			abortRender(false);
 		} else {

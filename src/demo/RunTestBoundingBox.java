@@ -5,6 +5,7 @@ import gui.Renderer;
 import raytracer.BoundingBox;
 import scene.BasicScene;
 import scene.Camera;
+import scene.GridAcceleratedScene;
 import scene.Scene;
 import scene.data.Matrix4f;
 import scene.data.Vector3f;
@@ -16,7 +17,7 @@ import scene.lighting.PointLight;
 import scene.material.Color3f;
 import scene.material.DiffuseMaterial;
 import scene.material.Material;
-import scene.material.RefractiveMaterial;
+import scene.material.ReflectiveMaterial;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,14 +33,20 @@ public class RunTestBoundingBox {
 		PolarisMainWindow window = new PolarisMainWindow();
 		Renderer renderer = new Renderer(window.getRenderPanel(), 32);
 
-		Scene scene = new BasicScene();
+		Scene scene = new GridAcceleratedScene(new BasicScene());
 		renderer.loadScene(scene);
 
-		Camera camera = new Camera(new Vector3f(10, 10, 10), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 5, 60);
+		Camera camera = new Camera(new Vector3f(8, 8, 8), new Vector3f(-5, -4, -5), new Vector3f(0, 1, 0), 5, 60);
 		scene.setCamera(camera);
+		scene.setBackground(new Color3f(0.2f, 0.2f, 0.2f));
 
 		Material mat = new DiffuseMaterial(new Color3f(0, 1, 0));
-		Surface elf = new Model("data/objects/elephav.obj", mat);
+		Surface elf = new Model("data/objects/crawler.obj", mat);
+		//elf.applyTransformation(AffineTransformation.rotation(new Vector3f(0, 1, 0), 180));
+
+		Surface plane = new Model("data/objects/plane.obj", new ReflectiveMaterial(0.2f));
+		plane.applyTransformation(AffineTransformation.scale(30));
+		scene.addSurface(plane);
 
 		// Move elf to origin
 		BoundingBox bb = elf.boundingBox();

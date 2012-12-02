@@ -24,10 +24,7 @@ public class Triangle extends Surface {
 	// If single triangle, not in collection
 	public Triangle(Vector3f v1, Vector3f v2, Vector3f v3, Material mat) {
 		// Calculate normal vector for triangle and store in vertices
-		Vector3f U = v2.minus(v1);
-		Vector3f V = v3.minus(v1);
-		
-		Vector3f N = U.crossProduct(V);
+		Vector3f N = generateNormal(v1, v2, v3);
 		
 		Vertex vert1 = new Vertex(v1, N);
 		Vertex vert2 = new Vertex(v2, N);
@@ -38,13 +35,28 @@ public class Triangle extends Surface {
 		this.v3 = vert3;
 		this.material = mat;
 	}
-	
+
+	private Vector3f generateNormal(Vector3f v1, Vector3f v2, Vector3f v3) {
+		Vector3f U = v2.minus(v1);
+		Vector3f V = v3.minus(v1);
+
+		return U.crossProduct(V);
+	}
+
 	public Triangle(Vector3f v1, Vector3f v2, Vector3f v3) {
 		this(v1, v2, v3, null);
 	}
 	
 	// Triangle made out of vertices that have normal vectors 
 	public Triangle(Vertex v1, Vertex v2, Vertex v3, Material mat) {
+		if (v1.getNormal() == null) {
+			Vector3f N = generateNormal(v1.getPoint(), v2.getPoint(), v3.getPoint());
+
+			v1 = new Vertex(v1.getPoint(), N, v1.getTexture());
+			v2 = new Vertex(v2.getPoint(), N, v2.getTexture());
+			v3 = new Vertex(v3.getPoint(), N, v3.getTexture());
+		}
+
 		this.v1 = v1;
 		this.v2 = v2;
 		this.v3 = v3;

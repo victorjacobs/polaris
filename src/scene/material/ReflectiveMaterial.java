@@ -24,7 +24,7 @@ public class ReflectiveMaterial extends PhongMaterial {
 		if (recursionDepth > Settings.MAX_RECURSION_DEPTH) return new Color3f(0, 0, 0);
 
 		Color3f phongShading = super.getColor(scene, hit, recursionDepth);
-		
+
 		// Construct ray from hit (angle incoming ray and normal same for outgoing and normal)
 		Vector3f rayDirection = hit.getRay().getDirection().reflectOver(hit.getNormal());
 		Ray outgoingRay = new Ray(hit.getPoint(), rayDirection);
@@ -36,8 +36,7 @@ public class ReflectiveMaterial extends PhongMaterial {
 		if (nextSurfaceHit != null) {
 			other = nextSurfaceHit.getSurface().getMaterial().getColor(scene, nextSurfaceHit, recursionDepth + 1);
 		} else {
-			//other = new Color3f(0.1f, 0.1f, 0.1f);	// TODO
-			other = new Color3f(0, 0, 0);
+			other = scene.getBackground();
 		}
 		
 		return new Color3f(reflectionCoefficient * other.getRed() + phongShading.getRed(),

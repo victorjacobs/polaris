@@ -17,8 +17,7 @@ import scene.material.*;
 
 /*
  * FIXME shadows for textures broken
- * TODO parse squares !! (make general)
- * TODO texture mapping
+ * TODO UI: be able to load .obj files, use RunTestBoundingBox as template
  * TODO Soft shadows
  * 		+ Area lights
  * TODO Anti aliasing
