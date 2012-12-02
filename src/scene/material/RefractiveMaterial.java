@@ -22,10 +22,10 @@ public class RefractiveMaterial extends PhongMaterial {
 	@Override
 	public Color3f getColor(Scene scene, Hit hit, int recursionDepth) {
 		if (recursionDepth > Settings.MAX_RECURSION_DEPTH) return new Color3f(0, 0, 0); // TODO solve
-		//Color3f phong = super.getColor(scene, hit, recursionDepth);
+		Color3f phong = super.getColor(scene, hit, recursionDepth);
 
 		// TODO needs phong
-		Color3f phong = new Color3f(0, 0, 0);
+		//Color3f phong = new Color3f(0, 0, 0);
 
 		Ray nextRay;
 		Hit nextHit;

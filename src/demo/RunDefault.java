@@ -50,9 +50,8 @@ public class RunDefault {
 		Material checkerboard = new DiffuseMaterial(checkerboardTexture);
 
 		Surface plane = new Model("data/objects/plane.obj");
-		plane.applyTransformation(AffineTransformation.scale(new Vector3f(0.9f, 0.9f, 0.9f)));
 		plane.setMaterial(checkerboard);
-		plane.applyTransformation(AffineTransformation.scale(new Vector3f(20, 20, 20)));
+		plane.applyTransformation(AffineTransformation.scale(new Vector3f(3, 3, 3)));
 		scene.addSurface(plane);
 
 		Material glass = new RefractiveMaterial(new Color3f(1, 1, 1), 1.33f);
