@@ -12,7 +12,7 @@ public class Run {
 
 		PolarisMainWindow mainWindow = new PolarisMainWindow();
 		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), 1);
-		renderer.loadSDL("data/scenes/787.sdl");
+		renderer.loadSDL("data/scenes/teapot.sdl");
 
 		mainWindow.setListener(renderer);
 

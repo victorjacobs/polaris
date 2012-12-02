@@ -90,6 +90,16 @@ public class PolarisMainWindow extends JFrame {
 		abort.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		fileMenu.add(abort);
 
+		JMenuItem forceRepaint = new JMenuItem("Force repaint");
+		forceRepaint.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				getRenderPanel().repaint();
+			}
+		});
+		//abort.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		fileMenu.add(forceRepaint);
+
 		menuBar.add(fileMenu);
 	}
 
