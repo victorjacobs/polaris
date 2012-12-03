@@ -159,4 +159,13 @@ public class Triangle extends Surface {
 		v3 = v3.applyTransformation(transformation);
 	}
 
+	@Override
+	public float getProjectedSurfaceArea() {
+		// Use v1 as origin for local axis system, calculate area of of square defined by transformed v2 and v3
+		Vector3f l2 = v2.getPoint().minus(v1.getPoint());
+		Vector3f l3 = v3.getPoint().minus(v1.getPoint());
+
+		return (l2.norm() * l3.norm()) / 4;
+	}
+
 }

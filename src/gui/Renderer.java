@@ -25,6 +25,10 @@ public class Renderer implements MainWindowListener {
 	private long startTime;
 
 	public Renderer(CgPanel panel, int passes) {
+		this(panel, null, passes);
+	}
+
+	public Renderer(CgPanel panel, Scene scene, int passes) {
 		// Display some warnings about debug settings
 		if (Settings.FIX_SINGLE_THREAD) {
 			cores = 1;
@@ -39,6 +43,7 @@ public class Renderer implements MainWindowListener {
 
 		this.panel = panel;
 		this.passes = passes;
+		this.scene = scene;
 	}
 
 	// TODO implement this
@@ -46,9 +51,14 @@ public class Renderer implements MainWindowListener {
 		System.err.println("Reloadfile not yet implemented");
 	}
 
-	// TODO add ambient light to SDL
 	public void loadSDL(String file) {
-		SceneBuilder sceneBuilder = new SceneBuilder(new GridAcceleratedScene(new BasicScene()));
+		SceneBuilder sceneBuilder;
+
+		if (scene == null) {
+			sceneBuilder = new SceneBuilder(new GridAcceleratedScene(new BasicScene()));
+		} else {
+			sceneBuilder = new SceneBuilder(scene);
+		}
 
 		try {
 			scene = sceneBuilder.loadScene(file);

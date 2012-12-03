@@ -3,10 +3,8 @@ package scene.geometry;
 import raytracer.BoundingBox;
 import raytracer.Hit;
 import raytracer.Ray;
-import scene.data.Point2f;
-import scene.data.Point3f;
-import scene.material.Material;
 import scene.data.Matrix4f;
+import scene.material.Material;
 
 /**
  * Created with IntelliJ IDEA. User: victor Date: 18/11/12 Time: 23:32 To change this template use File | Settings |
@@ -37,5 +35,10 @@ public class Cone extends Surface {
 	@Override
 	public void applyTransformation(Matrix4f transformation) {
 		//To change body of implemented methods use File | Settings | File Templates.
+	}
+
+	@Override
+	public float getProjectedSurfaceArea() {
+		return 0;  //To change body of implemented methods use File | Settings | File Templates.
 	}
 }

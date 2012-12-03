@@ -165,8 +165,8 @@ public class Vector3f extends Tuple3f implements Serializable, Comparable<Vector
 
 	@Override
 	public int compareTo(Vector3f o) {
-		if (x < o.x && y < o.y && z < o.z) return -1;
-		if (x > o.x && y > o.y && z > o.z) return 1;
+		if (norm() < o.norm()) return -1;
+		if (norm() > o.norm()) return 1;
 		return 0;
 	}
 }

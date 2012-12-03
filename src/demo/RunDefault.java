@@ -12,14 +12,12 @@ import scene.geometry.Surface;
 import scene.material.*;
 
 /*
- * FIXME shadows for textures broken
  * TODO UI: be able to load .obj files, use RunTestBoundingBox as template
  * TODO Soft shadows
  * 		+ Area lights
  * TODO Anti aliasing
  * TODO color changing in reflections
  * TODO count intersection tests
- * TODO scene background ===== ambient light
  */
 
 public class RunDefault {

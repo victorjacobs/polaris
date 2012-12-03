@@ -24,9 +24,6 @@ public class RefractiveMaterial extends PhongMaterial {
 		if (recursionDepth > Settings.MAX_RECURSION_DEPTH) return new Color3f(0, 0, 0); // TODO solve
 		Color3f phong = super.getColor(scene, hit, recursionDepth);
 
-		// TODO needs phong
-		//Color3f phong = new Color3f(0, 0, 0);
-
 		Ray nextRay;
 		Hit nextHit;
 		float kr, kg, kb;

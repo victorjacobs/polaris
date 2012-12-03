@@ -32,6 +32,7 @@ public class DiffuseMaterial extends Material {
 
 		Hit lightHit;
 
+		// TODO dit werkt niet als achter glas nog een ander materiaal zit
 		for (Light light : scene.getLightSources()) {
 			lightHit = scene.trace(new Ray(hit.getPoint(), light.rayTo(hit.getPoint())), Settings.EPS);
 

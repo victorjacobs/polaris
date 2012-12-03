@@ -214,6 +214,11 @@ public class Model extends Surface {
 	}
 
 	@Override
+	public float getProjectedSurfaceArea() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public List<Surface> getPrimitiveSurfaces() {
 		return new LinkedList<Surface>(triangles);
 	}
