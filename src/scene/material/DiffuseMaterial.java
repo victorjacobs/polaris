@@ -1,8 +1,6 @@
 package scene.material;
 
 import raytracer.Hit;
-import raytracer.Ray;
-import raytracer.Settings;
 import scene.Scene;
 import scene.lighting.Light;
 
@@ -34,9 +32,7 @@ public class DiffuseMaterial extends Material {
 
 		// TODO dit werkt niet als achter glas nog een ander materiaal zit
 		for (Light light : scene.getLightSources()) {
-			lightHit = scene.trace(new Ray(hit.getPoint(), light.rayTo(hit.getPoint())), Settings.EPS);
-
-			shadowPercentage = (lightHit == null) ? 0 : lightHit.getSurface().getMaterial().getShadowPercentage();
+			shadowPercentage = light.getShadowPercentage(scene, hit.getPoint());
 
 			dotProduct = Math.max(0, hit.getNormal().dotProduct(light.rayTo(hit.getPoint()).normalize()));
 			curR = (light.intensity() * light.color().getRed()) * dotProduct;

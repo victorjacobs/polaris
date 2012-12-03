@@ -12,7 +12,7 @@ import scene.geometry.AffineTransformation;
 import scene.geometry.Model;
 import scene.geometry.Sphere;
 import scene.geometry.Surface;
-import scene.lighting.PointLight;
+import scene.lighting.ExtendedLight;
 import scene.material.*;
 
 /**
@@ -37,7 +37,7 @@ public class RunAllEffects {
 		scene.setCamera(new Camera(new Point3f(7, 5, 7), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 60));
 		scene.setBackground(new Color3f(0.2f, 0.2f, 0.2f));
 
-		scene.addLightSource(new PointLight(new Vector3f(20, 20, 0), 0.7f));
+		scene.addLightSource(new ExtendedLight(new Vector3f(10, 10, 0)));
 
 		Surface plane = new Model("data/objects/plane.obj");
 		Material planeMaterial = new DiffuseMaterial(new Texture("data/textures/essos.jpg"));

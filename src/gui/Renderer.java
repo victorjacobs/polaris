@@ -41,6 +41,9 @@ public class Renderer implements MainWindowListener {
 		if (Settings.COLLECT_STATS)
 			System.err.println("WARNING: collecting stats, performance might be affected");
 
+		if (Settings.AA != 1)
+			System.err.println("WARNING: AA enabled");
+
 		this.panel = panel;
 		this.passes = passes;
 		this.scene = scene;

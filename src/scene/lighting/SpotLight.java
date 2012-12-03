@@ -1,5 +1,6 @@
 package scene.lighting;
 
+import scene.Scene;
 import scene.data.Vector3f;
 import scene.material.Color3f;
 
@@ -9,6 +10,11 @@ public class SpotLight implements Light {
 	public Vector3f rayTo(Vector3f point) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public float getShadowPercentage(Scene scene, Vector3f point) {
+		return 0;  //To change body of implemented methods use File | Settings | File Templates.
 	}
 
 	@Override

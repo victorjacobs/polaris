@@ -9,6 +9,7 @@ import scene.lighting.Light;
 
 public class PhongMaterial extends Material {
 	// TODO add intensity
+	// TODO klopt niet helemaal voor extended lights
 	private Color3f phongColor = new Color3f(1, 1, 1);
 	private float phongExponent;
 	

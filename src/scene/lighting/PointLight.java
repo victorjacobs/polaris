@@ -1,5 +1,9 @@
 package scene.lighting;
 
+import raytracer.Hit;
+import raytracer.Ray;
+import raytracer.Settings;
+import scene.Scene;
 import scene.data.Vector3f;
 import scene.material.Color3f;
 
@@ -30,10 +34,17 @@ public class PointLight implements Light {
 	public Vector3f rayTo(Vector3f point) {
 		return position.minus(point).normalize();
 	}
-	
+
+	@Override
+	public float getShadowPercentage(Scene scene, Vector3f point) {
+		Hit lightHit = scene.trace(new Ray(point, rayTo(point)), Settings.EPS);
+
+		return (lightHit == null) ? 0 : lightHit.getSurface().getMaterial().getShadowPercentage();
+	}
+
 	/* (non-Javadoc)
-	 * @see scene.lighting.Light#intensity()
-	 */
+		 * @see scene.lighting.Light#intensity()
+		 */
 	@Override
 	public float intensity() {
 		return this.intensity;
