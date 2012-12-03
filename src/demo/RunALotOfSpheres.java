@@ -50,7 +50,7 @@ public class RunALotOfSpheres {
 		Surface plane = new Model("data/objects/plane.obj");
 		plane.applyTransformation(AffineTransformation.scale(20));
 		plane.setMaterial(new ReflectiveMaterial(0.3f));
-		scene.addSurface(plane);
+		//scene.addSurface(plane);
 
 		DiffuseMaterial randomColor;
 

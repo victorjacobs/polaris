@@ -17,7 +17,6 @@ import scene.lighting.PointLight;
 import scene.material.Color3f;
 import scene.material.DiffuseMaterial;
 import scene.material.Material;
-import scene.material.ReflectiveMaterial;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,12 +40,8 @@ public class RunTestBoundingBox {
 		scene.setBackground(new Color3f(0.2f, 0.2f, 0.2f));
 
 		Material mat = new DiffuseMaterial(new Color3f(0, 1, 0));
-		Surface elf = new Model("data/objects/crawler.obj", mat);
-		//elf.applyTransformation(AffineTransformation.rotation(new Vector3f(0, 1, 0), 180));
-
-		Surface plane = new Model("data/objects/plane.obj", new ReflectiveMaterial(0.2f));
-		plane.applyTransformation(AffineTransformation.scale(30));
-		scene.addSurface(plane);
+		Surface elf = new Model("data/objects/nightfury.obj", mat);
+		elf.applyTransformation(AffineTransformation.rotation(new Vector3f(0, 1, 0), 180));
 
 		// Move elf to origin
 		BoundingBox bb = elf.boundingBox();

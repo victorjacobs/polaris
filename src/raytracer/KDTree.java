@@ -99,10 +99,6 @@ public class KDTree {
 				prevPlane = split;
 			}
 
-			System.out.println(minSA);
-
-			System.out.println("Left num nodes: " + leftData.size() + " right: " + rightData.size());
-
 			left = new KDTree(leftData, (currentAxis + 1) % 3);
 			right = new KDTree(rightData, (currentAxis + 1) % 3);
 		}

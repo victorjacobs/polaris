@@ -14,7 +14,7 @@ public class Settings {
 	public static final float EPS = 0.01f;
 
 	public static final int GRID_DENSITY = 7;
-	public static final int KDTREE_ELEMENTS_IN_LEAF = 100;
+	public static final int KDTREE_ELEMENTS_IN_LEAF = 20;
 
 	// Some debug settings
 	public static final boolean SHOULD_REPAINT_AFTER_EVERY_PIXEL = false;
