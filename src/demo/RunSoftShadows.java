@@ -12,7 +12,7 @@ import scene.geometry.AffineTransformation;
 import scene.geometry.Model;
 import scene.geometry.Sphere;
 import scene.geometry.Surface;
-import scene.lighting.ExtendedLight;
+import scene.lighting.AreaLight;
 import scene.material.Color3f;
 import scene.material.DiffuseMaterial;
 
@@ -38,7 +38,7 @@ public class RunSoftShadows {
 		scene.setBackground(new Color3f(0.3f, 0.3f, 0.3f));
 		scene.setCamera(new Camera(new Point3f(0, 1, 0), new Vector3f(1, 0, 0), new Vector3f(0, 1, 0), 60));
 		//scene.addLightSource(new PointLight(new Vector3f(6, 4, -3)));
-		scene.addLightSource(new ExtendedLight(new Vector3f(0, 5, 0)));
+		scene.addLightSource(new AreaLight(new Point3f(0, 5, 0)));
 
 		Surface sphere = new Sphere(new Vector3f(4, 1, -1), 0.5f, new DiffuseMaterial(new Color3f(0, 1, 0)));
 		scene.addSurface(sphere);

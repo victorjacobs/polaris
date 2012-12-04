@@ -14,8 +14,17 @@
 	name						ID				#REQUIRED
 >
 
-<!ELEMENT Lights ((DirectionalLight|PointLight|SpotLight)+)>
+<!ELEMENT Lights ((DirectionalLight|PointLight|SpotLight|AreaLight)+)>
 <!ATTLIST Lights>
+
+<!ELEMENT AreaLight EMPTY>
+<!ATTLIST AreaLight
+    position                    CDATA           #REQUIRED
+    color                       CDATA           "1 1 1"
+    intensity                   CDATA           "0.7"
+    size                        CDATA           #REQUIRED
+    name                        ID              #REQUIRED
+>
 
 <!ELEMENT DirectionalLight EMPTY>
 <!ATTLIST DirectionalLight
@@ -135,16 +144,16 @@
 
 <!ELEMENT RefractiveMaterial EMPTY>
 <!ATTLIST RefractiveMaterial
-	color						CDATA 			#REQUIRED
+	color						CDATA 			"1 1 1"
 	refractiveIndex				CDATA 			#REQUIRED
 	name						ID 				#REQUIRED
 >
 
 <!ELEMENT ReflectiveMaterial EMPTY>
 <!ATTLIST ReflectiveMaterial
-    name                        ID              #REQUIRED
     color                       CDATA           "1 1 1"
     reflectivity                CDATA           #REQUIRED
+    name                        ID              #REQUIRED
 >
 
 <!ELEMENT Scene ((Shape|Rotate|Translate|Scale)+)>

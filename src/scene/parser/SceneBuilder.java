@@ -9,6 +9,7 @@ import scene.geometry.AffineTransformation;
 import scene.geometry.Model;
 import scene.geometry.Sphere;
 import scene.geometry.Surface;
+import scene.lighting.AreaLight;
 import scene.lighting.Light;
 import scene.lighting.PointLight;
 import scene.material.*;
@@ -143,6 +144,15 @@ public class SceneBuilder implements ParserHandler
     public void startLights() throws Exception
     {
     }
+
+	@Override
+	public void startAreaLight(String name, Color3f color, Point3f position, float intensity, float size) {
+		lights.put(name, new AreaLight(position, color, intensity, size));
+	}
+
+	@Override
+	public void endAreaLight() {
+	}
 
     public void startDirectionalLight(Vector3f direction, float intensity, Color3f color, String name) throws Exception
     {
@@ -286,7 +296,7 @@ public class SceneBuilder implements ParserHandler
 	public void endReflectiveMaterial() {
 	}
 
-    public void startDiffuseMaterial(Color3f color, String name) throws Exception
+	public void startDiffuseMaterial(Color3f color, String name) throws Exception
     {
 		System.out.println("Adding diffuse material " + name);
 		materials.put(name, new DiffuseMaterial(color));

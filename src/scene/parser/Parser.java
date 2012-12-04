@@ -603,6 +603,30 @@ public final class Parser extends DefaultHandler
 				//if (echoHandler != null) echoHandler.startRefractiveMaterial(scale);
 				if (    handler != null) handler.startReflectiveMaterial(name, color, reflectivity);
 			}
+			else if (qName.equals("AreaLight"))
+			{
+				String positionString = attributes.getValue("position");
+				if (positionString == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"position\".");
+				Point3f position = ParserUtils.parsePoint3f(positionString);
+
+				String colorString = attributes.getValue("color");
+				if (colorString == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"color\".");
+				Color3f color = ParserUtils.parseColor3f(colorString);
+
+				String intensityString = attributes.getValue("intensity");
+				if (intensityString == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"intensity\".");
+				float intensity = ParserUtils.parseFloat(intensityString);
+
+				String sizeString = attributes.getValue("size");
+				if (sizeString == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"size\".");
+				float size = ParserUtils.parseFloat(sizeString);
+
+
+				String name = attributes.getValue("name");
+				if (name == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"name\".");
+
+				if (    handler != null) handler.startAreaLight(name, color, position, intensity, size);
+			}
             // Unknown element
             else
             {
@@ -814,6 +838,10 @@ public final class Parser extends DefaultHandler
 			else if (qName.equals("ReflectiveMaterial"))
 			{
 				if (    handler != null) handler.endReflectiveMaterial();
+			}
+			else if (qName.equals("AreaLight"))
+			{
+				if (    handler != null) handler.endAreaLight();
 			}
             // Unknown element
             else

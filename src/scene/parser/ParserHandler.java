@@ -95,4 +95,7 @@ public interface ParserHandler
 
 	public void startReflectiveMaterial(String name, Color3f color, float reflectivity);
 	public void endReflectiveMaterial();
+
+	public void startAreaLight(String name, Color3f color, Point3f position, float intensity, float size);
+	public void endAreaLight();
 }

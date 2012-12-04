@@ -5,7 +5,9 @@ import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.Settings;
 import scene.Scene;
+import scene.data.Point3f;
 import scene.data.Vector3f;
+import scene.material.Color3f;
 
 import java.util.Random;
 
@@ -16,20 +18,18 @@ import java.util.Random;
  * Time: 15:42
  * To change this template use File | Settings | File Templates.
  */
-public class ExtendedLight extends PointLight {
+public class AreaLight extends PointLight {
 
 	private BoundingBox volume;
 
-	// TODO color
-	// TODO extended light heeft niet echt een positie nodig!!
-	public ExtendedLight(Vector3f position) {
-		this(position, new BoundingBox(new Vector3f(position.x - 1f, position.y - 1f, position.z - 1f), new Vector3f(position.x + 1f, position.y + 1f, position.z + 1f)), 0.7f);
+	public AreaLight(Point3f position) {
+		this(position, new Color3f(1, 1, 1), 0.7f, 1);
 	}
 
-	public ExtendedLight(Vector3f position, BoundingBox volume, float intensity) {
-		super(position, intensity);
+	public AreaLight(Point3f position, Color3f color, float intensity, float size) {
+		super(new Vector3f(position), intensity, color);
 
-		this.volume = volume;
+		volume = new BoundingBox(new Vector3f(position.x - 1f, position.y - 1f, position.z - 1f), new Vector3f(position.x + 1f, position.y + 1f, position.z + 1f));
 	}
 
 	@Override
@@ -45,9 +45,9 @@ public class ExtendedLight extends PointLight {
 			y = volume.getMax().minus(volume.getMin()).y * rand.nextFloat();
 			z = volume.getMax().minus(volume.getMin()).z * rand.nextFloat();
 
-			lightHit = scene.trace(new Ray(point, (new Vector3f(x, y, z)).sum(volume.getMin())), Settings.EPS);
+			lightHit = scene.trace(new Ray(point, (new Vector3f(x, y, z).sum(volume.getMin())).minus(point)), Settings.EPS);
 
-			if (lightHit != null) {
+			if (lightHit != null && lightHit.getT() < 1) {
 				numOfHits++;
 				if (materialShadowPercentage == -1) {
 					materialShadowPercentage = lightHit.getSurface().getMaterial().getShadowPercentage();

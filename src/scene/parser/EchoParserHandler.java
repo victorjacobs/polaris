@@ -513,4 +513,14 @@ public class EchoParserHandler implements ParserHandler
 		//To change body of implemented methods use File | Settings | File Templates.
 	}
 
+	@Override
+	public void startAreaLight(String name, Color3f color, Point3f position, float intensity, float size) {
+		//To change body of implemented methods use File | Settings | File Templates.
+	}
+
+	@Override
+	public void endAreaLight() {
+		//To change body of implemented methods use File | Settings | File Templates.
+	}
+
 }
