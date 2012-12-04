@@ -1,8 +1,6 @@
 package scene.geometry;
 
-import raytracer.BoundingBox;
-import raytracer.Hit;
-import raytracer.Ray;
+import raytracer.*;
 import scene.data.*;
 import scene.material.Material;
 
@@ -25,6 +23,8 @@ public class Sphere extends Surface {
 
 	@Override
 	public Hit hit(Ray ray, float t0, float t1) {
+		if (Settings.COLLECT_STATS)
+			Stats.incIntersections();
 		// Compute discriminant (see page 77)
 		float A = ray.getDirection().dotProduct(ray.getDirection());
 		float B = ray.getOrigin().minus(center).multiply(2).dotProduct(ray.getDirection());

@@ -20,8 +20,11 @@ public class KDTree {
 	// Cache bounding box around this tree (or leaf)
 	private BoundingBox boundingBox;
 
+	private int[] nbNodeHistory;
+	private boolean invalid = false;
+
 	public KDTree(List<Surface> data) {
-		this(data, 0);
+		this(data, 0, new int[3][2], 0);
 	}
 
 	/**
@@ -29,7 +32,7 @@ public class KDTree {
 	 * @param data
 	 * @param currentAxis	Next axis over which to split the tree (0 == x, 1 == y, 2 == z)
 	 */
-	private KDTree(List<Surface> data, int currentAxis) {
+	private KDTree(List<Surface> data, int currentAxis, int[][] nbNodeHistory, int currentDepth) {
 		// Always generate a bounding box around the data
 		boundingBox = generateBoundingBox(data);
 
@@ -99,8 +102,22 @@ public class KDTree {
 				prevPlane = split;
 			}
 
-			left = new KDTree(leftData, (currentAxis + 1) % 3);
-			right = new KDTree(rightData, (currentAxis + 1) % 3);
+			if (nbNodeHistory[currentAxis][0] == nextLeftData.size() && nbNodeHistory[currentAxis][1] == nextRightData.size()) {
+				this.invalid = true;
+			} else {
+				nbNodeHistory[currentAxis][0] = nextLeftData.size();
+				nbNodeHistory[currentAxis][1] = nextRightData.size();
+
+				left = new KDTree(leftData, (currentAxis + 1) % 3, nbNodeHistory, currentDepth + 1);
+				right = new KDTree(rightData, (currentAxis + 1) % 3, nbNodeHistory, currentDepth + 1);
+
+				if (left.isInvalid() || right.isInvalid()) {
+					left = null;
+					right = null;
+					leafData = data;
+				}
+			}
+
 		}
 	}
 
@@ -157,5 +174,9 @@ public class KDTree {
 
 	public boolean isLeaf() {
 		return leafData != null;
+	}
+
+	public boolean isInvalid() {
+		return invalid;
 	}
 }

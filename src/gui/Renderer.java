@@ -3,6 +3,7 @@ package gui;
 import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.Settings;
+import raytracer.Stats;
 import scene.BasicScene;
 import scene.GridAcceleratedScene;
 import scene.Scene;
@@ -30,6 +31,11 @@ public class Renderer implements MainWindowListener {
 
 	public Renderer(CgPanel panel, Scene scene, int passes) {
 		// Display some warnings about debug settings
+		if (Settings.COLLECT_STATS) {
+			System.err.println("WARNING: collecting stats, running single threaded!");
+			cores = 1;
+		}
+
 		if (Settings.FIX_SINGLE_THREAD) {
 			cores = 1;
 			System.err.println("WARNING: hardcoded to run on one core");
@@ -37,9 +43,6 @@ public class Renderer implements MainWindowListener {
 
 		if (Settings.SHOULD_REPAINT_AFTER_EVERY_PIXEL)
 			System.err.println("WARNING: flushing after every pixel draw is not good for performance!");
-
-		if (Settings.COLLECT_STATS)
-			System.err.println("WARNING: collecting stats, performance might be affected");
 
 		if (Settings.AA != 1)
 			System.err.println("WARNING: AA enabled");
@@ -77,6 +80,9 @@ public class Renderer implements MainWindowListener {
 
 	@Override
 	public Color3f renderPixel(int x, int y) {
+		if (Settings.COLLECT_STATS)
+			Stats.resetIntersections();
+
 		Ray ray = scene.getCamera().rayToPixel(x, y);
 
 		Hit hit = scene.trace(ray);
@@ -89,7 +95,13 @@ public class Renderer implements MainWindowListener {
 			pixelColor = hit.getSurface().getMaterial().getColor(scene, hit);
 		}
 
-		return pixelColor;
+		if (Settings.COLLECT_STATS) {
+			float color = (float)Math.log((Stats.getNumIntersections()) + 1) / 13;
+
+			return new Color3f(color, color, color);
+		} else {
+			return pixelColor;
+		}
 	}
 	
 	public void render() {

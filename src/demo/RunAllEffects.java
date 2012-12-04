@@ -2,10 +2,7 @@ package demo;
 
 import gui.PolarisMainWindow;
 import gui.Renderer;
-import scene.BasicScene;
-import scene.Camera;
-import scene.GridAcceleratedScene;
-import scene.Scene;
+import scene.*;
 import scene.data.Point3f;
 import scene.data.Vector3f;
 import scene.geometry.AffineTransformation;
@@ -28,7 +25,7 @@ public class RunAllEffects {
 
 		PolarisMainWindow mainWindow = new PolarisMainWindow();
 
-		Scene scene = new GridAcceleratedScene(new BasicScene());
+		Scene scene = new BoundingBoxAcceleratedScene(new BasicScene());
 		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), 1);
 		mainWindow.setListener(renderer);
 

@@ -1,9 +1,6 @@
 package scene.geometry;
 
-import raytracer.BoundingBox;
-import raytracer.Hit;
-import raytracer.Ray;
-import raytracer.Settings;
+import raytracer.*;
 import scene.data.Matrix4f;
 import scene.data.Point2f;
 import scene.data.Vector3f;
@@ -74,6 +71,9 @@ public class Triangle extends Surface {
 	
 	@Override
 	public Hit hit(Ray ray, float t0, float t1) {
+		if (Settings.COLLECT_STATS)
+			Stats.incIntersections();
+
 		float a = v1.getPoint().x - v2.getPoint().x;
 		float b = v1.getPoint().y - v2.getPoint().y;
 		float c = v1.getPoint().z - v2.getPoint().z;

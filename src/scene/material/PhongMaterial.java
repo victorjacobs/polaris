@@ -10,7 +10,6 @@ import scene.lighting.Light;
 public class PhongMaterial extends Material {
 	// TODO add intensity
 	// TODO klopt niet helemaal voor extended lights
-	private Color3f phongColor = new Color3f(1, 1, 1);
 	private float phongExponent;
 	
 	public PhongMaterial(Color3f baseColor, float phongExponent) {
@@ -37,9 +36,9 @@ public class PhongMaterial extends Material {
 				
 				dotProduct = (float) Math.pow(Math.max(0, hit.getNormal().dotProduct(halfVector)), phongExponent);
 				
-				sumR += phongColor.getRed() * light.color().getRed() * light.intensity() * dotProduct;
-				sumG += phongColor.getGreen() * light.color().getGreen() * light.intensity() * dotProduct;
-				sumB += phongColor.getBlue() * light.color().getBlue() * light.intensity() * dotProduct;
+				sumR += light.color().getRed() * light.intensity() * dotProduct;
+				sumG += light.color().getGreen() * light.intensity() * dotProduct;
+				sumB += light.color().getBlue() * light.intensity() * dotProduct;
 			}
 		}
 		

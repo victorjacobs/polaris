@@ -1,7 +1,7 @@
 import gui.PolarisMainWindow;
 import gui.Renderer;
 import scene.BasicScene;
-import scene.BoundingBoxAcceleratedScene;
+import scene.GridAcceleratedScene;
 
 /**
  * Created with IntelliJ IDEA. User: victor Date: 18/11/12 Time: 23:19 To change this template use File | Settings |
@@ -13,8 +13,8 @@ public class Run {
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Polaris");
 
 		PolarisMainWindow mainWindow = new PolarisMainWindow();
-		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), new BoundingBoxAcceleratedScene(new BasicScene()), 16);
-		renderer.loadSDL("data/scenes/teapot.sdl");
+		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), new GridAcceleratedScene(new BasicScene()), 1);
+		renderer.loadSDL("data/scenes/tree.sdl");
 
 		mainWindow.setListener(renderer);
 

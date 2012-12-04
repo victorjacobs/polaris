@@ -9,8 +9,12 @@ package raytracer;
 public class Stats {
 	private static int NUM_INTERSECTION_TESTS = 0;
 
-	public static synchronized void incIntersections() {
+	public static void incIntersections() {
 		NUM_INTERSECTION_TESTS++;
+	}
+
+	public static void resetIntersections() {
+		NUM_INTERSECTION_TESTS = 0;
 	}
 
 	public static int getNumIntersections() {
