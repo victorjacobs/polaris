@@ -57,6 +57,7 @@ public class Vertex {
 			normalHomogeneous = transformation.multiply(normalHomogeneous);
 
 			newNormal = new Vector3f(normalHomogeneous.x, normalHomogeneous.y, normalHomogeneous.z);
+
 			return new Vertex(newPoint, newNormal.normalize(), getTexture());
 		} else {
 			return new Vertex(newPoint, null, getTexture());

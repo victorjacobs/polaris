@@ -39,6 +39,10 @@ public class PointLight implements Light {
 	public float getShadowPercentage(Scene scene, Vector3f point) {
 		Hit lightHit = scene.trace(new Ray(point, rayTo(point)), Settings.EPS);
 
+		// FIXED: if the ray hits something beyond the light (t > 1) -> no shadow!
+		if (lightHit != null && lightHit.getT() > 1)
+			return 0;
+
 		return (lightHit == null) ? 0 : lightHit.getSurface().getMaterial().getShadowPercentage();
 	}
 

@@ -9,10 +9,10 @@ package raytracer;
  */
 public class Settings {
 	public static final int SCREEN_X = 1280;
-	public static final int SCREEN_Y = 900;
+	public static final int SCREEN_Y = 720;
 	public static final int MAX_RECURSION_DEPTH = 10;
-	public static final float EPS = 0.01f;
-	public static final int SOFT_SHADOW_SAMPLES = 300;
+	public static final float EPS = 0.0001f;
+	public static final int SOFT_SHADOW_SAMPLES = 20;
 	public static final int AA = 1;
 
 	public static final int GRID_DENSITY = 7;

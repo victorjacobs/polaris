@@ -23,7 +23,7 @@ public class ExtendedLight extends PointLight {
 	// TODO color
 	// TODO extended light heeft niet echt een positie nodig!!
 	public ExtendedLight(Vector3f position) {
-		this(position, new BoundingBox(new Vector3f(position.x - 1, position.y - 1, position.z - 1), new Vector3f(position.x + 1, position.y + 1, position.z + 1)), 0.7f);
+		this(position, new BoundingBox(new Vector3f(position.x - 1f, position.y - 1f, position.z - 1f), new Vector3f(position.x + 1f, position.y + 1f, position.z + 1f)), 0.7f);
 	}
 
 	public ExtendedLight(Vector3f position, BoundingBox volume, float intensity) {
@@ -58,6 +58,6 @@ public class ExtendedLight extends PointLight {
 
 		materialShadowPercentage = (materialShadowPercentage == -1) ? 0 : materialShadowPercentage;
 
-		return (numOfHits / Settings.SOFT_SHADOW_SAMPLES) * materialShadowPercentage;
+		return (numOfHits / (float)Settings.SOFT_SHADOW_SAMPLES) * materialShadowPercentage;
 	}
 }

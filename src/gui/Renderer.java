@@ -96,7 +96,7 @@ public class Renderer implements MainWindowListener {
 		}
 
 		if (Settings.COLLECT_STATS) {
-			float color = (float)Math.log((Stats.getNumIntersections()) + 1) / 13;
+			float color = (float)Math.log((Stats.getNumIntersections()) + 1) / 10;
 
 			return new Color3f(color, color, color);
 		} else {

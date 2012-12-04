@@ -25,7 +25,7 @@ public class RunAllEffects {
 
 		PolarisMainWindow mainWindow = new PolarisMainWindow();
 
-		Scene scene = new BoundingBoxAcceleratedScene(new BasicScene());
+		Scene scene = new GridAcceleratedScene(new BasicScene());
 		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), 1);
 		mainWindow.setListener(renderer);
 
@@ -54,7 +54,7 @@ public class RunAllEffects {
 
 		Surface bunny = new Model("data/objects/bunny.obj");
 		bunny.setMaterial(glass);
-		bunny.applyTransformation(AffineTransformation.translate(new Vector3f(0, 1, 5)));
+		bunny.applyTransformation(AffineTransformation.translate(new Vector3f(0, 0, 5)));
 		bunny.applyTransformation(AffineTransformation.scale(0.5f));
 		scene.addSurface(bunny);
 
