@@ -7,10 +7,12 @@ import raytracer.Stats;
 import scene.BasicScene;
 import scene.GridAcceleratedScene;
 import scene.Scene;
+import scene.data.Vector3f;
 import scene.material.Color3f;
 import scene.parser.SceneBuilder;
 
 import java.io.FileNotFoundException;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
@@ -83,16 +85,42 @@ public class Renderer implements MainWindowListener {
 		if (Settings.COLLECT_STATS)
 			Stats.resetIntersections();
 
-		Ray ray = scene.getCamera().rayToPixel(x, y);
-
-		Hit hit = scene.trace(ray);
-
-		// Do shading and color pixel
+		Ray ray;
+		Hit hit;
 		Color3f pixelColor;
-		if (hit == null) {
-			pixelColor = scene.getBackground();
+		Vector3f unclampedColor = new Vector3f();
+
+		if (Settings.AA == 1) {
+			ray = scene.getCamera().rayToPixel(x, y);
+
+			hit = scene.trace(ray);
+
+			// Do shading and color pixel
+			if (hit == null) {
+				pixelColor = scene.getBackground();
+			} else {
+				pixelColor = hit.getSurface().getMaterial().getColor(scene, hit);
+			}
 		} else {
-			pixelColor = hit.getSurface().getMaterial().getColor(scene, hit);
+			Random rand = new Random();
+
+			for (int i = 0; i < Settings.AA; i++) {
+				for (int j = 0; j < Settings.AA; j++) {
+					float p = (i + rand.nextFloat()) / Settings.AA;
+					float q = (j + rand.nextFloat()) / Settings.AA;
+
+					ray = scene.getCamera().rayToPixel(x, y, p, q);
+					hit = scene.trace(ray, Settings.EPS);
+
+					if (hit == null) {
+						unclampedColor = unclampedColor.sum(new Vector3f(scene.getBackground()));
+					} else {
+						unclampedColor = unclampedColor.sum(new Vector3f(hit.getSurface().getMaterial().getColor(scene, hit)));
+					}
+				}
+			}
+
+			pixelColor = new Color3f(unclampedColor.divideBy(Settings.AA * Settings.AA));
 		}
 
 		if (Settings.COLLECT_STATS) {

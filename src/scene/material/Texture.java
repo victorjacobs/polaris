@@ -40,6 +40,9 @@ public class Texture {
 		int x = (int)Math.floor(point.y * img.getWidth());
 		int y = (int)Math.floor(point.x * img.getHeight());
 
+		x = (x >= img.getWidth()) ? img.getWidth() - 1 : x;
+		y = (y >= img.getWidth()) ? img.getHeight() - 1 : y;
+
 		return new Color3f(new Color(img.getRGB(x, y)));
 	}
 }

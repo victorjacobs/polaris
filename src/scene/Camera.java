@@ -24,8 +24,12 @@ public class Camera {
 		this.distanceToScreen = distanceToScreen;
 		this.FOV = (float)Math.toRadians(FOV);
 	}
-	
+
 	public Ray rayToPixel(int x, int y) {
+		return rayToPixel(x, y, 0.5f, 0.5f);
+	}
+
+	public Ray rayToPixel(int x, int y, float p, float q) {
 		// Generate direction
 		// NOTE: l, r, t, b hebben niets te maken met SCREEN!
 		float aspectRatio = (float) Settings.SCREEN_Y / Settings.SCREEN_X;
@@ -35,8 +39,8 @@ public class Camera {
 		float t = aspectRatio * l;
 		float b = -t;
 
-		float u = l + ((r - l) * (x + 0.5f)) / Settings.SCREEN_X;
-		float v = b + ((t - b) * (y + 0.5f)) / Settings.SCREEN_Y;
+		float u = l + ((r - l) * (x + p)) / Settings.SCREEN_X;
+		float v = b + ((t - b) * (y + q)) / Settings.SCREEN_Y;
 		
 		Vector3f direction1 = getW().multiply(getDistanceToScreen()).negate();
 		Vector3f direction2 = getU().multiply(u);

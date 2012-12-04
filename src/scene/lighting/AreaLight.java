@@ -41,11 +41,7 @@ public class AreaLight extends PointLight {
 		float materialShadowPercentage = -1, x, y, z;
 
 		for (int i = 0; i < Settings.SOFT_SHADOW_SAMPLES; i++) {
-			x = volume.getMax().minus(volume.getMin()).x * rand.nextFloat();
-			y = volume.getMax().minus(volume.getMin()).y * rand.nextFloat();
-			z = volume.getMax().minus(volume.getMin()).z * rand.nextFloat();
-
-			lightHit = scene.trace(new Ray(point, (new Vector3f(x, y, z).sum(volume.getMin())).minus(point)), Settings.EPS);
+			lightHit = scene.trace(new Ray(point, generatePointInLight(rand).minus(point)), Settings.EPS);
 
 			if (lightHit != null && lightHit.getT() < 1) {
 				numOfHits++;
@@ -59,5 +55,15 @@ public class AreaLight extends PointLight {
 		materialShadowPercentage = (materialShadowPercentage == -1) ? 0 : materialShadowPercentage;
 
 		return (numOfHits / (float)Settings.SOFT_SHADOW_SAMPLES) * materialShadowPercentage;
+	}
+
+	private Vector3f generatePointInLight(Random rand) {
+		float x;
+		float y;
+		float z;
+		x = volume.getMax().minus(volume.getMin()).x * rand.nextFloat();
+		y = volume.getMax().minus(volume.getMin()).y * rand.nextFloat();
+		z = volume.getMax().minus(volume.getMin()).z * rand.nextFloat();
+		return new Vector3f(x, y, z).sum(volume.getMin());
 	}
 }
