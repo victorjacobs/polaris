@@ -40,9 +40,15 @@ public class Texture {
 		int x = (int)Math.floor(point.y * img.getWidth());
 		int y = (int)Math.floor(point.x * img.getHeight());
 
-		x = (x >= img.getWidth()) ? img.getWidth() - 1 : x;
-		y = (y >= img.getWidth()) ? img.getHeight() - 1 : y;
+		Color3f ret;
 
-		return new Color3f(new Color(img.getRGB(x, y)));
+		try {
+			ret = new Color3f(new Color(img.getRGB(x, y)));
+		} catch(IndexOutOfBoundsException e) {
+			// TODO this shouldn't be happening. But it does for AA
+			ret = new Color3f(0, 0, 0);
+		}
+
+		return ret;
 	}
 }
