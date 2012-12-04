@@ -13,7 +13,8 @@ public class Settings {
 	public static final int MAX_RECURSION_DEPTH = 10;
 	public static final float EPS = 0.0001f;
 	public static final int SOFT_SHADOW_SAMPLES = 20;
-	public static final int AA = 1;
+	public static final int AA = 4;
+	public static final int NUMBER_OF_RENDER_PASSES = 1;
 
 	public static final int GRID_DENSITY = 7;
 	public static final int KDTREE_ELEMENTS_IN_LEAF = 20;
@@ -23,5 +24,4 @@ public class Settings {
 	public static final boolean FIX_SINGLE_THREAD = false;
 	public static final boolean RANDOM_COLOR_TRIANGLES = false;
 	public static final boolean COLLECT_STATS = false;
-	public static final boolean GRID_ENABLE_MAILBOXING = true;
 }

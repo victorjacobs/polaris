@@ -1,5 +1,6 @@
 import gui.PolarisMainWindow;
 import gui.Renderer;
+import raytracer.Settings;
 import scene.BasicScene;
 import scene.GridAcceleratedScene;
 
@@ -13,7 +14,7 @@ public class Run {
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Polaris");
 
 		PolarisMainWindow mainWindow = new PolarisMainWindow();
-		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), new GridAcceleratedScene(new BasicScene()), 1);
+		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), new GridAcceleratedScene(new BasicScene()), Settings.NUMBER_OF_RENDER_PASSES);
 		renderer.loadSDL("data/scenes/cornell.sdl");
 
 		mainWindow.setListener(renderer);

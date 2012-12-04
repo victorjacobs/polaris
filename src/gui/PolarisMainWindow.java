@@ -20,6 +20,7 @@ public class PolarisMainWindow extends JFrame {
 	private CgPanel renderPanel;
 	private JMenuBar menuBar;
 	private MainWindowListener listener;
+	private File filePickerCurrentDir;
 
 	public PolarisMainWindow() {
 		setSize(Settings.SCREEN_X, Settings.SCREEN_Y);
@@ -28,6 +29,7 @@ public class PolarisMainWindow extends JFrame {
 
 		this.renderPanel = new CgPanel();
 		this.menuBar = new JMenuBar();
+		this.filePickerCurrentDir = new File(".");
 
 		layoutMenuBar();
 		layoutWindow();
@@ -107,8 +109,10 @@ public class PolarisMainWindow extends JFrame {
 		JFileChooser filePicker = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(extension.toUpperCase(), extension);
 		filePicker.addChoosableFileFilter(filter);
-		//filePicker.setCurrentDirectory(this.class.);
+		filePicker.setCurrentDirectory(filePickerCurrentDir);
 		filePicker.showOpenDialog(renderPanel);
+
+		filePickerCurrentDir = filePicker.getSelectedFile();
 
 		return filePicker.getSelectedFile();
 	}
