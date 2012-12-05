@@ -13,7 +13,6 @@ import java.util.List;
  * Time: 12:06
  * To change this template use File | Settings | File Templates.
  */
-// TODO refactor to class Cell
 public class Grid {
 	// Bounding box of the entire scene
 	private BoundingBox bb;

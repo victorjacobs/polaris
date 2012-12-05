@@ -9,8 +9,8 @@ package raytracer;
  */
 public class Settings {
 	// Renderer
-	public static final int SCREEN_X = 640;
-	public static final int SCREEN_Y = 480;
+	public static final int SCREEN_X = 1280;
+	public static final int SCREEN_Y = 900;
 	public static final int MAX_RECURSION_DEPTH = 10;
 	public static final float EPS = 0.0001f;
 	public static final int NUMBER_OF_RENDER_PASSES = 1;
