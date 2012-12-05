@@ -5,7 +5,6 @@ import raytracer.Ray;
 import raytracer.Settings;
 import raytracer.Stats;
 import scene.geometry.Surface;
-import scene.data.Vector3f;
 import scene.lighting.Light;
 import scene.material.Color3f;
 
@@ -63,7 +62,8 @@ public class BasicScene implements Scene {
 	
 	@Override
 	public HashSet<Surface> getSurfaces() {
-		return new HashSet<Surface>(surfaces);
+		// TODO nadenken of hier een kopie genomen moet worden
+		return surfaces;
 	}
 
 	@Override
@@ -94,5 +94,16 @@ public class BasicScene implements Scene {
 	@Override
 	public void preProcess() {
 		// Basic scene doesn't need any preprocessing
+	}
+
+	@Override
+	public void clear() {
+		surfaces.clear();
+		lights.clear();
+		camera = null;
+		background = null;
+
+		// JVM should come pick up garbage
+		System.gc();
 	}
 }

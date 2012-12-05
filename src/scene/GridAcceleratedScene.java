@@ -174,4 +174,15 @@ public class GridAcceleratedScene extends SceneDecorator {
 			grid = new Grid(primitiveBag);
 		}
 	}
+
+	@Override
+	public void clear() {
+		super.clear();
+
+		primitiveBag.clear();
+		grid = null;
+
+		// JVM should come pick up garbage
+		System.gc();
+	}
 }

@@ -19,23 +19,33 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public class Renderer implements MainWindowListener {
-	ExecutorService threadPool;
+	private ExecutorService threadPool;
 	
 	private Scene scene;
 	private final CgPanel panel;
 	private int passes;
-	private int cores = Runtime.getRuntime().availableProcessors();
+	private int cores;
 	private long startTime;
+	private String loadedSDL = null;
 
 	public Renderer(CgPanel panel, int passes) {
 		this(panel, null, passes);
 	}
 
+	// TODO factory voor aanmaken van scenes?
 	public Renderer(CgPanel panel, Scene scene, int passes) {
+		this.panel = panel;
+		this.passes = passes;
+		this.scene = scene;
+		this.cores = Runtime.getRuntime().availableProcessors();
+
 		// Display some warnings about debug settings
+		if (Settings.SOFT_SHADOW_SAMPLES == 1)
+			System.err.println("WARNING: soft shadows disabled");
+
 		if (Settings.COLLECT_STATS) {
-			System.err.println("WARNING: collecting stats, running single threaded!");
 			cores = 1;
+			System.err.println("WARNING: collecting stats, running single threaded!");
 		}
 
 		if (Settings.FIX_SINGLE_THREAD) {
@@ -48,30 +58,32 @@ public class Renderer implements MainWindowListener {
 
 		if (Settings.AA != 1)
 			System.err.println("WARNING: AA enabled");
-
-		this.panel = panel;
-		this.passes = passes;
-		this.scene = scene;
 	}
 
-	// TODO implement this
 	public void reloadFile() {
-		System.err.println("Reloadfile not yet implemented");
+		if (loadedSDL == null)
+			return;
+
+		loadSDL(loadedSDL);
 	}
 
+	// TODO fails for opening new files
 	public void loadSDL(String file) {
+		loadedSDL = file;
+
 		SceneBuilder sceneBuilder;
 
 		if (scene == null) {
 			sceneBuilder = new SceneBuilder(new GridAcceleratedScene(new BasicScene()));
 		} else {
+			scene.clear();
 			sceneBuilder = new SceneBuilder(scene);
 		}
 
 		try {
 			scene = sceneBuilder.loadScene(file);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.err.println("SDL file " + file + " not found.");
 		}
 
 	}

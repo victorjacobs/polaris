@@ -42,4 +42,6 @@ public interface Scene {
 	 * executed on a single thread.
 	 */
 	void preProcess();
+
+	void clear();
 }

@@ -16,21 +16,21 @@ import java.util.List;
  */
 public class BoundingBoxAcceleratedScene extends SceneDecorator {
 	private KDTree tree;
-	private List<Surface> primitiveList;
+	private List<Surface> primitiveBag;
 
 	public BoundingBoxAcceleratedScene(Scene scene) {
 		super(scene);
 
 		System.out.println("BVH KDTree acceleration structure loaded");
 
-		primitiveList = new LinkedList<Surface>();
+		primitiveBag = new LinkedList<Surface>();
 	}
 
 	@Override
 	public void addSurface(Surface surface) {
 		super.addSurface(surface);
 
-		primitiveList.addAll(surface.getPrimitiveSurfaces());
+		primitiveBag.addAll(surface.getPrimitiveSurfaces());
 	}
 
 	@Override
@@ -45,9 +45,20 @@ public class BoundingBoxAcceleratedScene extends SceneDecorator {
 
 			long startTime = System.currentTimeMillis();
 
-			tree = new KDTree(primitiveList);
+			tree = new KDTree(primitiveBag);
 
 			System.out.println("Building KDTree took " + (System.currentTimeMillis() - startTime) + "ms");
 		}
+	}
+
+	@Override
+	public void clear() {
+		super.clear();
+
+		tree = null;
+		primitiveBag.clear();
+
+		// JVM should come pick up garbage
+		System.gc();
 	}
 }

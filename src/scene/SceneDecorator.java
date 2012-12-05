@@ -78,4 +78,9 @@ public abstract class SceneDecorator implements Scene {
 	public void preProcess() {
 		scene.preProcess();
 	}
+
+	@Override
+	public void clear() {
+		scene.clear();
+	}
 }
