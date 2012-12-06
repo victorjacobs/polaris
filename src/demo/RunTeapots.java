@@ -7,7 +7,7 @@ import scene.data.Vector3f;
 import scene.geometry.AffineTransformation;
 import scene.geometry.Model;
 import scene.geometry.Surface;
-import scene.lighting.PointLight;
+import scene.lighting.AreaLight;
 import scene.material.Color3f;
 import scene.material.DiffuseMaterial;
 import scene.material.Material;
@@ -32,10 +32,10 @@ public class RunTeapots extends Demo {
 		scene.setCamera(new Camera(new Point3f(-5, 10f, 10f), new Vector3f(10, -10f, -10f), new Vector3f(0, 1, 0), 60));
 		scene.setBackground(new Color3f(0.2f, 0.2f, 0.2f));
 
-		scene.addLightSource(new PointLight(new Vector3f(-10, 3, 3), 0.9f));
-		scene.addLightSource(new PointLight(new Vector3f(2.5f, 10, 3f), 0.3f));
-		scene.addLightSource(new PointLight(new Vector3f(3, 1, -10), 0.3f));
-		scene.addLightSource(new PointLight(new Vector3f(3, 1, 10), 0.3f));
+		scene.addLightSource(new AreaLight(new Point3f(-10, 3, 3)));
+		scene.addLightSource(new AreaLight(new Point3f(2.5f, 10, 3f)));
+//		scene.addLightSource(new PointLight(new Vector3f(3, 1, -10), 0.3f));
+//		scene.addLightSource(new PointLight(new Vector3f(3, 1, 10), 0.3f));
 
 		Model motherTeapot = new Model("data/objects/teapot.obj");
 		Model teapot;

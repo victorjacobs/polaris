@@ -17,8 +17,8 @@ public class Settings {
 
 	// Effects
 	public static final boolean DISABLE_SHADOWS = false;
-	public static final int SOFT_SHADOW_SAMPLES = 1;
-	public static final int AA = 1;
+	public static final int SOFT_SHADOW_SAMPLES = 20;
+	public static final int AA = 4;
 
 	// Acceleration structures
 	public static final int GRID_DENSITY = 7;
