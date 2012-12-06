@@ -223,6 +223,7 @@ public class Renderer implements MainWindowListener {
 			}
 
 			panel.repaint();
+			panel.flush();
 
 			if (currentDepth == 1) {
 				long endTime = System.currentTimeMillis();
