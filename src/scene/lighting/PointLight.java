@@ -37,6 +37,9 @@ public class PointLight implements Light {
 
 	@Override
 	public float getShadowPercentage(Scene scene, Vector3f point) {
+		if (Settings.DISABLE_SHADOWS)
+			return 0;
+
 		Hit lightHit = scene.trace(new Ray(point, rayTo(point)), Settings.EPS);
 
 		// FIXED: if the ray hits something beyond the light (t > 1) -> no shadow!

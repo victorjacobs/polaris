@@ -30,6 +30,16 @@ public class Vertex {
 		this.point = point;
 	}
 
+	// Copy
+	public Vertex(Vertex other) {
+		this.point = new Vector3f(other.point);
+		this.normal = new Vector3f(other.normal);
+
+		if (this.texture != null) {
+			this.texture = new Point2f(other.texture);
+		}
+	}
+
 	public Vector3f getPoint() {
 		return point;
 	}

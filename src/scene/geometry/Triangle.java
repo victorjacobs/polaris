@@ -33,6 +33,15 @@ public class Triangle extends Surface {
 		this.material = mat;
 	}
 
+	public Triangle(Triangle triag) {
+		this.v1 = new Vertex(triag.v1);
+		this.v2 = new Vertex(triag.v2);
+		this.v3 = new Vertex(triag.v3);
+
+		// TODO clone??!
+		this.material = triag.material;
+	}
+
 	private Vector3f generateNormal(Vector3f v1, Vector3f v2, Vector3f v3) {
 		Vector3f U = v2.minus(v1);
 		Vector3f V = v3.minus(v1);

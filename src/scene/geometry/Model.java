@@ -21,9 +21,11 @@ import java.util.List;
  *
  */
 public class Model extends Surface {
+	// These are only needed for loading of file
 	private List<Vector3f> points;
 	private List<Vector3f> normalVectors;
 	private List<Point2f> textures;
+	// Actual data of model is here
 	private List<Triangle> triangles;
 	private Material material;
 	
@@ -48,7 +50,12 @@ public class Model extends Surface {
 
 		System.out.println("Loaded in " + (System.currentTimeMillis() - startTime) + "ms");
 	}
-	
+
+	private Model(List<Triangle> triangles, Material mat) {
+		this.triangles = triangles;
+		this.material = mat;
+	}
+
 	private void parseFile(String fileName) {
 		BufferedReader reader;
 		String line;
@@ -221,5 +228,17 @@ public class Model extends Surface {
 	@Override
 	public List<Surface> getPrimitiveSurfaces() {
 		return new LinkedList<Surface>(triangles);
+	}
+
+	// TODO naar interface?
+	public Model duplicate() {
+		// Deep copy triangles
+		List<Triangle> clonedTriangles = new LinkedList<Triangle>();
+
+		for (Triangle triag : triangles) {
+			clonedTriangles.add(new Triangle(triag));
+		}
+
+		return new Model(clonedTriangles, material);
 	}
 }
