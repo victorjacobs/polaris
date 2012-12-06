@@ -11,10 +11,8 @@ import scene.GridAcceleratedScene;
  */
 public class BenchmarkRun {
 
+	// TODO find a clever way to make the main quit after render is complete
 	public static void main(String[] args) {
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Polaris");
-
 		Renderer renderer = new Renderer(new StubPanel(), new GridAcceleratedScene(new BasicScene()), 1);
 
 		renderer.loadSDL("data/scenes/787.sdl");

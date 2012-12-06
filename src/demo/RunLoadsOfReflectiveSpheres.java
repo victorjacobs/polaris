@@ -1,10 +1,6 @@
 package demo;
 
-import gui.PolarisMainWindow;
-import gui.Renderer;
-import scene.BasicScene;
 import scene.Camera;
-import scene.GridAcceleratedScene;
 import scene.Scene;
 import scene.data.Vector3f;
 import scene.geometry.AffineTransformation;
@@ -20,18 +16,14 @@ import scene.material.*;
  * Time: 16:40
  * To change this template use File | Settings | File Templates.
  */
-public class RunLoadsOfReflectiveSpheres {
+public class RunLoadsOfReflectiveSpheres extends Demo {
 
 	public static void main(String[] args) {
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Polaris");
+		(new RunALotOfSpheres()).runStandalone();
+	}
 
-		PolarisMainWindow window = new PolarisMainWindow();
-		Renderer renderer = new Renderer(window.getRenderPanel(), 32);
-
-		Scene scene = new GridAcceleratedScene(new BasicScene());
-		renderer.loadScene(scene);
-
+	@Override
+	public void generateScene(Scene scene) {
 		PointLight light1 = new PointLight(new Vector3f(-20, 10, 0));
 		scene.addLightSource(light1);
 		scene.setBackground(new Color3f(0.3f, 0.3f, 0.3f));
@@ -67,15 +59,5 @@ public class RunLoadsOfReflectiveSpheres {
 				}
 			}
 		}
-
-		window.display();
-
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-		}
-
-		renderer.render();
 	}
-
 }

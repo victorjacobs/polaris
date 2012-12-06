@@ -1,6 +1,6 @@
 package gui;
 
-import gui.Panel.CgPanel;
+import gui.Panel.ScreenPanel;
 import raytracer.Settings;
 import scene.material.Color3f;
 
@@ -18,7 +18,7 @@ import java.io.File;
 // TODO macify it https://github.com/nebulorum/macify
 public class PolarisMainWindow extends JFrame {
 
-	private CgPanel renderPanel;
+	private ScreenPanel renderPanel;
 	private JMenuBar menuBar;
 	private MainWindowListener listener;
 	private File filePickerCurrentDir;
@@ -28,7 +28,7 @@ public class PolarisMainWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Polaris dev");
 
-		this.renderPanel = new CgPanel();
+		this.renderPanel = new ScreenPanel();
 		this.menuBar = new JMenuBar();
 		this.filePickerCurrentDir = new File(".");
 
@@ -159,7 +159,7 @@ public class PolarisMainWindow extends JFrame {
 		});
 	}
 
-	public CgPanel getRenderPanel() {
+	public ScreenPanel getRenderPanel() {
 		return renderPanel;
 	}
 

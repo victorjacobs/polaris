@@ -1,10 +1,6 @@
 package demo;
 
-import gui.PolarisMainWindow;
-import gui.Renderer;
-import scene.BasicScene;
 import scene.Camera;
-import scene.GridAcceleratedScene;
 import scene.Scene;
 import scene.data.Point3f;
 import scene.data.Vector3f;
@@ -25,21 +21,14 @@ import java.util.Random;
  * Date: 01/12/12
  * Time: 18:07
  */
-public class RunALotOfSpheres {
+public class RunALotOfSpheres extends Demo {
 
 	public static void main(String[] args) {
+		(new RunALotOfSpheres()).runStandalone();
+	}
 
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Polaris");
-
-		PolarisMainWindow mainWindow = new PolarisMainWindow();
-
-		Scene scene = new GridAcceleratedScene(new BasicScene());
-		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), 1);
-		mainWindow.setListener(renderer);
-
-		renderer.loadScene(scene);
-
+	@Override
+	public void generateScene(Scene scene) {
 		scene.setCamera(new Camera(new Point3f(-5, 10f, 10f), new Vector3f(10, -10f, -10f), new Vector3f(0, 1, 0), 60));
 		scene.setBackground(new Color3f(0.3f, 0.3f, 0.3f));
 		scene.addLightSource(new PointLight(new Vector3f(-10, 3, 3), 0.9f));
@@ -69,16 +58,5 @@ public class RunALotOfSpheres {
 			sphere = new Sphere(new Vector3f(x, y, z), 0.01f, randomColor);
 			scene.addSurface(sphere);
 		}
-
-		mainWindow.display();
-
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-
-		}
-
-		renderer.render();
 	}
-
 }

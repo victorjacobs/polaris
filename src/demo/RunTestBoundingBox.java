@@ -24,17 +24,13 @@ import scene.material.Material;
  * Date: 24/11/12
  * Time: 02:06
  */
-public class RunTestBoundingBox {
+public class RunTestBoundingBox extends Demo {
 	public static void main(String[] args) {
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Polaris");
+		(new RunTestBoundingBox()).runStandalone();
+	}
 
-		PolarisMainWindow window = new PolarisMainWindow();
-		Renderer renderer = new Renderer(window.getRenderPanel(), 32);
-
-		Scene scene = new GridAcceleratedScene(new BasicScene());
-		renderer.loadScene(scene);
-
+	@Override
+	public void generateScene(Scene scene) {
 		Camera camera = new Camera(new Vector3f(8, 8, 8), new Vector3f(-5, -4, -5), new Vector3f(0, 1, 0), 5, 60);
 		scene.setCamera(camera);
 		scene.setBackground(new Color3f(0.2f, 0.2f, 0.2f));
@@ -62,16 +58,5 @@ public class RunTestBoundingBox {
 		scene.addLightSource(light);
 		scene.setBackground(new Color3f(0.3f, 0.3f, 0.3f));
 		scene.addSurface(elf);
-
-		window.display();
-
-		try {
-			Thread.sleep(100);
-		} catch (Throwable e) {
-
-		}
-
-		// Disable actual rendering for make greater power saving
-		renderer.render();
 	}
 }

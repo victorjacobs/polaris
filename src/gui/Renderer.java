@@ -1,6 +1,6 @@
 package gui;
 
-import gui.Panel.CgPanel;
+import gui.Panel.ScreenPanel;
 import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.Settings;
@@ -23,18 +23,18 @@ public class Renderer implements MainWindowListener {
 	private ExecutorService threadPool;
 	
 	private Scene scene;
-	private final CgPanel panel;
+	private final ScreenPanel panel;
 	private int passes;
 	private int cores;
 	private long startTime;
 	private String loadedSDL = null;
 
-	public Renderer(CgPanel panel, int passes) {
+	public Renderer(ScreenPanel panel, int passes) {
 		this(panel, null, passes);
 	}
 
 	// TODO factory voor aanmaken van scenes?
-	public Renderer(CgPanel panel, Scene scene, int passes) {
+	public Renderer(ScreenPanel panel, Scene scene, int passes) {
 		this.panel = panel;
 		this.passes = passes;
 		this.scene = scene;

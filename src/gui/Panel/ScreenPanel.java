@@ -21,7 +21,7 @@ import java.io.File;
  *		panel.repaint();
  *		panel.flush();
  */
-public class CgPanel extends JPanel  implements ComponentListener {
+public class ScreenPanel extends JPanel  implements ComponentListener {
 
    /**
 	 * 
@@ -29,9 +29,9 @@ public class CgPanel extends JPanel  implements ComponentListener {
 	private static final long serialVersionUID = 5922802101836793417L;
 	
 	/**
-    * Construct a new CgPanel.
+    * Construct a new ScreenPanel.
     */
-   public CgPanel() {
+   public ScreenPanel() {
       addComponentListener(this);
       componentResized(new ComponentEvent(this, ComponentEvent.COMPONENT_RESIZED));
    }

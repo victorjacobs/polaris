@@ -1,8 +1,7 @@
 package demo;
 
-import gui.PolarisMainWindow;
-import gui.Renderer;
-import scene.*;
+import scene.Camera;
+import scene.Scene;
 import scene.data.Point3f;
 import scene.data.Vector3f;
 import scene.geometry.AffineTransformation;
@@ -20,19 +19,13 @@ import scene.material.*;
  * TODO count intersection tests
  */
 
-public class RunDefault {
+public class RunDefault extends Demo {
 	public static void main(String[] args) {
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Polaris");
+		(new RunDefault()).runStandalone();
+	}
 
-		PolarisMainWindow mainWindow = new PolarisMainWindow();
-
-		Scene scene = new GridAcceleratedScene(new BasicScene());
-		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), 1);
-		mainWindow.setListener(renderer);
-
-		renderer.loadScene(scene);
-
+	@Override
+	public void generateScene(Scene scene) {
 		scene.setCamera(new Camera(new Point3f(0, 7, 0), new Vector3f(0, -1, 0), new Vector3f(1, 0, 0), 60));
 		scene.setBackground(new Color3f(0.3f, 0.3f, 0.3f));
 		//scene.addLightSource(new PointLight(new Vector3f(-3, 3, 3), 0.9f));
@@ -52,15 +45,5 @@ public class RunDefault {
 
 		Surface sphere = new Sphere(new Vector3f(0.3f, 3, 0), 1f, glass);
 		scene.addSurface(sphere);
-
-		mainWindow.display();
-
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-
-		}
-
-		renderer.render();
 	}
 }

@@ -1,8 +1,7 @@
 package demo;
 
-import gui.PolarisMainWindow;
-import gui.Renderer;
-import scene.*;
+import scene.Camera;
+import scene.Scene;
 import scene.data.Point3f;
 import scene.data.Vector3f;
 import scene.geometry.AffineTransformation;
@@ -18,19 +17,13 @@ import scene.material.*;
  * Date: 02/12/12
  * Time: 14:31
  */
-public class RunAllEffects {
+public class RunAllEffects extends Demo {
 	public static void main(String[] args) {
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Polaris");
+		(new RunAllEffects()).runStandalone();
+	}
 
-		PolarisMainWindow mainWindow = new PolarisMainWindow();
-
-		Scene scene = new GridAcceleratedScene(new BasicScene());
-		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), 1);
-		mainWindow.setListener(renderer);
-
-		renderer.loadScene(scene);
-
+	@Override
+	public void generateScene(Scene scene) {
 		scene.setCamera(new Camera(new Point3f(7, 5, 7), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 60));
 		scene.setBackground(new Color3f(0.2f, 0.2f, 0.2f));
 
@@ -57,16 +50,5 @@ public class RunAllEffects {
 		bunny.applyTransformation(AffineTransformation.translate(new Vector3f(0, 0, 5)));
 		bunny.applyTransformation(AffineTransformation.scale(0.5f));
 		scene.addSurface(bunny);
-
-
-		mainWindow.display();
-
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-
-		}
-
-		renderer.render();
 	}
 }

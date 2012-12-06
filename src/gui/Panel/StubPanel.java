@@ -11,7 +11,7 @@ import java.awt.*;
  * Date: 06/12/12
  * Time: 14:07
  */
-public class StubPanel extends CgPanel {
+public class StubPanel extends ScreenPanel {
 	public StubPanel() {
 
 	}
