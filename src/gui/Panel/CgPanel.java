@@ -1,4 +1,4 @@
-package gui;
+package gui.Panel;
 
 import scene.material.Color3f;
 

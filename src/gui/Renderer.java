@@ -1,5 +1,6 @@
 package gui;
 
+import gui.Panel.CgPanel;
 import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.Settings;

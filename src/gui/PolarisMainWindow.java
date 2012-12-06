@@ -1,5 +1,6 @@
 package gui;
 
+import gui.Panel.CgPanel;
 import raytracer.Settings;
 import scene.material.Color3f;
 
