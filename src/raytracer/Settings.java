@@ -17,8 +17,8 @@ public class Settings {
 
 	// Effects
 	public static final boolean DISABLE_SHADOWS = false;
-	public static final int SOFT_SHADOW_SAMPLES = 20;
-	public static final int AA = 4;
+	public static final int SOFT_SHADOW_SAMPLES = 1;
+	public static final int AA = 1;
 
 	// Acceleration structures
 	public static final int GRID_DENSITY = 7;
@@ -28,5 +28,6 @@ public class Settings {
 	public static final boolean SHOULD_REPAINT_AFTER_EVERY_PIXEL = true;
 	public static final boolean FIX_SINGLE_THREAD = false;
 	public static final boolean RANDOM_COLOR_TRIANGLES = false;
-	public static final boolean COLLECT_STATS = false;
+	public static final boolean COLLECT_STATS = true;
+	public static final boolean INTERSECTION_TESTS_FALSE_COLOR = true;
 }

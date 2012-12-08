@@ -42,12 +42,7 @@ public class BoundingBoxAcceleratedScene extends SceneDecorator {
 	public void preProcess() {
 		if (tree == null) {
 			System.out.println("Preprocessing scene");
-
-			long startTime = System.currentTimeMillis();
-
 			tree = new KDTree(primitiveBag);
-
-			System.out.println("Building KDTree took " + (System.currentTimeMillis() - startTime) + "ms");
 		}
 	}
 

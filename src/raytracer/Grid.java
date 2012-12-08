@@ -201,9 +201,6 @@ public class Grid {
 				for (Surface surface : surfaces) {
 					hit = surface.hit(ray, eps, lowestT);
 
-					if (Settings.COLLECT_STATS)
-						Stats.incIntersections();
-
 					if (hit != null) {
 						// FIXED: check whether hit point is actually in cell
 						// Check whether hit was actually in cell and not outside of cell

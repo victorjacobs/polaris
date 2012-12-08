@@ -4,14 +4,11 @@ import scene.Camera;
 import scene.Scene;
 import scene.data.Point3f;
 import scene.data.Vector3f;
-import scene.geometry.AffineTransformation;
-import scene.geometry.Model;
 import scene.geometry.Sphere;
 import scene.geometry.Surface;
 import scene.lighting.PointLight;
 import scene.material.Color3f;
 import scene.material.DiffuseMaterial;
-import scene.material.ReflectiveMaterial;
 
 import java.util.Random;
 
@@ -22,6 +19,8 @@ import java.util.Random;
  * Time: 18:07
  */
 public class RunALotOfSpheres extends Demo {
+
+	private int nbOfSpheres = 1000000;
 
 	public static void main(String[] args) {
 		(new RunALotOfSpheres()).runStandalone();
@@ -36,9 +35,9 @@ public class RunALotOfSpheres extends Demo {
 		scene.addLightSource(new PointLight(new Vector3f(3, 1, -10), 0.3f));
 		scene.addLightSource(new PointLight(new Vector3f(3, 1, 10), 0.3f));
 
-		Surface plane = new Model("data/objects/plane.obj");
-		plane.applyTransformation(AffineTransformation.scale(20));
-		plane.setMaterial(new ReflectiveMaterial(0.3f));
+//		Surface plane = new Model("data/objects/plane.obj");
+//		plane.applyTransformation(AffineTransformation.scale(20));
+//		plane.setMaterial(new ReflectiveMaterial(0.3f));
 		//scene.addSurface(plane);
 
 		DiffuseMaterial randomColor;
@@ -47,7 +46,7 @@ public class RunALotOfSpheres extends Demo {
 		Surface sphere;
 		float x, y, z;
 
-		for (int i = 0; i < 1000000; i++) {
+		for (int i = 0; i < nbOfSpheres; i++) {
 			randomColor = new DiffuseMaterial(new Color3f(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
 
 			// Calculate next position (between 0 and 5
@@ -58,5 +57,13 @@ public class RunALotOfSpheres extends Demo {
 			sphere = new Sphere(new Vector3f(x, y, z), 0.01f, randomColor);
 			scene.addSurface(sphere);
 		}
+	}
+
+	public int getNbOfSpheres() {
+		return nbOfSpheres;
+	}
+
+	public void setNbOfSpheres(int nbOfSpheres) {
+		this.nbOfSpheres = nbOfSpheres;
 	}
 }

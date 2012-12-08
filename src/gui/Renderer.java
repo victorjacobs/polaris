@@ -33,7 +33,6 @@ public class Renderer implements MainWindowListener {
 		this(panel, null, passes);
 	}
 
-	// TODO factory voor aanmaken van scenes?
 	public Renderer(ScreenPanel panel, Scene scene, int passes) {
 		this.panel = panel;
 		this.passes = passes;
@@ -136,7 +135,7 @@ public class Renderer implements MainWindowListener {
 			pixelColor = new Color3f(unclampedColor.divideBy(Settings.AA * Settings.AA));
 		}
 
-		if (Settings.COLLECT_STATS) {
+		if (Settings.INTERSECTION_TESTS_FALSE_COLOR) {
 			float color = (float)Math.log((Stats.getNumIntersections()) + 1) / 10;
 
 			return new Color3f(color, color, color);
@@ -146,11 +145,25 @@ public class Renderer implements MainWindowListener {
 	}
 	
 	public void render() {
+		long startTime = System.currentTimeMillis();
+
 		scene.preProcess();
+
+		long duration = System.currentTimeMillis() - startTime;
+
+		if (Settings.COLLECT_STATS)
+			Stats.setStructureBuildTime(duration);
+
+		System.out.println("Building acceleration structure took " + duration + "ms");
 
 		Runtime rt = Runtime.getRuntime();
 
-		System.out.println("Memory usage before render start: " + (rt.totalMemory() - rt.freeMemory()) / (1024 * 1024) + "mb");
+		int memUsage = (int)(rt.totalMemory() - rt.freeMemory()) / (1024 * 1024);
+
+		if (Settings.COLLECT_STATS)
+			Stats.setMemoryUsage(memUsage);
+
+		System.out.println("Memory usage before render start: " + memUsage + "mb");
 
 		if (threadPool != null) {
 			abortRender(false);
@@ -158,7 +171,7 @@ public class Renderer implements MainWindowListener {
 			this.threadPool = Executors.newFixedThreadPool(cores);
 		}
 
-		startTime = System.currentTimeMillis();
+		this.startTime = System.currentTimeMillis();
 		// Split up the canvas in blocks to dispatch to the threadpool
 		for (int i = 0; i < cores; i++) {
 			threadPool.execute(new renderJob(i, passes));
@@ -184,6 +197,16 @@ public class Renderer implements MainWindowListener {
 			} else {
 				panel.clear();
 			}
+		}
+	}
+
+	// NOTE: this only works when rendering in one pass
+	public void join() {
+		threadPool.shutdown();
+
+		try {
+			threadPool.awaitTermination(1, TimeUnit.DAYS);
+		} catch (InterruptedException e) {
 		}
 	}
 
