@@ -44,8 +44,7 @@ public class Renderer implements MainWindowListener {
 			System.err.println("WARNING: soft shadows disabled");
 
 		if (Settings.COLLECT_STATS) {
-			cores = 1;
-			System.err.println("WARNING: collecting stats, running single threaded!");
+			System.err.println("WARNING: collecting stats, this might slow everything down");
 		}
 
 		if (Settings.FIX_SINGLE_THREAD) {

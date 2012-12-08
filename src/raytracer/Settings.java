@@ -21,13 +21,13 @@ public class Settings {
 	public static final int AA = 1;
 
 	// Acceleration structures
-	public static final int GRID_DENSITY = 7;
-	public static final int KDTREE_ELEMENTS_IN_LEAF = 20;
+	public static int GRID_DENSITY = 7;
+	public static int KDTREE_ELEMENTS_IN_LEAF = 20;
 
 	// Some debug settings
 	public static final boolean SHOULD_REPAINT_AFTER_EVERY_PIXEL = true;
 	public static final boolean FIX_SINGLE_THREAD = false;
 	public static final boolean RANDOM_COLOR_TRIANGLES = false;
 	public static final boolean COLLECT_STATS = true;
-	public static final boolean INTERSECTION_TESTS_FALSE_COLOR = true;
+	public static final boolean INTERSECTION_TESTS_FALSE_COLOR = false;
 }

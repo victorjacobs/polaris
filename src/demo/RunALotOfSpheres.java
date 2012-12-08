@@ -4,11 +4,14 @@ import scene.Camera;
 import scene.Scene;
 import scene.data.Point3f;
 import scene.data.Vector3f;
+import scene.geometry.AffineTransformation;
+import scene.geometry.Model;
 import scene.geometry.Sphere;
 import scene.geometry.Surface;
 import scene.lighting.PointLight;
 import scene.material.Color3f;
 import scene.material.DiffuseMaterial;
+import scene.material.ReflectiveMaterial;
 
 import java.util.Random;
 
@@ -28,18 +31,22 @@ public class RunALotOfSpheres extends Demo {
 
 	@Override
 	public void generateScene(Scene scene) {
-		scene.setCamera(new Camera(new Point3f(-5, 10f, 10f), new Vector3f(10, -10f, -10f), new Vector3f(0, 1, 0), 60));
-		scene.setBackground(new Color3f(0.3f, 0.3f, 0.3f));
+		generateBareScene(scene);
+
 		scene.addLightSource(new PointLight(new Vector3f(-10, 3, 3), 0.9f));
 		scene.addLightSource(new PointLight(new Vector3f(2.5f, 10, 3f), 0.3f));
 		scene.addLightSource(new PointLight(new Vector3f(3, 1, -10), 0.3f));
 		scene.addLightSource(new PointLight(new Vector3f(3, 1, 10), 0.3f));
 
-//		Surface plane = new Model("data/objects/plane.obj");
-//		plane.applyTransformation(AffineTransformation.scale(20));
-//		plane.setMaterial(new ReflectiveMaterial(0.3f));
-		//scene.addSurface(plane);
+		Surface plane = new Model("data/objects/plane.obj");
+		plane.applyTransformation(AffineTransformation.scale(20));
+		plane.setMaterial(new ReflectiveMaterial(0.3f));
+		scene.addSurface(plane);
+	}
 
+	public void generateBareScene(Scene scene) {
+		scene.setCamera(new Camera(new Point3f(-5, 10f, 10f), new Vector3f(10, -10f, -10f), new Vector3f(0, 1, 0), 60));
+		scene.setBackground(new Color3f(0.3f, 0.3f, 0.3f));
 		DiffuseMaterial randomColor;
 
 		Random rand = new Random();
