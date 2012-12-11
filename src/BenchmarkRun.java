@@ -1,4 +1,5 @@
-import demo.RunALotOfSpheres;
+import demo.ALotOfSpheres;
+import demo.SceneGenerator;
 import gui.Panel.StubPanel;
 import gui.Renderer;
 import raytracer.Settings;
@@ -21,8 +22,12 @@ import java.util.HashMap;
  * Time: 13:53
  */
 public class BenchmarkRun {
-	private static final int NUM_OF_STEPS = 5;
+	private static final int NUM_OF_STEPS = 4;
+	private static final int STEP_SIZE = 10;
+
 	private final long runID;
+
+	private SceneGenerator sg;
 
 	public static void main(String[] args) {
 		new BenchmarkRun();
@@ -32,14 +37,40 @@ public class BenchmarkRun {
 		runID = System.currentTimeMillis() % 1000;
 
 		Renderer renderer = new Renderer(new StubPanel(), 1);
-		RunALotOfSpheres sceneGenerator = new RunALotOfSpheres();
+		sg =  new ALotOfSpheres();
 
-		//benchmarkAll(renderer, sceneGenerator);
-		benchmarkGrid(renderer, sceneGenerator);
-		//benchmarkKD(renderer, sceneGenerator);
+		benchmarkAll(renderer);
+		benchmarkGrid(renderer);
+		benchmarkKD(renderer);
 	}
 
-	private void benchmarkKD(Renderer renderer, RunALotOfSpheres sceneGenerator) {
+	private void benchmarkAll(Renderer renderer) {
+		StringBuilder sb;
+		HashMap<String, Scene> scenes = new HashMap<String, Scene>();
+		scenes.put("basic", new BasicScene());
+		scenes.put("grid", new GridAcceleratedScene(new BasicScene()));
+		scenes.put("KD", new BoundingBoxAcceleratedScene(new BasicScene()));
+
+		// Compare all different acceleration structures with one another
+
+		for (String sceneType : scenes.keySet()) {
+			sb = new StringBuilder();
+			sb.append("nbSpheres | nbIntersections" + sceneType + " | mem" + sceneType + " | buildtime" + sceneType + " | rendertime" + sceneType + '\n');
+
+			System.err.println("------------------------");
+			System.err.println("Starting " + sceneType + " benchmark");
+			System.err.println("------------------------");
+
+			Scene scene = scenes.get(sceneType);
+			iterate(renderer, sb, scene);
+
+			System.out.println("Writing stats to file");
+
+			toFile(sb.toString(), sceneType);
+		}
+	}
+
+	private void benchmarkKD(Renderer renderer) {
 		// Experiment with different settings for parameters for grid
 
 		StringBuilder sb;
@@ -52,44 +83,17 @@ public class BenchmarkRun {
 		for (int i = 20; i < 200; i+=50) {
 			System.err.println("KD leaf contents: " + i);
 			sb = new StringBuilder();
-			sb.append("nbSpheres | nbIntersections" + i + " | mem" + i + " | buildtime" + i + '\n');
-			sceneGenerator.setNbOfSpheres(1);
+			sb.append("nbSpheres | nbIntersections" + i + " | mem" + i + " | buildtime" + i + " | rendertime" + i + '\n');
 
 			Settings.KDTREE_ELEMENTS_IN_LEAF = i;
 
-			for (int j = 0; j < NUM_OF_STEPS; j++) {
-				Stats.resetTotalNumIntersections();
-				System.err.println("Iteration " + j + " " + sceneGenerator.getNbOfSpheres() + " spheres");
+			iterate(renderer, sb, scene);
 
-				scene.clear();
-				sceneGenerator.generateBareScene(scene);
-				renderer.loadScene(scene);
-
-				renderer.render();
-
-				renderer.join();
-
-				sceneGenerator.setNbOfSpheres(sceneGenerator.getNbOfSpheres() * 10);
-				sb.append(sceneGenerator.getNbOfSpheres() + " | " + Stats.getTotalNumIntersections() + " | " + Stats.getMemoryUsage() + " | " + Stats.getStructureBuildTime() + '\n');
-			}
-
-			System.out.println("Writing stats to file");
-
-			try {
-				String filePath = "./benchmarks/" + runID + "-kdtree" + i + ".txt";
-				File outFile = new File(filePath);
-				BufferedWriter out = new BufferedWriter(new FileWriter(outFile));
-
-				out.write(sb.toString());
-				out.flush();
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			toFile(sb.toString(), "kdtree" + i);
 		}
 	}
 
-	private void benchmarkGrid(Renderer renderer, RunALotOfSpheres sceneGenerator) {
+	private void benchmarkGrid(Renderer renderer) {
 		// Experiment with different settings for parameters for grid
 
 		StringBuilder sb;
@@ -102,91 +106,55 @@ public class BenchmarkRun {
 		for (int i = 2; i < 15; i+=3) {
 			System.err.println("Grid density: " + i);
 			sb = new StringBuilder();
-			sb.append("nbSpheres | nbIntersections" + i + " | mem" + i + " | buildtime" + i + '\n');
-			sceneGenerator.setNbOfSpheres(1);
+			sb.append("nbSpheres | nbIntersections" + i + " | mem" + i + " | buildtime" + i + " | rendertime" + i + '\n');
 
 			Settings.GRID_DENSITY = i;
 
-			for (int j = 0; j < NUM_OF_STEPS; j++) {
-				Stats.resetTotalNumIntersections();
-				System.err.println("Iteration " + j + " " + sceneGenerator.getNbOfSpheres() + " spheres");
+			iterate(renderer, sb, scene);
 
-				scene.clear();
-				sceneGenerator.generateBareScene(scene);
-				renderer.loadScene(scene);
-
-				renderer.render();
-
-				renderer.join();
-
-				sceneGenerator.setNbOfSpheres(sceneGenerator.getNbOfSpheres() * 10);
-				sb.append(sceneGenerator.getNbOfSpheres() + " | " + Stats.getTotalNumIntersections() + " | " + Stats.getMemoryUsage() + " | " + Stats.getStructureBuildTime() + '\n');
-			}
-
-			System.out.println("Writing stats to file");
-
-			try {
-				String filePath = "./benchmarks/" + runID + "-grid" + i + ".txt";
-				File outFile = new File(filePath);
-				BufferedWriter out = new BufferedWriter(new FileWriter(outFile));
-
-				out.write(sb.toString());
-				out.flush();
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			toFile(sb.toString(), "grid" + i);
 		}
 	}
 
-	private void benchmarkAll(Renderer renderer, RunALotOfSpheres sceneGenerator) {
-		StringBuilder sb;
-		HashMap<String, Scene> scenes = new HashMap<String, Scene>();
-		scenes.put("basic", new BasicScene());
-		scenes.put("grid", new GridAcceleratedScene(new BasicScene()));
-		scenes.put("KD", new BoundingBoxAcceleratedScene(new BasicScene()));
+	private void iterate(Renderer renderer, StringBuilder sb, Scene scene) {
+		int nbSpheres = 1;
 
-		// Compare all different acceleration structures with one another
+		for (int i = 0; i < NUM_OF_STEPS; i++) {
+			Stats.resetTotalNumIntersections();
 
-		for (String sceneType : scenes.keySet()) {
-			sb = new StringBuilder();
-			sb.append("nbSpheres | nbIntersections" + sceneType + " | mem" + sceneType + " | buildtime" + sceneType + '\n');
-			sceneGenerator.setNbOfSpheres(1);
+			System.err.println("\nIteration " + i + " " + nbSpheres + " spheres");
 
-			System.err.println("------------------------");
-			System.err.println("Starting " + sceneType + " benchmark");
-			System.err.println("------------------------");
+			scene.clear();
+			sg.generateScene(scene, nbSpheres);
+			renderer.loadScene(scene);
 
-			Scene scene = scenes.get(sceneType);
-			for (int i = 0; i < NUM_OF_STEPS; i++) {
-				Stats.resetTotalNumIntersections();
-				System.err.println("Iteration " + i + " " + sceneGenerator.getNbOfSpheres() + " spheres");
+			long localStartTime = System.currentTimeMillis();
 
-				scene.clear();
-				sceneGenerator.generateBareScene(scene);
-				renderer.loadScene(scene);
+			renderer.render();
 
-				renderer.render();
+			renderer.join();
 
-				renderer.join();
+			sb.append(nbSpheres + " | " + Stats.getTotalNumIntersections() + " | " +
+					Stats.getMemoryUsage() + " | " + Stats.getStructureBuildTime() +
+					" | " + (System.currentTimeMillis() - localStartTime) + '\n');
 
-				sceneGenerator.setNbOfSpheres(sceneGenerator.getNbOfSpheres() * 10);
-				sb.append(sceneGenerator.getNbOfSpheres() + " | " + Stats.getTotalNumIntersections() + " | " + Stats.getMemoryUsage() + " | " + Stats.getStructureBuildTime() + '\n');
-			}
+			nbSpheres *= STEP_SIZE;
+		}
+	}
 
-			System.out.println("Writing stats to file");
+	private void toFile(String data, String ID) {
+		System.out.println("Writing stats to file " + ID);
 
-			try {
-				String filePath = "./benchmarks/" + runID + "-" + sceneType + ".txt";
-				File outFile = new File(filePath);
-				BufferedWriter out = new BufferedWriter(new FileWriter(outFile));
+		try {
+			String filePath = "./benchmarks/" + runID + "-" + ID + ".txt";
+			File outFile = new File(filePath);
+			BufferedWriter out = new BufferedWriter(new FileWriter(outFile));
 
-				out.write(sb.toString());
-				out.flush();
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			out.write(data);
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

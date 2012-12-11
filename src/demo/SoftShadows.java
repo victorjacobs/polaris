@@ -18,9 +18,9 @@ import scene.material.DiffuseMaterial;
  * Date: 02/12/12
  * Time: 00:49
  */
-public class RunSoftShadows extends Demo {
+public class SoftShadows extends Demo {
 	public static void main(String[] args) {
-		(new RunSoftShadows()).runStandalone();
+		(new SoftShadows()).runStandalone();
 	}
 
 	@Override

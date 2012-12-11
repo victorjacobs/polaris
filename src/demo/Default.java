@@ -11,7 +11,7 @@ import scene.geometry.Surface;
 import scene.material.*;
 
 /*
- * TODO UI: be able to load .obj files, use RunTestBoundingBox as template
+ * TODO UI: be able to load .obj files, use TestBoundingBox as template
  * TODO Soft shadows
  * 		+ Area lights
  * TODO Anti aliasing
@@ -19,9 +19,9 @@ import scene.material.*;
  * TODO count intersection tests
  */
 
-public class RunDefault extends Demo {
+public class Default extends Demo {
 	public static void main(String[] args) {
-		(new RunDefault()).runStandalone();
+		(new Default()).runStandalone();
 	}
 
 	@Override

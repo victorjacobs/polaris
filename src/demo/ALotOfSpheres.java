@@ -21,17 +21,15 @@ import java.util.Random;
  * Date: 01/12/12
  * Time: 18:07
  */
-public class RunALotOfSpheres extends Demo {
-
-	private int nbOfSpheres = 1000000;
+public class ALotOfSpheres extends Demo implements SceneGenerator {
 
 	public static void main(String[] args) {
-		(new RunALotOfSpheres()).runStandalone();
+		(new ALotOfSpheres()).runStandalone();
 	}
 
 	@Override
 	public void generateScene(Scene scene) {
-		generateBareScene(scene);
+		generateScene(scene, 1000000);
 
 		scene.addLightSource(new PointLight(new Vector3f(-10, 3, 3), 0.9f));
 		scene.addLightSource(new PointLight(new Vector3f(2.5f, 10, 3f), 0.3f));
@@ -44,7 +42,8 @@ public class RunALotOfSpheres extends Demo {
 		scene.addSurface(plane);
 	}
 
-	public void generateBareScene(Scene scene) {
+	@Override
+	public void generateScene(Scene scene, int size) {
 		scene.setCamera(new Camera(new Point3f(-5, 10f, 10f), new Vector3f(10, -10f, -10f), new Vector3f(0, 1, 0), 60));
 		scene.setBackground(new Color3f(0.3f, 0.3f, 0.3f));
 		DiffuseMaterial randomColor;
@@ -53,10 +52,10 @@ public class RunALotOfSpheres extends Demo {
 		Surface sphere;
 		float x, y, z;
 
-		for (int i = 0; i < nbOfSpheres; i++) {
+		for (int i = 0; i < size; i++) {
 			randomColor = new DiffuseMaterial(new Color3f(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
 
-			// Calculate next position (between 0 and 5
+			// Calculate next position (between 0 and 5)
 			x = 5 * rand.nextFloat();
 			y = 5 * rand.nextFloat();
 			z = 5 * rand.nextFloat();
@@ -64,13 +63,5 @@ public class RunALotOfSpheres extends Demo {
 			sphere = new Sphere(new Vector3f(x, y, z), 0.01f, randomColor);
 			scene.addSurface(sphere);
 		}
-	}
-
-	public int getNbOfSpheres() {
-		return nbOfSpheres;
-	}
-
-	public void setNbOfSpheres(int nbOfSpheres) {
-		this.nbOfSpheres = nbOfSpheres;
 	}
 }

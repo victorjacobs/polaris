@@ -43,8 +43,15 @@ public class Renderer implements MainWindowListener {
 		if (Settings.SOFT_SHADOW_SAMPLES == 1)
 			System.err.println("WARNING: soft shadows disabled");
 
-		if (Settings.COLLECT_STATS) {
+		if (Settings.COLLECT_STATS)
 			System.err.println("WARNING: collecting stats, this might slow everything down");
+
+		if (Settings.INTERSECTION_TESTS_FALSE_COLOR) {
+			if (!Settings.COLLECT_STATS)
+				throw new RuntimeException("Can't create false color image if COLLECT_STATS is off");
+
+			cores = 1;
+			System.err.println("WARNING: rendering false color image is single threaded!");
 		}
 
 		if (Settings.FIX_SINGLE_THREAD) {
@@ -157,7 +164,7 @@ public class Renderer implements MainWindowListener {
 
 		Runtime rt = Runtime.getRuntime();
 
-		int memUsage = (int)(rt.totalMemory() - rt.freeMemory()) / (1024 * 1024);
+		long memUsage = (rt.totalMemory() - rt.freeMemory()) / (1024 * 1024);
 
 		if (Settings.COLLECT_STATS)
 			Stats.setMemoryUsage(memUsage);
@@ -179,8 +186,6 @@ public class Renderer implements MainWindowListener {
 
 	@Override
 	public void abortRender(boolean shouldFlush) {
-		System.out.println("Shutting down threadpool");
-
 		try {
 			threadPool.shutdownNow();
 			threadPool.awaitTermination(100, TimeUnit.MILLISECONDS);

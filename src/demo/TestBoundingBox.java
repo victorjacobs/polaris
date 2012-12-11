@@ -1,11 +1,7 @@
 package demo;
 
-import gui.PolarisMainWindow;
-import gui.Renderer;
 import raytracer.BoundingBox;
-import scene.BasicScene;
 import scene.Camera;
-import scene.GridAcceleratedScene;
 import scene.Scene;
 import scene.data.Matrix4f;
 import scene.data.Vector3f;
@@ -24,9 +20,9 @@ import scene.material.Material;
  * Date: 24/11/12
  * Time: 02:06
  */
-public class RunTestBoundingBox extends Demo {
+public class TestBoundingBox extends Demo {
 	public static void main(String[] args) {
-		(new RunTestBoundingBox()).runStandalone();
+		(new TestBoundingBox()).runStandalone();
 	}
 
 	@Override

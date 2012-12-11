@@ -16,10 +16,10 @@ import scene.material.*;
  * Time: 16:40
  * To change this template use File | Settings | File Templates.
  */
-public class RunLoadsOfReflectiveSpheres extends Demo {
+public class LoadsOfReflectiveSpheres extends Demo {
 
 	public static void main(String[] args) {
-		(new RunALotOfSpheres()).runStandalone();
+		(new ALotOfSpheres()).runStandalone();
 	}
 
 	@Override

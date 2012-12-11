@@ -21,10 +21,10 @@ import java.util.Random;
  * Date: 06/12/12
  * Time: 18:26
  */
-public class RunTeapots extends Demo {
+public class Teapots extends Demo {
 
 	public static void main(String[] args) {
-		(new RunTeapots()).runStandalone();
+		(new Teapots()).runStandalone();
 	}
 
 	@Override

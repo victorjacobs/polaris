@@ -17,9 +17,9 @@ import scene.material.*;
  * Date: 02/12/12
  * Time: 14:31
  */
-public class RunAllEffects extends Demo {
+public class AllEffects extends Demo {
 	public static void main(String[] args) {
-		(new RunAllEffects()).runStandalone();
+		(new AllEffects()).runStandalone();
 	}
 
 	@Override

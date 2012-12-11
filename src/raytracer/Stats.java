@@ -9,7 +9,7 @@ package raytracer;
 public class Stats {
 	private static long NUM_INTERSECTION_TESTS = 0;
 	private static long TOTAL_INTERSECTION_TESTS = 0;
-	private static int MEM_USAGE_DATA_STRUCTURE;
+	private static long MEM_USAGE_DATA_STRUCTURE;
 	private static long STRUCTURE_BUILD_TIME;
 
 	public static void incIntersections() {
@@ -33,11 +33,11 @@ public class Stats {
 		TOTAL_INTERSECTION_TESTS = 0;
 	}
 
-	public static void setMemoryUsage(int usage) {
+	public static void setMemoryUsage(long usage) {
 		MEM_USAGE_DATA_STRUCTURE = usage;
 	}
 
-	public static int getMemoryUsage() {
+	public static long getMemoryUsage() {
 		return MEM_USAGE_DATA_STRUCTURE;
 	}
 
