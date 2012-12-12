@@ -2,6 +2,7 @@ package scene;
 
 import raytracer.Hit;
 import raytracer.Ray;
+import scene.data.Vector3f;
 import scene.geometry.Surface;
 import scene.lighting.Light;
 import scene.material.Color3f;
@@ -18,7 +19,7 @@ import java.util.HashSet;
 public interface Scene {
 	void setBackground(Color3f background);
 
-	Color3f getBackground();
+	Color3f getBackground(Vector3f direction);
 
 	void setCamera(Camera cam);
 
@@ -44,4 +45,6 @@ public interface Scene {
 	void preProcess();
 
 	void clear();
+
+	void setEnvironmentMap(EnvironmentMap environmentMap);
 }

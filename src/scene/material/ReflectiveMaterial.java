@@ -36,7 +36,7 @@ public class ReflectiveMaterial extends PhongMaterial {
 		if (nextSurfaceHit != null) {
 			other = nextSurfaceHit.getSurface().getMaterial().getColor(scene, nextSurfaceHit, recursionDepth + 1);
 		} else {
-			other = scene.getBackground();
+			other = scene.getBackground(outgoingRay.getDirection());
 		}
 		
 		return new Color3f(reflectionCoefficient * other.getRed() + phongShading.getRed(),

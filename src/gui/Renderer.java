@@ -115,7 +115,7 @@ public class Renderer implements MainWindowListener {
 
 			// Do shading and color pixel
 			if (hit == null) {
-				pixelColor = scene.getBackground();
+				pixelColor = scene.getBackground(ray.getDirection());
 			} else {
 				pixelColor = hit.getSurface().getMaterial().getColor(scene, hit);
 			}
@@ -131,7 +131,7 @@ public class Renderer implements MainWindowListener {
 					hit = scene.trace(ray, Settings.EPS);
 
 					if (hit == null) {
-						unclampedColor = unclampedColor.sum(new Vector3f(scene.getBackground()));
+						unclampedColor = unclampedColor.sum(new Vector3f(scene.getBackground(ray.getDirection())));
 					} else {
 						unclampedColor = unclampedColor.sum(new Vector3f(hit.getSurface().getMaterial().getColor(scene, hit)));
 					}

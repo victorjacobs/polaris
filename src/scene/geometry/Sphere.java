@@ -89,7 +89,7 @@ public class Sphere extends Surface {
 		return (float)(radius * radius * Math.PI);
 	}
 
-	private Point2f getLocalCoordinateFor(Point3f point) {
+	public Point2f getLocalCoordinateFor(Point3f point) {
 		float theta = (float)Math.acos((point.z - center.z) / radius);
 		float phi = (float)Math.atan2((point.y - center.y), (point.x - center.x));
 

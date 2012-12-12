@@ -52,7 +52,7 @@ public class RefractiveMaterial extends PhongMaterial {
 				Color3f colorUnattenuated;
 
 				if (nextHit == null) {
-					colorUnattenuated = scene.getBackground();
+					colorUnattenuated = scene.getBackground(hit.getRay().getDirection());
 				} else {
 					colorUnattenuated = nextHit.getSurface().getMaterial().getColor(scene, nextHit, recursionDepth + 1);
 				}
@@ -67,7 +67,7 @@ public class RefractiveMaterial extends PhongMaterial {
 		Hit reflectHit = scene.trace(reflectedRay, Settings.EPS);
 		Color3f reflectColor;
 		if (reflectHit == null) {
-			reflectColor = scene.getBackground();
+			reflectColor = scene.getBackground(hit.getRay().getDirection());
 		} else {
 			reflectColor = reflectHit.getSurface().getMaterial().getColor(scene, reflectHit, recursionDepth + 1);
 		}
@@ -75,7 +75,7 @@ public class RefractiveMaterial extends PhongMaterial {
 		Hit transmittedHit = scene.trace(nextRay, Settings.EPS);
 		Color3f transmittedColor;
 		if (transmittedHit == null) {
-			transmittedColor = scene.getBackground();
+			transmittedColor = scene.getBackground(hit.getRay().getDirection());
 		} else {
 			transmittedColor = transmittedHit.getSurface().getMaterial().getColor(scene, transmittedHit, recursionDepth + 1);
 		}

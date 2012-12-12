@@ -4,6 +4,7 @@ import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.Settings;
 import raytracer.Stats;
+import scene.data.Vector3f;
 import scene.geometry.Surface;
 import scene.lighting.Light;
 import scene.material.Color3f;
@@ -18,8 +19,14 @@ public class BasicScene implements Scene {
 	private HashSet<Light> lights;
 	private Camera camera;
 	private Color3f background;
+	private EnvironmentMap environmentMap;
 
 	public BasicScene() {
+		this(null);
+	}
+
+	public BasicScene(EnvironmentMap environmentMap) {
+		this.environmentMap = environmentMap;
 		surfaces = new HashSet<Surface>();
 		lights = new HashSet<Light>();
 		background = new Color3f(0, 0, 0);
@@ -31,10 +38,21 @@ public class BasicScene implements Scene {
 	}
 
 	@Override
-	public Color3f getBackground() {
-		return background;
+	public void setEnvironmentMap(EnvironmentMap environmentMap) {
+		this.environmentMap = environmentMap;
 	}
-	
+
+	@Override
+	public Color3f getBackground(Vector3f direction) {
+		if (environmentMap != null) {
+			return environmentMap.getColorInDirection(direction);
+		} else if (background == null) {
+			return new Color3f(0, 0, 0);
+		} else {
+			return background;
+		}
+	}
+
 	@Override
 	public void setCamera(Camera cam) {
 		this.camera = cam;

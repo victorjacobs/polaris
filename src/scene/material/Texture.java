@@ -15,12 +15,9 @@ import java.io.IOException;
  * Time: 22:16
  */
 public class Texture {
-	private String path;
 	private BufferedImage img = null;
 
 	public Texture(String path) {
-		this.path = path;
-
 		System.out.println("Loading texture from file " + path);
 
 		try {

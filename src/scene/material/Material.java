@@ -35,10 +35,10 @@ public abstract class Material {
 
 	// Implements ambient light
 	public Color3f getColor(Scene scene, Hit hit, int recursionDepth) {
-		if (scene.getBackground() != null) {
-			return new Color3f(getUnshadedColorAt(hit.getTextureCoordinates()).getRed() * scene.getBackground().getRed(),
-					getUnshadedColorAt(hit.getTextureCoordinates()).getGreen() * scene.getBackground().getGreen(),
-					getUnshadedColorAt(hit.getTextureCoordinates()).getBlue() * scene.getBackground().getBlue());
+		if (scene.getBackground(hit.getRay().getDirection()) != null) {
+			return new Color3f(getUnshadedColorAt(hit.getTextureCoordinates()).getRed() * scene.getBackground(hit.getRay().getDirection()).getRed(),
+					getUnshadedColorAt(hit.getTextureCoordinates()).getGreen() * scene.getBackground(hit.getRay().getDirection()).getGreen(),
+					getUnshadedColorAt(hit.getTextureCoordinates()).getBlue() * scene.getBackground(hit.getRay().getDirection()).getBlue());
 		} else {
 			return new Color3f(0, 0, 0);
 		}

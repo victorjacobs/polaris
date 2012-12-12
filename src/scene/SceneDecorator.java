@@ -2,6 +2,7 @@ package scene;
 
 import raytracer.Hit;
 import raytracer.Ray;
+import scene.data.Vector3f;
 import scene.geometry.Surface;
 import scene.lighting.Light;
 import scene.material.Color3f;
@@ -40,8 +41,8 @@ public abstract class SceneDecorator implements Scene {
 	}
 
 	@Override
-	public Color3f getBackground() {
-		return scene.getBackground();
+	public Color3f getBackground(Vector3f direction) {
+		return scene.getBackground(direction);
 	}
 
 	@Override
@@ -82,5 +83,10 @@ public abstract class SceneDecorator implements Scene {
 	@Override
 	public void clear() {
 		scene.clear();
+	}
+
+	@Override
+	public void setEnvironmentMap(EnvironmentMap environmentMap) {
+		scene.setEnvironmentMap(environmentMap);
 	}
 }
