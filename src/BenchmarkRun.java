@@ -116,6 +116,14 @@ public class BenchmarkRun {
 		}
 	}
 
+	/**
+	 * This benchmark keeps increasing the scene size until a certain timeout is reached
+	 * @param renderer
+	 */
+	private void gridStressBenchmark(Renderer renderer) {
+
+	}
+
 	private void iterate(Renderer renderer, StringBuilder sb, Scene scene) {
 		int nbSpheres = 1;
 
