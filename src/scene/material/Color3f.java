@@ -125,4 +125,8 @@ public class Color3f extends Tuple3f implements Serializable
 	public Color3f divideBy(float div) {
 		return new Color3f(x / div, y / div, z / div);
 	}
+
+	public Color3f multiply(float mult) {
+		return new Color3f(x * mult, y * mult, z * mult);
+	}
 }

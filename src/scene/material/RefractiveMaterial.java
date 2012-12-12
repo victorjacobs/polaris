@@ -16,53 +16,73 @@ public class RefractiveMaterial extends PhongMaterial {
 		super(baseColor, 100);
 		this.refractionCoefficient = refractionCoefficient;
 
-		ar = ag = ab = 0.5f;
+		ar = ag = ab = 0.1f;
 	}
 	
 	@Override
 	public Color3f getColor(Scene scene, Hit hit, int recursionDepth) {
 		if (recursionDepth > Settings.MAX_RECURSION_DEPTH) return new Color3f(0, 0, 0); // TODO solve
 		Color3f phong = super.phongHighlight(scene, hit, recursionDepth);
+		Ray reflectedRay = new Ray(hit.getPoint(), hit.getRay().getDirection().reflectOver(hit.getNormal().negate()));
 
 		Ray nextRay;
 		Hit nextHit;
 		float kr, kg, kb;
+		float c;
 
-		if (hit.getRay().getDirection().dotProduct(hit.getNormal()) > 0) {
+		if (hit.getRay().getDirection().dotProduct(hit.getNormal()) <= 0) {
+			// Ray entering from the outside
+			nextRay = refractedRay(hit, hit.getNormal(), n, refractionCoefficient);
+			kr = kg = kb = 1;
+
+			c = -hit.getRay().getDirection().dotProduct(hit.getNormal());
+		} else {
 			// Normal oriented in same direction as ray, this is an inner ray
 			nextRay = refractedRay(hit, hit.getNormal().negate(), refractionCoefficient, n);
 			// Set k to something
 			kr = (float)Math.exp(- ar * hit.getT());
 			kg = (float)Math.exp(- ag * hit.getT());
 			kb = (float)Math.exp(- ab * hit.getT());
-		} else {
-			// Ray entering from the outside
-			nextRay = refractedRay(hit, hit.getNormal(), n, refractionCoefficient);
-			kr = kg = kb = 1;
+
+			if (nextRay != null) {
+				c = nextRay.getDirection().dotProduct(hit.getNormal());
+			} else {
+				// Internal reflection
+				nextHit = scene.trace(reflectedRay, Settings.EPS);
+				Color3f colorUnattenuated = nextHit.getSurface().getMaterial().getColor(scene, nextHit, recursionDepth + 1);
+
+				return new Color3f(kr * colorUnattenuated.getRed(), kg * colorUnattenuated.getGreen(), kb * colorUnattenuated.getBlue());
+			}
 		}
 
-		if (nextRay == null) {
-			// Complete internal reflection
-			Vector3f reflectedDirection = hit.getRay().getDirection().reflectOver(hit.getNormal().negate());
+		float r0 = ((refractionCoefficient - 1) * (refractionCoefficient - 1)) / ((refractionCoefficient + 1) * (refractionCoefficient + 1));
+		float r = r0 + (1 - r0) * (float)Math.pow((1 - c), 5);
 
-			nextHit = scene.trace(new Ray(hit.getPoint(), reflectedDirection), Settings.EPS);
+		Hit reflectHit = scene.trace(reflectedRay, Settings.EPS);
+		Color3f reflectColor;
+		if (reflectHit == null) {
+			reflectColor = scene.getBackground();
 		} else {
-			nextHit = scene.trace(nextRay, Settings.EPS);
+			reflectColor = reflectHit.getSurface().getMaterial().getColor(scene, reflectHit, recursionDepth + 1);
+		}
+
+		Hit transmittedHit = scene.trace(nextRay, Settings.EPS);
+		Color3f transmittedColor;
+		if (transmittedHit == null) {
+			transmittedColor = scene.getBackground();
+		} else {
+			transmittedColor = transmittedHit.getSurface().getMaterial().getColor(scene, transmittedHit, recursionDepth + 1);
 		}
 
 		Color3f nextColor;
 
-		if (nextHit != null) {
-			Color3f colorUnattenuated = nextHit.getSurface().getMaterial().getColor(scene, nextHit, recursionDepth + 1);
+		nextColor = reflectColor.multiply(r).sum(transmittedColor.multiply(1 - r));
+		nextColor = new Color3f(kr * nextColor.getRed(), kg * nextColor.getGreen(), kb * nextColor.getRed());
 
-			nextColor = new Color3f(kr * colorUnattenuated.getRed(), kg * colorUnattenuated.getGreen(), kb * colorUnattenuated.getBlue());
-		} else {
-			nextColor = scene.getBackground();
-		}
-
+		// Add phong
 		if (recursionDepth == 1) {
 			// Only add phong on the end of the recursion chain
-			nextColor = nextColor.sum(phong);
+			nextColor = nextColor.sum(phong.multiply(r));
 		}
 
 		return nextColor;
