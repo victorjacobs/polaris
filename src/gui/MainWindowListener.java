@@ -1,5 +1,6 @@
 package gui;
 
+import demo.SceneGenerator;
 import scene.material.Color3f;
 
 /**
@@ -15,4 +16,6 @@ public interface MainWindowListener {
 	public void reloadFile();
 	public void render();
 	void abortRender(boolean willFlush);
+
+	void applySceneGenerator(SceneGenerator sg);
 }

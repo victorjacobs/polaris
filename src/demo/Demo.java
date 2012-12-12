@@ -5,7 +5,6 @@ import gui.Renderer;
 import raytracer.Settings;
 import scene.BasicScene;
 import scene.GridAcceleratedScene;
-import scene.Scene;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,12 +25,10 @@ public class Demo {
 
 		PolarisMainWindow mainWindow = new PolarisMainWindow();
 
-		Scene scene = new GridAcceleratedScene(new BasicScene());
-		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), Settings.NUMBER_OF_RENDER_PASSES);
+		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), new GridAcceleratedScene(new BasicScene()), Settings.NUMBER_OF_RENDER_PASSES);
 		mainWindow.setListener(renderer);
-		renderer.loadScene(scene);
 
-		sg.generateScene(scene);
+		renderer.applySceneGenerator(sg);
 
 		mainWindow.display();
 

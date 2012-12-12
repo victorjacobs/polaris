@@ -1,5 +1,6 @@
 package gui;
 
+import demo.SceneGenerator;
 import gui.Panel.ScreenPanel;
 import raytracer.Hit;
 import raytracer.Ray;
@@ -96,6 +97,13 @@ public class Renderer implements MainWindowListener {
 
 	public void loadScene(Scene scene) {
 		this.scene = scene;
+	}
+
+	@Override
+	public void applySceneGenerator(SceneGenerator sg) {
+		scene.clear();
+
+		sg.generateScene(scene);
 	}
 
 	@Override

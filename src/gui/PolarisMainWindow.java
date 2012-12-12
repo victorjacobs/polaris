@@ -1,5 +1,9 @@
 package gui;
 
+
+import demo.ALotOfSpheres;
+import demo.AllEffects;
+import demo.SceneGenerator;
 import gui.Panel.ScreenPanel;
 import raytracer.Settings;
 import scene.material.Color3f;
@@ -9,6 +13,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,6 +28,7 @@ public class PolarisMainWindow extends JFrame {
 	private JMenuBar menuBar;
 	private MainWindowListener listener;
 	private File filePickerCurrentDir;
+	private Map<String, SceneGenerator> sceneGenerators;
 
 	public PolarisMainWindow() {
 		setSize(Settings.SCREEN_X, Settings.SCREEN_Y);
@@ -31,6 +38,10 @@ public class PolarisMainWindow extends JFrame {
 		this.renderPanel = new ScreenPanel();
 		this.menuBar = new JMenuBar();
 		this.filePickerCurrentDir = new File(".");
+		this.sceneGenerators = new HashMap<String, SceneGenerator>();
+
+		sceneGenerators.put("All effects", new AllEffects());
+		sceneGenerators.put("A lot of spheres", new ALotOfSpheres());
 
 		layoutMenuBar();
 		layoutWindow();
@@ -104,6 +115,30 @@ public class PolarisMainWindow extends JFrame {
 		fileMenu.add(forceRepaint);
 
 		menuBar.add(fileMenu);
+
+		JMenu demoMenu = new JMenu("Demo");
+		JMenuItem item;
+
+		for (final String demoName : sceneGenerators.keySet()) {
+			item = new JMenuItem(demoName);
+
+			item.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent actionEvent) {
+					listener.abortRender(true);
+
+					SceneGenerator sg = sceneGenerators.get(demoName);
+
+					listener.applySceneGenerator(sg);
+
+					listener.render();
+				}
+			});
+
+			demoMenu.add(item);
+		}
+
+		menuBar.add(demoMenu);
 	}
 
 	private File openDialog(String extension) {
