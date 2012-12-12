@@ -11,7 +11,7 @@ import scene.geometry.Surface;
 import scene.material.*;
 
 /*
- * TODO UI: be able to load .obj files, use TestBoundingBox as template
+ * TODO UI: be able to load .obj files, use BoundingBox as template
  * TODO Soft shadows
  * 		+ Area lights
  * TODO Anti aliasing
@@ -19,9 +19,9 @@ import scene.material.*;
  * TODO count intersection tests
  */
 
-public class Default extends Demo {
+public class Default implements SceneGenerator {
 	public static void main(String[] args) {
-		(new Default()).runStandalone();
+		(new Demo(new Default())).runStandalone();
 	}
 
 	@Override
@@ -45,5 +45,10 @@ public class Default extends Demo {
 
 		Surface sphere = new Sphere(new Vector3f(0.3f, 3, 0), 1f, glass);
 		scene.addSurface(sphere);
+	}
+
+	@Override
+	public void generateScene(Scene scene, int size) {
+		generateScene(scene);
 	}
 }

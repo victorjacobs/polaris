@@ -16,10 +16,10 @@ import scene.material.*;
  * Time: 16:40
  * To change this template use File | Settings | File Templates.
  */
-public class LoadsOfReflectiveSpheres extends Demo {
+public class LoadsOfReflectiveSpheres implements SceneGenerator {
 
 	public static void main(String[] args) {
-		(new ALotOfSpheres()).runStandalone();
+		(new Demo(new LoadsOfReflectiveSpheres())).runStandalone();
 	}
 
 	@Override
@@ -59,5 +59,10 @@ public class LoadsOfReflectiveSpheres extends Demo {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void generateScene(Scene scene, int size) {
+		generateScene(scene);
 	}
 }

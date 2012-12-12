@@ -18,9 +18,9 @@ import scene.material.DiffuseMaterial;
  * Date: 02/12/12
  * Time: 00:49
  */
-public class SoftShadows extends Demo {
+public class SoftShadows implements SceneGenerator {
 	public static void main(String[] args) {
-		(new SoftShadows()).runStandalone();
+		(new Demo(new SoftShadows())).runStandalone();
 	}
 
 	@Override
@@ -37,5 +37,10 @@ public class SoftShadows extends Demo {
 		plane.applyTransformation(AffineTransformation.scale(20));
 		plane.setMaterial(new DiffuseMaterial(new Color3f(1, 1, 1)));
 		scene.addSurface(plane);
+	}
+
+	@Override
+	public void generateScene(Scene scene, int size) {
+		generateScene(scene);
 	}
 }

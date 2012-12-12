@@ -21,10 +21,10 @@ import java.util.Random;
  * Date: 01/12/12
  * Time: 18:07
  */
-public class ALotOfSpheres extends Demo implements SceneGenerator {
+public class ALotOfSpheres implements SceneGenerator {
 
 	public static void main(String[] args) {
-		(new ALotOfSpheres()).runStandalone();
+		(new Demo(new ALotOfSpheres())).runStandalone();
 	}
 
 	@Override

@@ -21,14 +21,19 @@ import java.util.Random;
  * Date: 06/12/12
  * Time: 18:26
  */
-public class Teapots extends Demo {
+public class Teapots implements SceneGenerator {
 
 	public static void main(String[] args) {
-		(new Teapots()).runStandalone();
+		(new Demo(new Teapots())).runStandalone();
 	}
 
 	@Override
 	public void generateScene(Scene scene) {
+		generateScene(scene, 1000);
+	}
+
+	@Override
+	public void generateScene(Scene scene, int size) {
 		scene.setCamera(new Camera(new Point3f(-5, 10f, 10f), new Vector3f(10, -10f, -10f), new Vector3f(0, 1, 0), 60));
 		scene.setBackground(new Color3f(0.2f, 0.2f, 0.2f));
 
@@ -50,7 +55,7 @@ public class Teapots extends Demo {
 		Material randomColor;
 
 
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < size; i++) {
 			randomColor = new DiffuseMaterial(new Color3f(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
 
 			x = 5 * rand.nextFloat();

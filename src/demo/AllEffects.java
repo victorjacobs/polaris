@@ -17,9 +17,9 @@ import scene.material.*;
  * Date: 02/12/12
  * Time: 14:31
  */
-public class AllEffects extends Demo {
+public class AllEffects implements SceneGenerator {
 	public static void main(String[] args) {
-		(new AllEffects()).runStandalone();
+		(new Demo(new AllEffects())).runStandalone();
 	}
 
 	@Override
@@ -50,5 +50,10 @@ public class AllEffects extends Demo {
 		bunny.applyTransformation(AffineTransformation.translate(new Vector3f(0, 0, 5)));
 		bunny.applyTransformation(AffineTransformation.scale(0.5f));
 		scene.addSurface(bunny);
+	}
+
+	@Override
+	public void generateScene(Scene scene, int size) {
+		generateScene(scene);
 	}
 }

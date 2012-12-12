@@ -13,7 +13,13 @@ import scene.Scene;
  * Date: 06/12/12
  * Time: 14:45
  */
-public abstract class Demo {
+public class Demo {
+	private SceneGenerator sg;
+
+	public Demo(SceneGenerator sg) {
+		this.sg = sg;
+	}
+
 	public void runStandalone() {
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Polaris");
@@ -25,7 +31,7 @@ public abstract class Demo {
 		mainWindow.setListener(renderer);
 		renderer.loadScene(scene);
 
-		generateScene(scene);
+		sg.generateScene(scene);
 
 		mainWindow.display();
 
@@ -37,6 +43,4 @@ public abstract class Demo {
 
 		renderer.render();
 	}
-
-	public abstract void generateScene(Scene scene);
 }
