@@ -1,9 +1,7 @@
 package gui;
 
 
-import demo.ALotOfSpheres;
-import demo.AllEffects;
-import demo.SceneGenerator;
+import demo.*;
 import gui.Panel.ScreenPanel;
 import raytracer.Settings;
 import scene.material.Color3f;
@@ -15,6 +13,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,7 +21,7 @@ import java.util.Map;
  * Time: 10:48
  */
 // TODO macify it https://github.com/nebulorum/macify
-public class PolarisMainWindow extends JFrame {
+public class PolarisMainWindow extends JFrame implements KeyListener {
 
 	private ScreenPanel renderPanel;
 	private JMenuBar menuBar;
@@ -42,9 +41,18 @@ public class PolarisMainWindow extends JFrame {
 
 		sceneGenerators.put("All effects", new AllEffects());
 		sceneGenerators.put("A lot of spheres", new ALotOfSpheres());
+		sceneGenerators.put("Teapots", new Teapots());
+		sceneGenerators.put("Soft shadows", new SoftShadows());
+		sceneGenerators.put("Loads of reflective spheres", new LoadsOfReflectiveSpheres());
+		sceneGenerators.put("Environment map", new EnvironmentMapTest());
+
+		sceneGenerators = new TreeMap<String, SceneGenerator>(sceneGenerators);
 
 		layoutMenuBar();
 		layoutWindow();
+
+		if (Settings.ENABLE_CAMERA_MOVE_IN_UI)
+			addKeyListener(this);
 	}
 
 	private void layoutMenuBar() {
@@ -204,5 +212,34 @@ public class PolarisMainWindow extends JFrame {
 
 	public void setListener(MainWindowListener listener) {
 		this.listener = listener;
+	}
+
+	@Override
+	public void keyTyped(KeyEvent keyEvent) {
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent keyEvent) {
+		// This is ugly
+		switch (keyEvent.getKeyCode()) {
+			case KeyEvent.VK_LEFT:
+				listener.rotateCamera(0);
+				break;
+			case KeyEvent.VK_RIGHT:
+				listener.rotateCamera(1);
+				break;
+			case KeyEvent.VK_UP:
+				listener.rotateCamera(2);
+				break;
+			case KeyEvent.VK_DOWN:
+				listener.rotateCamera(3);
+				break;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent keyEvent) {
+		//To change body of implemented methods use File | Settings | File Templates.
 	}
 }

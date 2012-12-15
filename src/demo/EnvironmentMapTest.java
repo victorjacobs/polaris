@@ -22,9 +22,9 @@ public class EnvironmentMapTest implements SceneGenerator {
 
 	@Override
 	public void generateScene(Scene scene) {
-		scene.setEnvironmentMap(new EnvironmentMap("data/em/mountain.png"));
+		scene.setEnvironmentMap(new EnvironmentMap("data/em/sea.png"));
 
-		scene.setCamera(new Camera(new Point3f(10f, 3, 10f), new Vector3f(-10, -3, -10f), new Vector3f(0, 1, 0), 70));
+		scene.setCamera(new Camera(new Point3f(10f, 3, -10f), new Vector3f(-10, -3, 10f), new Vector3f(0, 1, 0), 60));
 
 		Model teapot = new Model("data/objects/teapot.obj");
 		teapot.setMaterial(new ReflectiveMaterial(0.9f));

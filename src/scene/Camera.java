@@ -1,8 +1,12 @@
 package scene;
+
 import raytracer.Ray;
 import raytracer.Settings;
+import scene.data.Matrix4f;
 import scene.data.Point3f;
 import scene.data.Vector3f;
+import scene.data.Vector4f;
+import scene.geometry.AffineTransformation;
 
 
 public class Camera {
@@ -23,6 +27,51 @@ public class Camera {
 		this.up = up;
 		this.distanceToScreen = distanceToScreen;
 		this.FOV = (float)Math.toRadians(FOV);
+	}
+
+	public void rotate(int direction) {
+		Matrix4f trans = null;
+		Vector4f affineVector = null;
+
+		// Ugly
+		switch (direction) {
+			case 0:
+				// Left
+				trans = AffineTransformation.rotation(up, 10);
+				affineVector = new Vector4f(gaze);
+				affineVector = trans.multiply(affineVector);
+				gaze = new Vector3f(affineVector.x, affineVector.y, affineVector.z);
+				break;
+			case 1:
+				// Right
+				trans = AffineTransformation.rotation(up, -10);
+				affineVector = new Vector4f(gaze);
+				affineVector = trans.multiply(affineVector);
+				gaze = new Vector3f(affineVector.x, affineVector.y, affineVector.z);
+				break;
+			case 2:
+				// Up
+				trans = AffineTransformation.rotation(up.crossProduct(gaze), -10);
+				affineVector = new Vector4f(up);
+				affineVector = trans.multiply(affineVector);
+				up = new Vector3f(affineVector.x, affineVector.y, affineVector.z);
+
+				affineVector = new Vector4f(gaze);
+				affineVector = trans.multiply(affineVector);
+				gaze = new Vector3f(affineVector.x, affineVector.y, affineVector.z);
+				break;
+			case 3:
+				// Down
+				trans = AffineTransformation.rotation(up.crossProduct(gaze), 10);
+				affineVector = new Vector4f(up);
+				affineVector = trans.multiply(affineVector);
+				up = new Vector3f(affineVector.x, affineVector.y, affineVector.z);
+
+				affineVector = new Vector4f(gaze);
+				affineVector = trans.multiply(affineVector);
+				gaze = new Vector3f(affineVector.x, affineVector.y, affineVector.z);
+				break;
+		}
 	}
 
 	public Ray rayToPixel(int x, int y) {

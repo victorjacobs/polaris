@@ -107,6 +107,15 @@ public class Renderer implements MainWindowListener {
 	}
 
 	@Override
+	public void rotateCamera(int direction) {
+		abortRender(true);
+
+		scene.getCamera().rotate(direction);
+
+		render();
+	}
+
+	@Override
 	public Color3f renderPixel(int x, int y) {
 		if (Settings.COLLECT_STATS)
 			Stats.resetIntersections();
@@ -196,7 +205,7 @@ public class Renderer implements MainWindowListener {
 	public void abortRender(boolean shouldFlush) {
 		try {
 			threadPool.shutdownNow();
-			threadPool.awaitTermination(100, TimeUnit.MILLISECONDS);
+			threadPool.awaitTermination(200, TimeUnit.MILLISECONDS);
 
 			threadPool = Executors.newFixedThreadPool(cores);
 		} catch (RejectedExecutionException e) {
@@ -259,7 +268,7 @@ public class Renderer implements MainWindowListener {
 			}
 
 			panel.repaint();
-			panel.flush();
+			//panel.flush();
 
 			if (currentDepth == 1) {
 				long endTime = System.currentTimeMillis();

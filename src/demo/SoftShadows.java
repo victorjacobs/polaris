@@ -1,5 +1,6 @@
 package demo;
 
+import raytracer.Settings;
 import scene.Camera;
 import scene.Scene;
 import scene.data.Point3f;
@@ -25,6 +26,9 @@ public class SoftShadows implements SceneGenerator {
 
 	@Override
 	public void generateScene(Scene scene) {
+		if (Settings.SOFT_SHADOW_SAMPLES == 1)
+			throw new RuntimeException("ERROR: running soft shadows demo is ridiculous without enabling soft shadows");
+
 		scene.setBackground(new Color3f(0.3f, 0.3f, 0.3f));
 		scene.setCamera(new Camera(new Point3f(0, 1, 0), new Vector3f(1, 0, 0), new Vector3f(0, 1, 0), 60));
 		//scene.addLightSource(new PointLight(new Vector3f(6, 4, -3)));
