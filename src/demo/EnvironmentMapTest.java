@@ -25,7 +25,7 @@ public class EnvironmentMapTest implements SceneGenerator {
 
 	@Override
 	public void generateScene(Scene scene) {
-		scene.setEnvironmentMap(new EnvironmentMap("data/em/lores.jpg"));
+		scene.setEnvironmentMap(new EnvironmentMap("data/em/mountain.png"));
 
 		scene.setCamera(new Camera(new Point3f(10f, 3, 0), new Vector3f(-10, -3, 0), new Vector3f(0, 0, -1), 70));
 

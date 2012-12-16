@@ -241,4 +241,13 @@ public class Model extends Surface {
 
 		return new Model(clonedTriangles, material);
 	}
+
+	public void moveToOrigin() {
+		BoundingBox bb = boundingBox();
+		Vector3f translate = bb.getMin().sum(bb.getMax()).divideBy(2).negate();
+
+		Matrix4f trans = AffineTransformation.translate(translate);
+
+		applyTransformation(trans);
+	}
 }

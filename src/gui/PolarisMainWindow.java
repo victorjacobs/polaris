@@ -45,6 +45,7 @@ public class PolarisMainWindow extends JFrame implements KeyListener {
 		sceneGenerators.put("Soft shadows", new SoftShadows());
 		sceneGenerators.put("Loads of reflective spheres", new LoadsOfReflectiveSpheres());
 		sceneGenerators.put("Environment map", new EnvironmentMapTest());
+		sceneGenerators.put("OBJ parser", new ObjParser());
 
 		sceneGenerators = new TreeMap<String, SceneGenerator>(sceneGenerators);
 
@@ -221,6 +222,8 @@ public class PolarisMainWindow extends JFrame implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent keyEvent) {
+		if (keyEvent.isMetaDown()) return;
+
 		// This is ugly
 		switch (keyEvent.getKeyCode()) {
 			case KeyEvent.VK_LEFT:

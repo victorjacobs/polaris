@@ -176,7 +176,7 @@ public class Renderer implements MainWindowListener {
 		}
 
 		if (Settings.INTERSECTION_TESTS_FALSE_COLOR) {
-			float color = (float)Math.log((Stats.getNumIntersections()) + 1) / 15;
+			float color = (float)Math.log((Stats.getNumIntersections()) + 1) / 10;
 
 			return new Color3f(color, color, color);
 		} else {

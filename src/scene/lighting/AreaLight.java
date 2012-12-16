@@ -32,6 +32,10 @@ public class AreaLight extends PointLight {
 		volume = new BoundingBox(new Vector3f(position.x - 1f, position.y - 1f, position.z - 1f), new Vector3f(position.x + 1f, position.y + 1f, position.z + 1f));
 	}
 
+	public AreaLight(Point3f position, float intensity) {
+		this(position, new Color3f(1, 1, 1), intensity, 1);
+	}
+
 	@Override
 	public float getShadowPercentage(Scene scene, Vector3f point) {
 		Random rand = new Random();
