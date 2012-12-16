@@ -38,7 +38,8 @@ public class ReflectiveMaterial extends PhongMaterial {
 		} else {
 			other = scene.getBackground(outgoingRay.getDirection());
 		}
-		
+
+		// TODO moet ambient lighting ook geschaald worden met reflectiecoeff?
 		return new Color3f(reflectionCoefficient * other.getRed() + phongShading.getRed(),
 				reflectionCoefficient * other.getGreen() + phongShading.getGreen(),
 				reflectionCoefficient * other.getBlue() + phongShading.getBlue());

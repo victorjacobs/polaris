@@ -26,7 +26,8 @@ public class Renderer implements MainWindowListener {
 	private Scene scene;
 	private final ScreenPanel panel;
 	private int passes;
-	private int cores;
+	private int threads;
+	private int slices;
 	private long startTime;
 	private String loadedSDL = null;
 	private SceneGenerator sg;
@@ -39,7 +40,8 @@ public class Renderer implements MainWindowListener {
 		this.panel = panel;
 		this.passes = passes;
 		this.scene = scene;
-		this.cores = Runtime.getRuntime().availableProcessors();
+		this.threads = Runtime.getRuntime().availableProcessors();
+		this.slices = threads * 5;
 
 		// Display some warnings about debug settings
 		if (Settings.SOFT_SHADOW_SAMPLES == 1)
@@ -52,12 +54,12 @@ public class Renderer implements MainWindowListener {
 			if (!Settings.COLLECT_STATS)
 				throw new RuntimeException("Can't create false color image if COLLECT_STATS is off");
 
-			cores = 1;
+			threads = 1;
 			System.err.println("WARNING: rendering false color image is single threaded!");
 		}
 
 		if (Settings.FIX_SINGLE_THREAD) {
-			cores = 1;
+			threads = 1;
 			System.err.println("WARNING: hardcoded to run on one core");
 		}
 
@@ -175,7 +177,7 @@ public class Renderer implements MainWindowListener {
 		}
 
 		if (Settings.INTERSECTION_TESTS_FALSE_COLOR) {
-			float color = (float)Math.log((Stats.getNumIntersections()) + 1) / 10;
+			float color = (float)Math.log((Stats.getNumIntersections()) + 1) / 15;
 
 			return new Color3f(color, color, color);
 		} else {
@@ -209,13 +211,13 @@ public class Renderer implements MainWindowListener {
 		if (threadPool != null) {
 			abortRender(false);
 		} else {
-			this.threadPool = Executors.newFixedThreadPool(cores);
+			this.threadPool = Executors.newFixedThreadPool(threads);
 		}
 
 		this.startTime = System.currentTimeMillis();
 		// Split up the canvas in blocks to dispatch to the threadpool
-		for (int i = 0; i < cores; i++) {
-			threadPool.execute(new renderJob(i, passes));
+		for (int i = 0; i < slices; i++) {
+			threadPool.execute(new RenderJob(i, passes));
 		}
 
 		if (Settings.PAINT_AFTER_ALL_THREADS_FINISH) {
@@ -231,7 +233,7 @@ public class Renderer implements MainWindowListener {
 			threadPool.shutdownNow();
 			threadPool.awaitTermination(200, TimeUnit.MILLISECONDS);
 
-			threadPool = Executors.newFixedThreadPool(cores);
+			threadPool = Executors.newFixedThreadPool(threads);
 		} catch (RejectedExecutionException e) {
 			e.printStackTrace();
 		} catch (InterruptedException f) {
@@ -255,11 +257,11 @@ public class Renderer implements MainWindowListener {
 		}
 	}
 
-	private class renderJob implements Runnable {
+	private class RenderJob implements Runnable {
 		private int sliceNo;
 		private int currentDepth;
 		
-		public renderJob(int sliceNo, int currentDepth) {
+		public RenderJob(int sliceNo, int currentDepth) {
 			this.sliceNo = sliceNo;
 			this.currentDepth = currentDepth;
 		}
@@ -268,7 +270,7 @@ public class Renderer implements MainWindowListener {
 		public void run() {
 			Color3f pixelColor;
 			
-			for (int x = sliceNo * (panel.getWidth() / cores) + 1; x <= (sliceNo + 1) * (panel.getWidth() / cores); x += currentDepth) {
+			for (int x = sliceNo * (panel.getWidth() / slices) + 1; x <= (sliceNo + 1) * (panel.getWidth() / slices); x += currentDepth) {
 				// FIXED: shutdownNow on threadpool will call interrupt() on all threads, we should be so kind to do something with it
 				if (Thread.currentThread().isInterrupted()) return;
 
@@ -301,7 +303,7 @@ public class Renderer implements MainWindowListener {
 			}
 
 			try {
-				threadPool.execute(new renderJob(sliceNo, currentDepth / 2));
+				threadPool.execute(new RenderJob(sliceNo, currentDepth / 2));
 			} catch (RejectedExecutionException e) {
 				// Do nothing here, pool is shutting down
 			}
