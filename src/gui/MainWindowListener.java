@@ -20,4 +20,5 @@ public interface MainWindowListener {
 	void applySceneGenerator(SceneGenerator sg);
 
 	void rotateCamera(int direction);
+	void moveCamera(int direction);
 }

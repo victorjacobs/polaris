@@ -74,6 +74,30 @@ public class Camera {
 		}
 	}
 
+	public void move(int direction) {
+		// Idee: position verschuiven 1 eenheid in de gaze richting
+
+		// TODO: ugly
+		switch (direction) {
+			case 0:
+				// Left
+				position = position.sum(up.crossProduct(gaze).normalize());
+				break;
+			case 1:
+				// Right
+				position = position.sum(up.crossProduct(gaze).normalize().negate());
+				break;
+			case 2:
+				// Forward
+				position = position.sum(gaze.normalize());
+				break;
+			case 3:
+				// Backward
+				position = position.sum(gaze.normalize().negate());
+				break;
+		}
+	}
+
 	public Ray rayToPixel(int x, int y) {
 		return rayToPixel(x, y, 0.5f, 0.5f);
 	}

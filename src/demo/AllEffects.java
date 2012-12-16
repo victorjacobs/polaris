@@ -33,6 +33,7 @@ public class AllEffects implements SceneGenerator {
 		Material planeMaterial = new DiffuseMaterial(new Texture("data/textures/essos.jpg"));
 		plane.applyTransformation(AffineTransformation.scale(5));
 		plane.setMaterial(planeMaterial);
+		plane.applyTransformation(AffineTransformation.rotation(new Vector3f(0, 1, 0), 180));
 		scene.addSurface(plane);
 
 		Material veryReflective = new ReflectiveMaterial(0.9f);
@@ -46,7 +47,7 @@ public class AllEffects implements SceneGenerator {
 		scene.addSurface(sphere2);
 
 		Surface bunny = new Model("data/objects/bunny.obj");
-		bunny.setMaterial(glass);
+		bunny.setMaterial(green);
 		bunny.applyTransformation(AffineTransformation.translate(new Vector3f(0, 0, 5)));
 		bunny.applyTransformation(AffineTransformation.scale(0.5f));
 		scene.addSurface(bunny);

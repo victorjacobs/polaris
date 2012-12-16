@@ -121,6 +121,7 @@ public class BasicScene implements Scene {
 		lights.clear();
 		camera = null;
 		background = null;
+		environmentMap = null;
 
 		// JVM should come pick up garbage
 		System.gc();

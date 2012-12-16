@@ -123,6 +123,15 @@ public class Renderer implements MainWindowListener {
 	}
 
 	@Override
+	public void moveCamera(int direction) {
+		abortRender(true);
+
+		scene.getCamera().move(direction);
+
+		render();
+	}
+
+	@Override
 	public Color3f renderPixel(int x, int y) {
 		if (Settings.COLLECT_STATS)
 			Stats.resetIntersections();

@@ -235,6 +235,18 @@ public class PolarisMainWindow extends JFrame implements KeyListener {
 			case KeyEvent.VK_DOWN:
 				listener.rotateCamera(3);
 				break;
+			case KeyEvent.VK_Z:
+				listener.moveCamera(2);
+				break;
+			case KeyEvent.VK_S :
+				listener.moveCamera(3);
+				break;
+			case KeyEvent.VK_Q :
+				listener.moveCamera(0);
+				break;
+			case KeyEvent.VK_D :
+				listener.moveCamera(1);
+				break;
 		}
 	}
 
