@@ -34,7 +34,6 @@ public class GridAcceleratedScene extends SceneDecorator {
 	}
 
 	@Override
-	// TODO: maybe refactor to Grid
 	public Hit trace(Ray ray, float eps) {
 		return grid.trace(ray, eps);
 	}

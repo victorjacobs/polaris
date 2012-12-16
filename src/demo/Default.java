@@ -12,11 +12,7 @@ import scene.material.*;
 
 /*
  * TODO UI: be able to load .obj files, use BoundingBox as template
- * TODO Soft shadows
- * 		+ Area lights
- * TODO Anti aliasing
  * TODO color changing in reflections
- * TODO count intersection tests
  */
 
 public class Default implements SceneGenerator {

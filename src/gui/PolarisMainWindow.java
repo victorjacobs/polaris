@@ -123,6 +123,19 @@ public class PolarisMainWindow extends JFrame implements KeyListener {
 		//abort.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		fileMenu.add(forceRepaint);
 
+		JMenuItem toggleFalseColor = new JMenuItem("Toggle false colors");
+		toggleFalseColor.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				listener.abortRender(true);
+
+				Settings.INTERSECTION_TESTS_FALSE_COLOR = !Settings.INTERSECTION_TESTS_FALSE_COLOR;
+
+				listener.render();
+			}
+		});
+		fileMenu.add(toggleFalseColor);
+
 		menuBar.add(fileMenu);
 
 		JMenu demoMenu = new JMenu("Demo");

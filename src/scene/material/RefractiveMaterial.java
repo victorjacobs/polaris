@@ -6,7 +6,6 @@ import raytracer.Settings;
 import scene.Scene;
 import scene.data.Vector3f;
 
-// TODO reflectie etc
 public class RefractiveMaterial extends PhongMaterial {
 	private float refractionCoefficient;
 	private float n = 1;		// n where ray is travelling in

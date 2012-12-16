@@ -3,6 +3,7 @@ package scene.material;
 import raytracer.Hit;
 import scene.Scene;
 
+@Deprecated
 public class LinearCombinedMaterial extends Material {
 
 	Material mat1;

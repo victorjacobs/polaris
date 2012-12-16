@@ -156,7 +156,6 @@ public class SceneBuilder implements ParserHandler
 
     public void startDirectionalLight(Vector3f direction, float intensity, Color3f color, String name) throws Exception
     {
-		// TODO what's difference with pointlight?
 		throw new UnsupportedOperationException();
     }
 
