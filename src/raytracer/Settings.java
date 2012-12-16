@@ -25,11 +25,11 @@ public class Settings {
 	public static int KDTREE_ELEMENTS_IN_LEAF = 20;
 
 	// Some debug settings
-	public static boolean SHOULD_REPAINT_AFTER_EVERY_PIXEL = true;
+	public static boolean SHOULD_REPAINT_AFTER_EVERY_PIXEL = false;
 	public static boolean FIX_SINGLE_THREAD = false;
 	public static boolean RANDOM_COLOR_TRIANGLES = false;
 	public static boolean COLLECT_STATS = false;
 	public static boolean INTERSECTION_TESTS_FALSE_COLOR = false;
-	public static boolean ENABLE_CAMERA_MOVE_IN_UI = false;
-	public static boolean PAINT_AFTER_ALL_THREADS_FINISH = false;
+	public static boolean ENABLE_CAMERA_MOVE_IN_UI = true;
+	public static boolean PAINT_AFTER_ALL_THREADS_FINISH = true;
 }
