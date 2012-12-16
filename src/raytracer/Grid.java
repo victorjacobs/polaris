@@ -249,6 +249,7 @@ public class Grid {
 
 			cellsTraversed++;
 
+			// TODO herp derp
 			if (cellsTraversed > 100000) throw new RuntimeException("Traversing stalled, current cell: " + cell[0] + " " + cell[1] + " " + cell[2]);
 		}
 	}
@@ -271,6 +272,10 @@ public class Grid {
 
 			bb = bb.add(surf.boundingBox());
 		}
+
+		// Empty scene
+		if (bb == null)
+			bb = new BoundingBox(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0));
 
 		// Add some eps to the boundingbox
 		// TODO is this okay value? NOPE

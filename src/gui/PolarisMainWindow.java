@@ -95,7 +95,7 @@ public class PolarisMainWindow extends JFrame implements KeyListener {
 		render.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				listener.reloadFile();
+				listener.reload();
 				listener.render();
 			}
 		});

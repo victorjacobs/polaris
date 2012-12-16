@@ -42,7 +42,7 @@ public interface Scene {
 	 * scene into an acceleration structure. More general: it contains the last piece of code in scene that'll be
 	 * executed on a single thread.
 	 */
-	void preProcess();
+	boolean preProcess();
 
 	void clear();
 

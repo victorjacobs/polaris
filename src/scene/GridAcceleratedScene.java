@@ -40,11 +40,14 @@ public class GridAcceleratedScene extends SceneDecorator {
 	}
 
 	@Override
-	public void preProcess() {
+	public boolean preProcess() {
 		if (grid == null) {
 			System.out.println("Preprocessing scene");
 			grid = new Grid(primitiveBag);
+			return true;
 		}
+
+		return false;
 	}
 
 	@Override

@@ -29,6 +29,7 @@ public class Renderer implements MainWindowListener {
 	private int cores;
 	private long startTime;
 	private String loadedSDL = null;
+	private SceneGenerator sg;
 
 	public Renderer(ScreenPanel panel, int passes) {
 		this(panel, null, passes);
@@ -67,14 +68,19 @@ public class Renderer implements MainWindowListener {
 			System.err.println("WARNING: AA enabled");
 	}
 
-	public void reloadFile() {
-		if (loadedSDL == null)
+	@Override
+	public void reload() {
+		if (sg != null) {
+			scene.clear();
+			sg.generateScene(scene);
 			return;
+		}
 
-		loadSDL(loadedSDL);
+		if (loadedSDL != null)
+			loadSDL(loadedSDL);
 	}
 
-	// TODO fails for opening new files
+	@Override
 	public void loadSDL(String file) {
 		loadedSDL = file;
 
@@ -101,6 +107,7 @@ public class Renderer implements MainWindowListener {
 
 	@Override
 	public void applySceneGenerator(SceneGenerator sg) {
+		this.sg = sg;
 		scene.clear();
 
 		sg.generateScene(scene);
@@ -170,14 +177,15 @@ public class Renderer implements MainWindowListener {
 	public void render() {
 		long startTime = System.currentTimeMillis();
 
-		scene.preProcess();
+		boolean didPreprocess = scene.preProcess();
 
 		long duration = System.currentTimeMillis() - startTime;
 
 		if (Settings.COLLECT_STATS)
 			Stats.setStructureBuildTime(duration);
 
-		System.out.println("Building acceleration structure took " + duration + "ms");
+		if (didPreprocess)
+			System.out.println("Building acceleration structure took " + duration + "ms");
 
 		Runtime rt = Runtime.getRuntime();
 
@@ -186,7 +194,8 @@ public class Renderer implements MainWindowListener {
 		if (Settings.COLLECT_STATS)
 			Stats.setMemoryUsage(memUsage);
 
-		System.out.println("Memory usage before render start: " + memUsage + "mb");
+		if (didPreprocess)
+			System.out.println("Memory usage before render start: " + memUsage + "mb");
 
 		if (threadPool != null) {
 			abortRender(false);
@@ -198,6 +207,12 @@ public class Renderer implements MainWindowListener {
 		// Split up the canvas in blocks to dispatch to the threadpool
 		for (int i = 0; i < cores; i++) {
 			threadPool.execute(new renderJob(i, passes));
+		}
+
+		if (Settings.PAINT_AFTER_ALL_THREADS_FINISH) {
+			join();
+
+			panel.repaint();
 		}
 	}
 
@@ -221,7 +236,7 @@ public class Renderer implements MainWindowListener {
 		}
 	}
 
-	// NOTE: this only works when rendering in one pass
+	// TODO: this only works when rendering in one pass
 	public void join() {
 		threadPool.shutdown();
 
@@ -267,8 +282,8 @@ public class Renderer implements MainWindowListener {
 				}
 			}
 
-			panel.repaint();
-			//panel.flush();
+			if (!Settings.PAINT_AFTER_ALL_THREADS_FINISH)
+				panel.repaint();
 
 			if (currentDepth == 1) {
 				long endTime = System.currentTimeMillis();

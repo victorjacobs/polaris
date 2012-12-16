@@ -39,11 +39,14 @@ public class BoundingBoxAcceleratedScene extends SceneDecorator {
 	}
 
 	@Override
-	public void preProcess() {
+	public boolean preProcess() {
 		if (tree == null) {
 			System.out.println("Preprocessing scene");
 			tree = new KDTree(primitiveBag);
+			return true;
 		}
+
+		return false;
 	}
 
 	@Override

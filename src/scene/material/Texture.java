@@ -34,14 +34,14 @@ public class Texture {
 	 */
 	// TODO: Something weird here, x and y are switched around to make it work
 	public Color3f getColor(Point2f point) {
-		int x = (int)Math.floor(point.y * img.getWidth());
-		int y = (int)Math.floor(point.x * img.getHeight());
+		int x = (int)Math.floor(point.x * img.getWidth());
+		int y = (int)Math.floor(point.y * img.getHeight());
 
 		Color3f ret;
 
 		try {
 			ret = new Color3f(new Color(img.getRGB(x, y)));
-		} catch(IndexOutOfBoundsException e) {
+		} catch (IndexOutOfBoundsException e) {
 			// TODO this shouldn't be happening. But it does for AA
 			ret = new Color3f(0, 0, 0);
 		}

@@ -13,7 +13,7 @@ import scene.material.Color3f;
 public interface MainWindowListener {
 	Color3f renderPixel(int x, int y);
 	void loadSDL(String file);
-	void reloadFile();
+	void reload();
 	void render();
 	void abortRender(boolean willFlush);
 

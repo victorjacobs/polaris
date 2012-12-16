@@ -110,8 +110,9 @@ public class BasicScene implements Scene {
 	}
 
 	@Override
-	public void preProcess() {
+	public boolean preProcess() {
 		// Basic scene doesn't need any preprocessing
+		return false;
 	}
 
 	@Override

@@ -31,4 +31,5 @@ public class Settings {
 	public static final boolean COLLECT_STATS = false;
 	public static final boolean INTERSECTION_TESTS_FALSE_COLOR = false;
 	public static final boolean ENABLE_CAMERA_MOVE_IN_UI = true;
+	public static final boolean PAINT_AFTER_ALL_THREADS_FINISH = true;
 }
