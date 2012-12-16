@@ -70,6 +70,11 @@ public class Renderer implements MainWindowListener {
 	}
 
 	@Override
+	public void enableMultiThreading(boolean enable) {
+		threads = (enable) ? Runtime.getRuntime().availableProcessors() : 1;
+	}
+
+	@Override
 	public void reload() {
 		if (sg != null) {
 			scene.clear();

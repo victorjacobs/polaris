@@ -130,6 +130,8 @@ public class PolarisMainWindow extends JFrame implements KeyListener {
 				listener.abortRender(true);
 
 				Settings.INTERSECTION_TESTS_FALSE_COLOR = !Settings.INTERSECTION_TESTS_FALSE_COLOR;
+				Settings.COLLECT_STATS = !Settings.COLLECT_STATS;
+				listener.enableMultiThreading(!Settings.INTERSECTION_TESTS_FALSE_COLOR);
 
 				listener.render();
 			}

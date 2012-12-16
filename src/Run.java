@@ -15,7 +15,7 @@ public class Run {
 
 		PolarisMainWindow mainWindow = new PolarisMainWindow();
 		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), new GridAcceleratedScene(new BasicScene()), Settings.NUMBER_OF_RENDER_PASSES);
-		renderer.loadSDL("data/scenes/cornell.sdl");
+		renderer.loadSDL("data/scenes/teapot.sdl");
 
 		mainWindow.setListener(renderer);
 

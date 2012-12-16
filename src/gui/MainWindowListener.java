@@ -21,4 +21,6 @@ public interface MainWindowListener {
 
 	void rotateCamera(int direction);
 	void moveCamera(int direction);
+
+	void enableMultiThreading(boolean enable);
 }
