@@ -1,4 +1,4 @@
-package gui.Panel;
+package gui.panel;
 
 import raytracer.Settings;
 import scene.material.Color3f;

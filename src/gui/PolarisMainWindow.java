@@ -2,7 +2,7 @@ package gui;
 
 
 import demo.*;
-import gui.Panel.ScreenPanel;
+import gui.panel.ScreenPanel;
 import raytracer.Settings;
 import scene.material.Color3f;
 

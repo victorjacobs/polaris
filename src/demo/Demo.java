@@ -1,10 +1,13 @@
 package demo;
 
+import gui.panel.FilePanel;
 import gui.PolarisMainWindow;
 import gui.Renderer;
 import raytracer.Settings;
 import scene.BasicScene;
 import scene.GridAcceleratedScene;
+
+import java.io.File;
 
 /**
  * Created with IntelliJ IDEA.
@@ -39,5 +42,26 @@ public class Demo {
 		}
 
 		renderer.render();
+	}
+
+	public void runHeadless() {
+		FilePanel panel = new FilePanel();
+
+		Renderer renderer = new Renderer(panel, new GridAcceleratedScene(new BasicScene()), Settings.NUMBER_OF_RENDER_PASSES);
+
+		renderer.applySceneGenerator(sg);
+
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+
+		}
+
+		renderer.render();
+
+		renderer.join();
+
+		File toFile = new File("");
+		panel.saveImage(toFile.getAbsolutePath() + "/products/" + (System.currentTimeMillis() % 1000) + ".png");
 	}
 }

@@ -1,6 +1,6 @@
 import demo.ALotOfSpheres;
 import demo.SceneGenerator;
-import gui.Panel.StubPanel;
+import gui.panel.StubPanel;
 import gui.Renderer;
 import raytracer.Settings;
 import raytracer.Stats;

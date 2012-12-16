@@ -12,7 +12,7 @@ public class Settings {
 	public static int SCREEN_X = 640;
 	public static int SCREEN_Y = 480;
 	public static int MAX_RECURSION_DEPTH = 20;
-	public static float EPS = 0.01f;
+	public static float EPS = 0.00001f;
 	public static int NUMBER_OF_RENDER_PASSES = 1;
 
 	// Effects

@@ -18,7 +18,7 @@ import scene.material.*;
 public class ObjParser implements SceneGenerator {
 
 	public static void main(String[] args) {
-		(new Demo(new ObjParser())).runStandalone();
+		(new Demo(new ObjParser())).runHeadless();
 	}
 
 	@Override

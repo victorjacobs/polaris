@@ -1,7 +1,7 @@
 package gui;
 
 import demo.SceneGenerator;
-import gui.Panel.ScreenPanel;
+import gui.panel.ScreenPanel;
 import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.Settings;
