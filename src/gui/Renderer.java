@@ -28,7 +28,6 @@ public class Renderer implements MainWindowListener {
 	private int passes;
 	private int threads;
 	private int slices;
-	private long startTime;
 	private String loadedSDL = null;
 	private SceneGenerator sg;
 
@@ -214,7 +213,6 @@ public class Renderer implements MainWindowListener {
 			this.threadPool = Executors.newFixedThreadPool(threads);
 		}
 
-		this.startTime = System.currentTimeMillis();
 		// Split up the canvas in blocks to dispatch to the threadpool
 		for (int i = 0; i < slices; i++) {
 			threadPool.execute(new RenderJob(i, passes));
@@ -269,6 +267,7 @@ public class Renderer implements MainWindowListener {
 		@Override
 		public void run() {
 			Color3f pixelColor;
+			long startTime = System.currentTimeMillis();
 			
 			for (int x = sliceNo * (panel.getWidth() / slices) + 1; x <= (sliceNo + 1) * (panel.getWidth() / slices); x += currentDepth) {
 				// FIXED: shutdownNow on threadpool will call interrupt() on all threads, we should be so kind to do something with it

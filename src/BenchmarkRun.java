@@ -22,7 +22,7 @@ import java.util.HashMap;
  * Time: 13:53
  */
 public class BenchmarkRun {
-	private static final int NUM_OF_STEPS = 4;
+	private static final int NUM_OF_STEPS = 3;
 	private static final int STEP_SIZE = 10;
 
 	private final long runID;
@@ -30,6 +30,14 @@ public class BenchmarkRun {
 	private SceneGenerator sg;
 
 	public static void main(String[] args) {
+		// Fix settings
+		Settings.COLLECT_STATS = true;
+		Settings.SOFT_SHADOW_SAMPLES = 1;
+		Settings.AA = 1;
+		Settings.SCREEN_X = 500;
+		Settings.SCREEN_Y = 500;
+		Settings.SHOULD_REPAINT_AFTER_EVERY_PIXEL = false;
+
 		new BenchmarkRun();
 	}
 

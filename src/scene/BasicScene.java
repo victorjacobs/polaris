@@ -2,8 +2,6 @@ package scene;
 
 import raytracer.Hit;
 import raytracer.Ray;
-import raytracer.Settings;
-import raytracer.Stats;
 import scene.data.Vector3f;
 import scene.geometry.Surface;
 import scene.lighting.Light;
@@ -96,9 +94,6 @@ public class BasicScene implements Scene {
 
 		for (Surface surf : getSurfaces()) {
 			hit = surf.hit(ray, eps, lowestT);
-
-			if (Settings.COLLECT_STATS)
-				Stats.incIntersections();
 
 			if (hit != null) {
 				lowestT = hit.getT();
