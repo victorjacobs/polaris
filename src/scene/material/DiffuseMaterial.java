@@ -27,8 +27,6 @@ public class DiffuseMaterial extends Material {
 		float curR, curG, curB;
 		float shadowPercentage;
 
-		Hit lightHit;
-
 		// TODO dit werkt niet als achter glas nog een ander materiaal zit
 		for (Light light : scene.getLightSources()) {
 			shadowPercentage = light.getShadowPercentage(scene, hit.getPoint());

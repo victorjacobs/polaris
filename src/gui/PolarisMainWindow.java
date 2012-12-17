@@ -46,6 +46,7 @@ public class PolarisMainWindow extends JFrame implements KeyListener {
 		sceneGenerators.put("Loads of reflective spheres", new LoadsOfReflectiveSpheres());
 		sceneGenerators.put("Environment map", new EnvironmentMapTest());
 		sceneGenerators.put("OBJ parser", new ObjParser());
+		sceneGenerators.put("Nightfury", new NightFury());
 
 		sceneGenerators = new TreeMap<String, SceneGenerator>(sceneGenerators);
 
