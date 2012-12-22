@@ -28,6 +28,12 @@ public class Camera {
 		this.FOV = (float)Math.toRadians(FOV);
 	}
 
+	public void applyMatrixTransformation(Matrix4f trans) {
+		position = position.applyMatrixTransformation(trans);
+		gaze = gaze.applyMatrixTransformation(trans);
+		up = up.applyMatrixTransformation(trans);
+	}
+
 	public void rotate(int direction) {
 		Matrix4f trans = null;
 		Vector4f affineVector = null;

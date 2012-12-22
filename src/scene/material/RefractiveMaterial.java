@@ -15,7 +15,7 @@ public class RefractiveMaterial extends PhongMaterial {
 		super(baseColor, 100);
 		this.refractionCoefficient = refractionCoefficient;
 
-		ar = ag = ab = 0.2f;
+		ar = ag = ab = 0.1f;
 	}
 	
 	@Override

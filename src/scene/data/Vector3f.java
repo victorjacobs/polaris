@@ -169,4 +169,11 @@ public class Vector3f extends Tuple3f implements Serializable, Comparable<Vector
 		if (norm() > o.norm()) return 1;
 		return 0;
 	}
+
+	public Vector3f applyMatrixTransformation(Matrix4f trans) {
+		Vector4f foo = new Vector4f(x, y, z, 1);
+		foo = trans.multiply(foo);
+
+		return new Vector3f(foo.x, foo.y, foo.z);
+	}
 }
