@@ -13,6 +13,10 @@ public abstract class Material {
 	private Color3f baseColor;
 	private Texture texture;
 
+	public Material() {
+
+	}
+
 	public Material(Texture texture) {
 		this.texture = texture;
 	}

@@ -9,16 +9,16 @@ package raytracer;
  */
 public class Settings {
 	// Renderer
-	public static int SCREEN_X = 1280;
-	public static int SCREEN_Y = 720;
+	public static int SCREEN_X = 640;
+	public static int SCREEN_Y = 640;
 	public static int MAX_RECURSION_DEPTH = 20;
 	public static float EPS = 0.0001f;
 	public static int NUMBER_OF_RENDER_PASSES = 1;
 
 	// Effects
 	public static boolean DISABLE_SHADOWS = false;
-	public static int SOFT_SHADOW_SAMPLES = 20;
-	public static int AA = 4;
+	public static int SOFT_SHADOW_SAMPLES = 1;
+	public static int AA = 1;
 
 	// Acceleration structures
 	public static int GRID_DENSITY = 7;

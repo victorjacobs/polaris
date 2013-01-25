@@ -20,6 +20,7 @@ import java.util.List;
  * @author victor
  *
  */
+// TODO: StringTokeniser
 public class Model extends Surface {
 	// These are only needed for loading of file
 	private List<Vector3f> points;
