@@ -6,9 +6,8 @@ import raytracer.Hit;
 import raytracer.Ray;
 import raytracer.Settings;
 import raytracer.Stats;
-import scene.BasicScene;
-import scene.GridAcceleratedScene;
 import scene.Scene;
+import scene.SceneConstructor;
 import scene.data.Vector3f;
 import scene.material.Color3f;
 import scene.parser.SceneBuilder;
@@ -93,7 +92,7 @@ public class Renderer implements MainWindowListener {
 		SceneBuilder sceneBuilder;
 
 		if (scene == null) {
-			sceneBuilder = new SceneBuilder(new GridAcceleratedScene(new BasicScene()));
+			sceneBuilder = new SceneBuilder(SceneConstructor.getGridScene());
 		} else {
 			scene.clear();
 			sceneBuilder = new SceneBuilder(scene);
@@ -192,14 +191,14 @@ public class Renderer implements MainWindowListener {
 	public void render() {
 		long startTime = System.currentTimeMillis();
 
-		boolean didPreprocess = scene.preProcess();
+		boolean didPrepare = scene.prepare();
 
 		long duration = System.currentTimeMillis() - startTime;
 
 		if (Settings.COLLECT_STATS)
 			Stats.setStructureBuildTime(duration);
 
-		if (didPreprocess)
+		if (didPrepare)
 			System.out.println("Building acceleration structure took " + duration + "ms");
 
 		Runtime rt = Runtime.getRuntime();
@@ -209,7 +208,7 @@ public class Renderer implements MainWindowListener {
 		if (Settings.COLLECT_STATS)
 			Stats.setMemoryUsage(memUsage);
 
-		if (didPreprocess)
+		if (didPrepare)
 			System.out.println("Memory usage before render start: " + memUsage + "mb");
 
 		if (threadPool != null) {

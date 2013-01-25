@@ -1,5 +1,6 @@
 package raytracer;
 
+import scene.TraversalStrategy;
 import scene.data.Vector3f;
 import scene.geometry.Surface;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * Time: 12:06
  * To change this template use File | Settings | File Templates.
  */
-public class Grid {
+public class Grid implements TraversalStrategy {
 	// Bounding box of the entire scene
 	private BoundingBox bb;
 
@@ -32,12 +33,8 @@ public class Grid {
 	// Offsets
 	private int[] C;
 
-	public Grid(List<Surface> primitiveBag) {
-		this.primitiveBag = primitiveBag;
+	public Grid() {
 		this.M = new int[3];
-
-		calculateGridDimensions();
-		buildGrid();
 	}
 
 	private void buildGrid() {
@@ -126,6 +123,7 @@ public class Grid {
 		// After this operation, C is properly built, this means that C[O] actually points to the start index of cell 0
 	}
 
+	@Override
 	public Hit trace(Ray ray, float eps) {
 		Vector3f d = ray.getDirection();
 
@@ -254,6 +252,14 @@ public class Grid {
 		}
 	}
 
+	@Override
+	public void prepare(List<Surface> primitiveBag) {
+		this.primitiveBag = primitiveBag;
+
+		calculateGridDimensions();
+		buildGrid();
+	}
+
 	private int linearizeCellCoords(int x, int y, int z) {
 		// This construction is needed because if an object is part of the overall bounding box, the calculation for
 		// cell coordinates breaks down.
@@ -303,11 +309,11 @@ public class Grid {
 		return cellSize.clone();
 	}
 
-	public Hit hit(Ray ray) {
+	private Hit hit(Ray ray) {
 		return bb.hit(ray);
 	}
 
-	public List<Surface> getSurfacesForCell(int[] cell) {
+	private List<Surface> getSurfacesForCell(int[] cell) {
 		List<Surface> out = new LinkedList<Surface>();
 		int linearizedCoords = linearizeCellCoords(cell[0], cell[1], cell[2]);
 

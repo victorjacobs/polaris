@@ -3,7 +3,7 @@ package scene.material;
 import scene.data.Point2f;
 
 import javax.imageio.ImageIO;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;

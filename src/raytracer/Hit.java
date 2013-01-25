@@ -1,8 +1,8 @@
 package raytracer;
 
 import scene.data.Point2f;
-import scene.geometry.Surface;
 import scene.data.Vector3f;
+import scene.geometry.Surface;
 
 public class Hit {
 	private Vector3f point;

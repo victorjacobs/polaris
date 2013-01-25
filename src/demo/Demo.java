@@ -1,11 +1,10 @@
 package demo;
 
-import gui.panel.FilePanel;
 import gui.PolarisMainWindow;
 import gui.Renderer;
+import gui.panel.FilePanel;
 import raytracer.Settings;
-import scene.BasicScene;
-import scene.GridAcceleratedScene;
+import scene.SceneConstructor;
 
 import java.io.File;
 
@@ -28,7 +27,7 @@ public class Demo {
 
 		PolarisMainWindow mainWindow = new PolarisMainWindow();
 
-		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), new GridAcceleratedScene(new BasicScene()), Settings.NUMBER_OF_RENDER_PASSES);
+		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), SceneConstructor.getBVHScene(), Settings.NUMBER_OF_RENDER_PASSES);
 		mainWindow.setListener(renderer);
 
 		renderer.applySceneGenerator(sg);
@@ -47,7 +46,7 @@ public class Demo {
 	public void runHeadless() {
 		FilePanel panel = new FilePanel();
 
-		Renderer renderer = new Renderer(panel, new GridAcceleratedScene(new BasicScene()), Settings.NUMBER_OF_RENDER_PASSES);
+		Renderer renderer = new Renderer(panel, SceneConstructor.getGridScene(), Settings.NUMBER_OF_RENDER_PASSES);
 
 		renderer.applySceneGenerator(sg);
 

@@ -131,7 +131,7 @@ public class KDTree {
 		return bb;
 	}
 
-	public Hit hit(Ray ray, float eps) {
+	public Hit trace(Ray ray, float eps) {
 		Hit actualHit = null;
 
 		// Early return if the ray doesn't hit with this bounding box
@@ -151,8 +151,8 @@ public class KDTree {
 			}
 		} else {
 			// Hit left and right child
-			Hit leftHit = left.hit(ray, eps);
-			Hit rightHit = right.hit(ray, eps);
+			Hit leftHit = left.trace(ray, eps);
+			Hit rightHit = right.trace(ray, eps);
 
 			if (leftHit == null && rightHit == null) {
 				return null;

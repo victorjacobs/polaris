@@ -2,7 +2,7 @@ package scene.material;
 
 import scene.data.Tuple3f;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.Serializable;
 
 public class Color3f extends Tuple3f implements Serializable

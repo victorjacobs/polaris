@@ -2,9 +2,8 @@ package demo;
 
 import gui.Renderer;
 import gui.panel.FilePanel;
-import scene.BasicScene;
-import scene.GridAcceleratedScene;
 import scene.Scene;
+import scene.SceneConstructor;
 import scene.data.Vector3f;
 import scene.geometry.AffineTransformation;
 
@@ -29,7 +28,7 @@ public class Movie {
 		FilePanel panel = new FilePanel();
 		Renderer renderer = new Renderer(panel, 1);
 		SceneGenerator sg = new ObjParser();
-		Scene scene = new GridAcceleratedScene(new BasicScene());
+		Scene scene = SceneConstructor.getGridScene();
 		renderer.loadScene(scene);
 		sg.generateScene(scene);
 

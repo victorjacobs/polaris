@@ -1,8 +1,8 @@
 import gui.PolarisMainWindow;
 import gui.Renderer;
+import raytracer.Grid;
 import raytracer.Settings;
-import scene.BasicScene;
-import scene.GridAcceleratedScene;
+import scene.Scene;
 
 /**
  * Created with IntelliJ IDEA. User: victor Date: 18/11/12 Time: 23:19 To change this template use File | Settings |
@@ -14,7 +14,10 @@ public class Run {
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Polaris");
 
 		PolarisMainWindow mainWindow = new PolarisMainWindow();
-		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), new GridAcceleratedScene(new BasicScene()), Settings.NUMBER_OF_RENDER_PASSES);
+		Scene scene = new Scene();
+		scene.setTraversalStrategy(new Grid());	// TODO make constructor which sets traversal
+		Renderer renderer = new Renderer(mainWindow.getRenderPanel(), scene, Settings.NUMBER_OF_RENDER_PASSES);
+		// TODO loadSDL should go to scene
 		renderer.loadSDL("data/scenes/teapot.sdl");
 
 		mainWindow.setListener(renderer);
