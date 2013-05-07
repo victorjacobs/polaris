@@ -5,7 +5,7 @@ import gui.panel.StubPanel;
 import raytracer.Settings;
 import raytracer.Stats;
 import scene.Scene;
-import scene.SceneConstructor;
+import scene.SceneFactory;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -54,8 +54,8 @@ public class BenchmarkRun {
 		StringBuilder sb;
 		HashMap<String, Scene> scenes = new HashMap<String, Scene>();
 		scenes.put("basic", new Scene());
-		scenes.put("grid", SceneConstructor.getGridScene());
-		scenes.put("KD", SceneConstructor.getBVHScene());
+		scenes.put("grid", SceneFactory.getGridScene());
+		scenes.put("KD", SceneFactory.getBVHScene());
 
 		// Compare all different acceleration structures with one another
 
@@ -84,7 +84,7 @@ public class BenchmarkRun {
 		System.err.println("Starting extended BVH benchmark");
 		System.err.println("------------------------");
 
-		Scene scene = SceneConstructor.getBVHScene();
+		Scene scene = SceneFactory.getBVHScene();
 
 		for (int i = 20; i < 200; i+=50) {
 			System.err.println("KD leaf contents: " + i);
@@ -107,7 +107,7 @@ public class BenchmarkRun {
 		System.err.println("Starting grid extended benchmark");
 		System.err.println("------------------------");
 
-		Scene scene = SceneConstructor.getGridScene();
+		Scene scene = SceneFactory.getGridScene();
 
 		for (int i = 2; i < 15; i+=3) {
 			System.err.println("Grid density: " + i);

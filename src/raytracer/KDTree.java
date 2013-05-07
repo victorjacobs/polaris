@@ -70,7 +70,7 @@ public class KDTree {
 			float minSA = Float.MAX_VALUE;
 
 			for (float split : planes) {
-				if (prevPlane == split) continue;
+				if (prevPlane == split) continue;	// Coincidental planes, skip
 
 				// Reset for next step
 				nextLeftData.clear();

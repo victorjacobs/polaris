@@ -1,6 +1,7 @@
 package demo;
 
 import scene.Camera;
+import scene.EnvironmentMap;
 import scene.Scene;
 import scene.data.Point3f;
 import scene.data.Vector3f;
@@ -25,7 +26,7 @@ public class AllEffects implements SceneGenerator {
 	@Override
 	public void generateScene(Scene scene) {
 		scene.setCamera(new Camera(new Point3f(7, 5, 7), new Vector3f(-5, -5, -5), new Vector3f(0, 1, 0), 60));
-		scene.setBackground(new Color3f(0.2f, 0.2f, 0.2f));
+		scene.setEnvironmentMap(new EnvironmentMap("data/em/blurred.jpg"));
 
 		scene.addLightSource(new AreaLight(new Point3f(10, 10, 0)));
 
@@ -40,14 +41,14 @@ public class AllEffects implements SceneGenerator {
 		Material glass = new RefractiveMaterial(new Color3f(1, 1, 1), 1.33f);
 		Material green = new DiffuseMaterial(new Color3f(0, 0.7f, 0));
 
-		Surface sphere1 = new Sphere(new Vector3f(2, 1, 1), 1, green);
+		Surface sphere1 = new Sphere(new Vector3f(2, 1, 1), 1, veryReflective);
 		scene.addSurface(sphere1);
 
-		Surface sphere2 = new Sphere(new Vector3f(-1, 1, -1), 1, veryReflective);
+		Surface sphere2 = new Sphere(new Vector3f(-1, 1, -1), 1, green);
 		scene.addSurface(sphere2);
 
 		Surface bunny = new Model("data/objects/bunny.obj");
-		bunny.setMaterial(green);
+		bunny.setMaterial(glass);
 		bunny.applyTransformation(AffineTransformation.translate(new Vector3f(0, 0, 5)));
 		bunny.applyTransformation(AffineTransformation.scale(0.5f));
 		scene.addSurface(bunny);

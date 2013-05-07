@@ -7,7 +7,7 @@ import raytracer.Ray;
 import raytracer.Settings;
 import raytracer.Stats;
 import scene.Scene;
-import scene.SceneConstructor;
+import scene.SceneFactory;
 import scene.data.Vector3f;
 import scene.material.Color3f;
 import scene.parser.SceneBuilder;
@@ -92,7 +92,7 @@ public class Renderer implements MainWindowListener {
 		SceneBuilder sceneBuilder;
 
 		if (scene == null) {
-			sceneBuilder = new SceneBuilder(SceneConstructor.getGridScene());
+			sceneBuilder = new SceneBuilder(SceneFactory.getGridScene());
 		} else {
 			scene.clear();
 			sceneBuilder = new SceneBuilder(scene);

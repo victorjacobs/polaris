@@ -9,7 +9,7 @@ import raytracer.Grid;
  * Date: 25/01/13
  * Time: 14:41
  */
-public class SceneConstructor {
+public class SceneFactory {
 
 	public static Scene getGridScene() {
 		Scene scene = new Scene();

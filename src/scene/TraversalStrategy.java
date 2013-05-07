@@ -16,5 +16,6 @@ public interface TraversalStrategy {
 
 	Hit trace(Ray ray, float eps);
 	void prepare(List<Surface> primitiveBag);
+	TraversalStrategy clean();
 
 }

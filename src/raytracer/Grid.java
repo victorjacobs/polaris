@@ -260,6 +260,11 @@ public class Grid implements TraversalStrategy {
 		buildGrid();
 	}
 
+	@Override
+	public TraversalStrategy clean() {
+		return new Grid();
+	}
+
 	private int linearizeCellCoords(int x, int y, int z) {
 		// This construction is needed because if an object is part of the overall bounding box, the calculation for
 		// cell coordinates breaks down.

@@ -108,10 +108,11 @@ public class Scene {
 		return closestHit;
 	}
 
-	// TODO need to find a way to don't regenerate the strategy every time (versioning?)
 	public boolean prepare() {
 		if (strategy != null && shouldRebuildStructure) {
+			strategy = strategy.clean();
 			strategy.prepare(primitivesBag);
+			shouldRebuildStructure = false;
 			return true;
 		}
 
@@ -124,6 +125,7 @@ public class Scene {
 		camera = null;
 		background = null;
 		environmentMap = null;
+		primitivesBag.clear();
 		shouldRebuildStructure = true;
 
 		// JVM should come pick up garbage

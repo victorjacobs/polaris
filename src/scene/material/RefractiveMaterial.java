@@ -6,16 +6,21 @@ import raytracer.Settings;
 import scene.Scene;
 import scene.data.Vector3f;
 
+import java.util.Random;
+
 public class RefractiveMaterial extends PhongMaterial {
 	private float refractionCoefficient;
 	private float n = 1;		// n where ray is travelling in
 	private float ar, ag, ab;
-	
+	private Random rand;
+
 	public RefractiveMaterial(Color3f baseColor, float refractionCoefficient) {
 		super(baseColor, 100);
 		this.refractionCoefficient = refractionCoefficient;
 
 		ar = ag = ab = 0.1f;
+
+		rand = new Random();
 	}
 	
 	@Override
@@ -104,7 +109,7 @@ public class RefractiveMaterial extends PhongMaterial {
 
 		Vector3f t2 = n.multiply((float) Math.sqrt(sqrt));
 
-		return new Ray(hit.getPoint(), t1.minus(t2).normalize());
+		return new Ray(hit.getPoint(), t1.minus(t2).normalize().sum(new Vector3f(rand.nextFloat() / 10, rand.nextFloat() / 10, rand.nextFloat() / 10)));
 	}
 
 	@Override

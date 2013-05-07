@@ -34,8 +34,20 @@ public class Texture {
 	 */
 	// TODO: Something weird here, x and y are switched around to make it work
 	public Color3f getColor(Point2f point) {
-		int x = (int)Math.floor(point.x * img.getWidth());
-		int y = (int)Math.floor(point.y * img.getHeight());
+		// Bilinear interpolation
+		// x direction
+		float diff = point.x - (float)Math.floor(point.x);
+
+		Color3f c1 = new Color3f(new Color(img.getRGB((int)Math.floor(point.x), (int)Math.floor(point.y)))); // (x, y)
+		Color3f c2 = new Color3f(new Color(img.getRGB((int)Math.floor(point.x), (int)Math.ceil(point.y))));	// (x, y + 1)
+		Color3f c3 = new Color3f(new Color(img.getRGB((int)Math.ceil(point.x), (int)Math.floor(point.y))));	// (x + 1, y)
+		Color3f c4 = new Color3f(new Color(img.getRGB((int)Math.ceil(point.x), (int)Math.ceil(point.y))));	// (x + 1, y + 1)
+
+		
+
+
+		int x = (int)Math.floor(point.x * img.getWidth()) - 1;
+		int y = (int)Math.floor(point.y * img.getHeight()) - 1;
 
 		Color3f ret;
 

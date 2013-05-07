@@ -24,4 +24,9 @@ public class BoundingVolumeHierarchy implements TraversalStrategy {
 	public void prepare(List<Surface> primitiveBag) {
 		tree = new KDTree(primitiveBag);
 	}
+
+	@Override
+	public TraversalStrategy clean() {
+		return new BoundingVolumeHierarchy();
+	}
 }
