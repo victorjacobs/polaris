@@ -11,9 +11,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,7 +25,7 @@ public class PolarisMainWindow extends JFrame implements KeyListener {
 	private JMenuBar menuBar;
 	private MainWindowListener listener;
 	private File filePickerCurrentDir;
-	private Map<String, SceneGenerator> sceneGenerators;
+	private ArrayList<SceneGenerator> sceneGenerators;
 
 	public PolarisMainWindow() {
 		setSize(Settings.SCREEN_X, Settings.SCREEN_Y);
@@ -37,18 +35,16 @@ public class PolarisMainWindow extends JFrame implements KeyListener {
 		this.renderPanel = new ScreenPanel();
 		this.menuBar = new JMenuBar();
 		this.filePickerCurrentDir = new File(".");
-		this.sceneGenerators = new HashMap<String, SceneGenerator>();
+		this.sceneGenerators = new ArrayList<SceneGenerator>();
 
-		sceneGenerators.put("All effects", new AllEffects());
-		sceneGenerators.put("A lot of spheres", new ALotOfSpheres());
-		sceneGenerators.put("Teapots", new Teapots());
-		sceneGenerators.put("Soft shadows", new SoftShadows());
-		sceneGenerators.put("Loads of reflective spheres", new LoadsOfReflectiveSpheres());
-		sceneGenerators.put("Environment map", new EnvironmentMapTest());
-		sceneGenerators.put("OBJ parser", new ObjParser());
-		sceneGenerators.put("Nightfury", new NightFury());
-
-		sceneGenerators = new TreeMap<String, SceneGenerator>(sceneGenerators);
+		sceneGenerators.add(new AllEffects());
+		sceneGenerators.add(new ALotOfSpheres());
+		sceneGenerators.add(new Teapots());
+		sceneGenerators.add(new SoftShadows());
+		sceneGenerators.add(new LoadsOfReflectiveSpheres());
+		sceneGenerators.add(new EnvironmentMapTest());
+		sceneGenerators.add(new ObjParser());
+		sceneGenerators.add(new NightFury());
 
 		layoutMenuBar();
 		layoutWindow();
@@ -144,17 +140,15 @@ public class PolarisMainWindow extends JFrame implements KeyListener {
 		JMenu demoMenu = new JMenu("Demo");
 		JMenuItem item;
 
-		for (final String demoName : sceneGenerators.keySet()) {
-			item = new JMenuItem(demoName);
+		for (final SceneGenerator scene : sceneGenerators) {
+			item = new JMenuItem(scene.getName());
 
 			item.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent actionEvent) {
 					listener.abortRender(true);
 
-					SceneGenerator sg = sceneGenerators.get(demoName);
-
-					listener.applySceneGenerator(sg);
+					listener.applySceneGenerator(scene);
 
 					listener.render();
 				}

@@ -64,4 +64,9 @@ public class ALotOfSpheres implements SceneGenerator {
 			scene.addSurface(sphere);
 		}
 	}
+
+	@Override
+	public String getName() {
+		return "A Lot of Spheres";
+	}
 }

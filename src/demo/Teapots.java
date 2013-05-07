@@ -73,4 +73,9 @@ public class Teapots implements SceneGenerator {
 
 	}
 
+	@Override
+	public String getName() {
+		return "Teapots";
+	}
+
 }

@@ -47,4 +47,9 @@ public class Default implements SceneGenerator {
 	public void generateScene(Scene scene, int size) {
 		generateScene(scene);
 	}
+
+	@Override
+	public String getName() {
+		return "Default";
+	}
 }

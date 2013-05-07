@@ -10,7 +10,8 @@ import scene.Scene;
  */
 public interface SceneGenerator {
 
-	public void generateScene(Scene scene);
-	public void generateScene(Scene scene, int size);
+	void generateScene(Scene scene);
+	void generateScene(Scene scene, int size);
+	String getName();
 
 }

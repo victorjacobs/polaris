@@ -53,4 +53,9 @@ public class TextureTest implements SceneGenerator {
 	public void generateScene(Scene scene, int size) {
 		generateScene(scene);
 	}
+
+	@Override
+	public String getName() {
+		return "Texture Test";
+	}
 }
